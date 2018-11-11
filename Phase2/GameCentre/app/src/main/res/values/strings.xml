@@ -1,9 +1,11 @@
 <resources>
     <string name="app_name">GameCentre</string>
     <string name="score_text">Score: \u0020</string>
+    <string name="score">Score</string>
     <string name="score_zero">0</string>
-    <string name="welcome_text_slidingtiles">Welcome To Sliding Tiles! \n A Puzzle Game where you must arrange the
-        numbers in the correct order.</string>
+    <string name="three_text">3</string>
+    <string name="welcome_text_slidingtiles">Welcome To Sliding Tiles! \n A Puzzle Game where you
+        must arrange the numbers in the correct order.</string>
     <string name="start_text">New Game</string>
     <string name="load_text">Load Saved Game</string>
     <string name="save_text">Save Game</string>
@@ -15,7 +17,18 @@
     <string name="redo_text">Redo</string>
     <string name="welcome_user">Log In To Your Account</string>
     <string name="create_user">Create a New Account</string>
+    <string name="create_user_button">Create Account</string>
     <string name="current_undo_text">Current allowed undo: \u0020</string>
     <string name="scoreboard_note_text">(Only display games solved with 3 allowed undo.)</string>
     <string name="complex_text">Please choose the complexity of the game.</string>
+    <string name="maximum_undo">Set maximum undo</string>
+    <string name="set_text">Set</string>
+    <string name="undo_note">The default allowed undo is 3 (if nothing is inputted).</string>
+    <string name="username">Username</string>
+    <string name="password">Password</string>
+    <string name="slidingtiles_text">Sliding Tiles</string>
+    <string name="choose_game">Please choose the game.</string>
+    <string name="sign_in">Sign In</string>
+    <string name="sign_up">Sign Up</string>
+    <string name="show_scoreboard">Show the Scoreboard for:</string>
 </resources>
