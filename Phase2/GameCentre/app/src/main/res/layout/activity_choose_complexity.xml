@@ -15,7 +15,7 @@
         android:layout_marginBottom="280dp"
         android:text="@string/complex_text"
         android:textColor="@android:color/black"
-        android:textSize="18dp" />
+        android:textSize="18sp" />
 
     <Button
         android:id="@+id/EasyButton"
@@ -54,7 +54,7 @@
         android:layout_marginTop="150dp"
         android:ems="10"
         android:importantForAutofill="no"
-        android:hint="Set maximum undo"
+        android:hint="@string/maximum_undo"
         android:inputType="number"
         android:digits="1234567890" />
 
@@ -65,7 +65,7 @@
         android:layout_centerHorizontal="true"
         android:layout_alignParentTop="true"
         android:layout_marginTop="200dp"
-        android:text="Set" />
+        android:text="@string/set_text" />
 
     <TextView
         android:id="@+id/DefaultInfo"
@@ -75,7 +75,7 @@
         android:layout_alignParentTop="true"
         android:layout_marginTop="120dp"
         android:textColor="@android:color/black"
-        android:text="The default allowed undo is 3 (if nothing is inputted)." />
+        android:text="@string/undo_note" />
 
     <TextView
         android:id="@+id/TextUndo"
@@ -92,7 +92,7 @@
         android:id="@+id/CurrUndo"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="3"
+        android:text="@string/three_text"
         android:textColor="@android:color/black"
         android:layout_toEndOf="@id/TextUndo"
         android:layout_alignBaseline="@id/TextUndo"

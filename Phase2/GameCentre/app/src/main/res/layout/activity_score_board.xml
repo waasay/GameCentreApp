@@ -14,7 +14,7 @@
         android:layout_centerHorizontal="true"
         android:layout_alignParentTop="true"
         android:layout_marginTop="150dp"
-        android:text="Show the Scoreboard for:"
+        android:text="@string/show_scoreboard"
         android:textColor="@android:color/black"
         android:textSize="25sp"
         android:textStyle="bold" />

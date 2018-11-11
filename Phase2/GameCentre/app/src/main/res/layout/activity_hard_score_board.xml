@@ -15,7 +15,7 @@
         android:layout_alignParentStart="true"
         android:layout_marginStart="40dp"
         android:layout_marginTop="50dp"
-        android:text="Username"
+        android:text="@string/username"
         android:textColor="@android:color/black"
         android:textSize="25sp" />
 
@@ -37,7 +37,7 @@
         android:layout_alignParentEnd="true"
         android:layout_marginEnd="40dp"
         android:layout_alignBaseline="@id/UserText"
-        android:text="Score"
+        android:text="@string/score"
         android:textColor="@android:color/black"
         android:textSize="25sp" />
 

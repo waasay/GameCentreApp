@@ -16,7 +16,8 @@
         android:layout_alignStart="@id/TypePassword"
         android:ems="10"
         android:imeOptions="actionNext"
-        android:hint="Username"
+        android:importantForAutofill="no"
+        android:hint="@string/username"
         android:inputType="textPersonName" />
 
     <EditText
@@ -27,7 +28,8 @@
         android:layout_centerVertical="true"
         android:ems="10"
         android:imeOptions="actionDone"
-        android:hint="Password"
+        android:importantForAutofill="no"
+        android:hint="@string/password"
         android:inputType="textPassword" />
 
     <Button
@@ -38,7 +40,7 @@
         android:layout_centerVertical="true"
         android:layout_alignParentTop="true"
         android:layout_marginTop="380dp"
-        android:text="Create Account" />
+        android:text="@string/create_user_button" />
 
     <TextView
         android:id="@+id/CreateUser"
