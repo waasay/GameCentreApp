@@ -21,7 +21,6 @@
         android:id="@+id/StartButton"
         android:layout_width="120dp"
         android:layout_height="70dp"
-        android:layout_below="@+id/GameText"
         android:layout_centerHorizontal="true"
         android:layout_centerVertical="true"
         android:text="@string/start_text" />
@@ -30,28 +29,27 @@
         android:id="@+id/LoadButton"
         android:layout_width="120dp"
         android:layout_height="70dp"
-        android:layout_below="@+id/GameText"
+        android:layout_alignParentStart="true"
         android:layout_marginStart="10dp"
-        android:layout_marginEnd="20dp"
-        android:layout_toStartOf="@+id/StartButton"
+        android:layout_alignBottom="@+id/StartButton"
         android:text="@string/load_text" />
 
     <Button
         android:id="@+id/SaveButton"
         android:layout_width="120dp"
         android:layout_height="70dp"
-        android:layout_below="@+id/GameText"
-        android:layout_marginStart="20dp"
-        android:layout_toEndOf="@+id/StartButton"
+        android:layout_alignParentEnd="true"
+        android:layout_marginEnd="10dp"
+        android:layout_alignBottom="@+id/StartButton"
         android:text="@string/save_text" />
 
     <Button
         android:id="@+id/ScoreButton"
         android:layout_width="120dp"
         android:layout_height="70dp"
-        android:layout_below="@+id/GameText"
+        android:layout_alignParentBottom="true"
         android:layout_centerInParent="true"
-        android:layout_marginTop="80dp"
+        android:layout_marginBottom="220dp"
         android:text="@string/scoreboard_text" />
 
 </RelativeLayout>
