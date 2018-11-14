@@ -21,6 +21,7 @@ import java.util.Observable;
 import java.util.Observer;
 
 import group_0548.gamecentre.R;
+import group_0548.gamecentre.CustomAdapter;
 import group_0548.gamecentre.UsersManager;
 
 /**
