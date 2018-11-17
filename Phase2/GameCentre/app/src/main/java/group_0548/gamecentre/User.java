@@ -16,15 +16,12 @@ public class User implements Serializable {
      * The username of the user
      */
     private String userName;
+
     /**
      * The password of the user
      */
     private String password;
-    /**
-     * The hash map that maps a a user's game type to its highest score in that
-     * game type
-     */
-    private HashMap<String, Integer> hashMapOfHighScore = new HashMap<>();
+
     /**
      * The hash map that maps a a user's game type (a game type is referring to
      * any arbitrary game's type complexity
@@ -41,7 +38,6 @@ public class User implements Serializable {
     public User(String userName, String password) {
         this.userName = userName;
         this.password = password;
-
     }
 
     /**
@@ -62,24 +58,6 @@ public class User implements Serializable {
      */
     public BoardManager loadGame(String gameType) {
         return this.hashMapOfPastGames.get(gameType);
-    }
-
-    /**
-     * Updating the score one the game is finished and
-     * the new score is better than the last score (lower
-     * for SlidingTiles) asd
-     *
-     * @param gameType a game type's score to be updated
-     * @param score    the new score
-     */
-    public void updateScore(String gameType, int score) {
-        if (this.hashMapOfHighScore.get(gameType) != null) {
-            if (this.hashMapOfHighScore.get(gameType) < score) {
-                this.hashMapOfHighScore.put(gameType, score);
-            }
-        } else {
-            this.hashMapOfHighScore.put(gameType, score);
-        }
     }
 
     /**
