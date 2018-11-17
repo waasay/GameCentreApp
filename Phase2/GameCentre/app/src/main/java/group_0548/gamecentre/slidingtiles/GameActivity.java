@@ -20,8 +20,8 @@ import java.util.ArrayList;
 import java.util.Observable;
 import java.util.Observer;
 
-import group_0548.gamecentre.R;
 import group_0548.gamecentre.CustomAdapter;
+import group_0548.gamecentre.R;
 import group_0548.gamecentre.UsersManager;
 
 /**
@@ -210,8 +210,6 @@ public class GameActivity extends AppCompatActivity implements Observer {
             StartingActivity.scoreBoardManager.updateScoreBoard(boardManager.getComplexity(),
                     UsersManager.getCurrentUser().getUserName(), boardManager.getBoard().getScore());
             saveToFile(StartingActivity.SCOREBOARD_SAVE_FILENAME, StartingActivity.scoreBoardManager);
-            UsersManager.getCurrentUser().updateScore(boardManager.getComplexity(),
-                    boardManager.getBoard().getScore());
         }
     }
 
