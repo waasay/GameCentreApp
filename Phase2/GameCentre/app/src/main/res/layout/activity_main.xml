@@ -8,7 +8,7 @@
     tools:context="group_0548.gamecentre.slidingtiles.GameActivity">
 
     <TextView
-        android:id="@+id/ScoreText"
+        android:id="@+id/SlidingScoreText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="10dp"
@@ -20,11 +20,11 @@
 
 
     <TextView
-        android:id="@+id/Score"
+        android:id="@+id/SlidingScore"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignBaseline="@id/ScoreText"
-        android:layout_toEndOf="@+id/ScoreText"
+        android:layout_toEndOf="@+id/SlidingScoreText"
         android:text="@string/score_zero"
         android:textColor="@android:color/black"
         android:textSize="30sp"
@@ -39,16 +39,16 @@
         android:layout_marginTop="50dp" />
 
     <Button
-        android:id="@+id/Undo"
+        android:id="@+id/SlidingUndo"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
-        android:layout_toEndOf="@id/Redo"
+        android:layout_toEndOf="@id/SlidingRedo"
         android:onClick="undo"
         android:text="@string/undo_text" />
 
     <Button
-        android:id="@+id/Redo"
+        android:id="@+id/SlidingRedo"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
