@@ -74,15 +74,24 @@ public class ScoreBoard implements Serializable {
      * @return an array list of the best players with their user names
      * and their corresponding score.
      */
-    public ArrayList<String> getScoreContent() {
+    public ArrayList<String> getScoreContent(String order) {
         ArrayList<String> ids = new ArrayList<>();
         String name = "";
         String score = "";
-        for (Object o : topScores.keySet().toArray()) {
-            name = name + o.toString() + "\r\n";
-        }
-        for (Object o : topScores.values().toArray()) {
-            score = score + o.toString() + "\r\n";
+        if (order.equals("Ascending")) {
+            for (Object o : topScores.keySet().toArray()) {
+                name = name + o.toString() + "\r\n";
+            }
+            for (Object o : topScores.values().toArray()) {
+                score = score + o.toString() + "\r\n";
+            }
+        } else if (order.equals("Descending")) {
+            for (Object o : topScores.keySet().toArray()) {
+                name = o.toString() + "\r\n" + name;
+            }
+            for (Object o : topScores.values().toArray()) {
+                score = o.toString() + "\r\n" + score;
+            }
         }
         ids.add(name);
         ids.add(score);
