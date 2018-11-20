@@ -17,15 +17,16 @@
             </intent-filter>
         </activity>
         <activity android:name=".slidingtiles.GameActivity" />
-        <activity android:name=".slidingtiles.ScoreBoardActivity" />
         <activity android:name=".slidingtiles.ChooseComplexityActivity" />
-        <activity android:name=".slidingtiles.EasyScoreBoardActivity" />
         <activity android:name=".GameCentreActivity" />
         <activity android:name=".slidingtiles.StartingActivity" />
-        <activity android:name=".slidingtiles.MediumScoreBoardActivity" />
-        <activity android:name=".slidingtiles.HardScoreBoardActivity" />
         <activity android:name=".SignUpActivity" />
-        <activity android:name=".colourguess.ColourStartingActivity"></activity>
+        <activity android:name=".ChooseScoreBoardActivity" />
+        <activity android:name=".ScoreBoardActivity" />
+        <!--<activity android:name=".colourguess.ColourGuessStartingActivity" />-->
+        <!--<activity android:name=".colourguess.ColourGuessChooseComplexityActivity" />-->
+        <!--<activity android:name=".colourguess.ColourGuessMemoryPhaseActivity" />-->
+        <!--<activity android:name=".colourguess.ColourGuessChoosePhaseActivity" />-->
     </application>
 
 </manifest>
