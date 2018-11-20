@@ -4,12 +4,13 @@ import android.support.annotation.NonNull;
 
 import java.io.Serializable;
 
+import group_0548.gamecentre.AbstractTile;
 import group_0548.gamecentre.R;
 
 /**
  * A Tile in a sliding tiles puzzle.
  */
-public class Tile implements Comparable<Tile>, Serializable {
+public class Tile extends AbstractTile implements Comparable<Tile>, Serializable {
 
     /**
      * The background id to find the tile image.
@@ -20,17 +21,6 @@ public class Tile implements Comparable<Tile>, Serializable {
      * The unique id.
      */
     private int id;
-
-    /**
-     * A Tile with id and background. The background may not have a corresponding image.
-     *
-     * @param id         the id
-     * @param background the background
-     */
-    public Tile(int id, int background) {
-        this.id = id;
-        this.background = background;
-    }
 
     /**
      * A tile with a background id; look up and set the id.
