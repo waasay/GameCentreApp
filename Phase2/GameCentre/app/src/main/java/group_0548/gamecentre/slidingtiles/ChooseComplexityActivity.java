@@ -20,10 +20,6 @@ import group_0548.gamecentre.R;
  */
 public class ChooseComplexityActivity extends AppCompatActivity {
 
-    /**
-     * A temporary save file.
-     */
-    public static final String TEMP_SAVE_FILENAME = "save_file_tmp.ser";
 
     /**
      * The maximum undo of a game
@@ -124,7 +120,7 @@ public class ChooseComplexityActivity extends AppCompatActivity {
      */
     private void switchToGame() {
         Intent tmp = new Intent(this, GameActivity.class);
-        saveToFile(TEMP_SAVE_FILENAME);
+        saveToFile(StartingActivity.TEMP_SAVE_FILENAME);
         startActivity(tmp);
     }
 
