@@ -18,6 +18,7 @@ import java.io.ObjectOutputStream;
 import group_0548.gamecentre.R;
 import group_0548.gamecentre.ScoreBoardManager;
 import group_0548.gamecentre.UsersManager;
+import group_0548.gamecentre.ChooseScoreBoardActivity;
 
 /**
  * The initial activity for the sliding puzzle tile game.
@@ -27,7 +28,7 @@ public class StartingActivity extends AppCompatActivity {
     /**
      * The save file for scoreboard.
      */
-    public static final String SCOREBOARD_SAVE_FILENAME = "scoreboard_save_file.ser";
+    public static final String SCOREBOARD_SAVE_FILENAME = "sliding_scoreboard_save_file.ser";
     /**
      * The game type for current game.
      */
@@ -35,7 +36,7 @@ public class StartingActivity extends AppCompatActivity {
     /**
      * A temporary save file.
      */
-    public static final String TEMP_SAVE_FILENAME = "save_file_tmp.ser";
+    public static final String TEMP_SAVE_FILENAME = "sliding_save_file_tmp.ser";
     /**
      * The scoreboard manager.
      */
@@ -62,7 +63,7 @@ public class StartingActivity extends AppCompatActivity {
      * Activate the start button.
      */
     private void addStartButtonListener() {
-        Button startButton = findViewById(R.id.StartButton);
+        Button startButton = findViewById(R.id.SlidingStartButton);
         startButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -75,7 +76,7 @@ public class StartingActivity extends AppCompatActivity {
      * Activate the load button.
      */
     private void addLoadButtonListener() {
-        Button loadButton = findViewById(R.id.LoadButton);
+        Button loadButton = findViewById(R.id.SlidingLoadButton);
         loadButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -100,7 +101,7 @@ public class StartingActivity extends AppCompatActivity {
      * Activate the save button.
      */
     private void addSaveButtonListener() {
-        Button saveButton = findViewById(R.id.SaveButton);
+        Button saveButton = findViewById(R.id.SlidingSaveButton);
         saveButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -115,7 +116,7 @@ public class StartingActivity extends AppCompatActivity {
      * Activate the scoreboard button.
      */
     private void addScoreButtonListener() {
-        Button scoreButton = findViewById(R.id.ScoreButton);
+        Button scoreButton = findViewById(R.id.SlidingScoreButton);
         scoreButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -150,10 +151,11 @@ public class StartingActivity extends AppCompatActivity {
     }
 
     /**
-     * Switch to the ScoreBoardActivity view to see the leader board.
+     * Switch to the ChooseScoreBoardActivity view to see the leader board.
      */
     private void switchToScore() {
-        Intent tep = new Intent(this, ScoreBoardActivity.class);
+        ChooseScoreBoardActivity.gameType = GAME_TYPE;
+        Intent tep = new Intent(this, ChooseScoreBoardActivity.class);
         startActivity(tep);
     }
 
