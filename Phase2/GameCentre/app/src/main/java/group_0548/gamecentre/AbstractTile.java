@@ -13,7 +13,7 @@ public abstract class AbstractTile {
     /**
      * Abstract method for get ID.
      */
-    abstract int getId();
+    abstract public int getId();
 
 
 
