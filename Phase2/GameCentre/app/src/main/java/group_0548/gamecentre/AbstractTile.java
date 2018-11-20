@@ -3,7 +3,7 @@ package group_0548.gamecentre;
 /**
  * Abstract Tile Object for the individual tile object in the game.
  */
-public class AbstractTile {
+public abstract class AbstractTile {
 
     /**
      * An unique ID for the this abstract tile
@@ -11,12 +11,10 @@ public class AbstractTile {
     private int id;
 
     /**
-     * Return the ID of this abstract tile
-     * @return the ID of this tile
+     *Abstract method for get ID.
      */
-    public int getId() {
-        return id;
-    }
+    abstract int getId();
+
 
 
 
