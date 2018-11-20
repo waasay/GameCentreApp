@@ -30,7 +30,7 @@
         android:textSize="30sp"
         android:textStyle="bold" />
 
-    <group_0548.gamecentre.slidingtiles.GestureDetectGridView xmlns:android="http://schemas.android.com/apk/res/android"
+    <group_0548.gamecentre.colourguess.ColourGestureDetectGridView
         xmlns:tools="http://schemas.android.com/tools"
         android:id="@+id/grid"
         android:layout_width="match_parent"
