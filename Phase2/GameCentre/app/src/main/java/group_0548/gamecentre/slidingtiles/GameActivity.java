@@ -63,7 +63,7 @@ public class GameActivity extends AppCompatActivity implements Observer {
         setContentView(R.layout.activity_main);
 
         // Add View to activity
-        currentScore = findViewById(R.id.Score);
+        currentScore = findViewById(R.id.SlidingScore);
         gridView = findViewById(R.id.grid);
         gridView.setNumColumns(boardManager.getBoard().getNumCol());
         gridView.setBoardManager(boardManager);
