@@ -120,7 +120,7 @@ public class StartingActivity extends AppCompatActivity {
         scoreButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                switchToScore();
+                switchToScoreBoard();
             }
         });
     }
@@ -153,7 +153,7 @@ public class StartingActivity extends AppCompatActivity {
     /**
      * Switch to the ChooseScoreBoardActivity view to see the leader board.
      */
-    private void switchToScore() {
+    private void switchToScoreBoard() {
         ChooseScoreBoardActivity.gameType = GAME_TYPE;
         Intent tep = new Intent(this, ChooseScoreBoardActivity.class);
         startActivity(tep);
