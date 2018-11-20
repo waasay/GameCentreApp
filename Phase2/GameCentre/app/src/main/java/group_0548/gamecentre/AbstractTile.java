@@ -11,7 +11,7 @@ public abstract class AbstractTile {
     private int id;
 
     /**
-     *Abstract method for get ID.
+     * Abstract method for get ID.
      */
     abstract int getId();
 
