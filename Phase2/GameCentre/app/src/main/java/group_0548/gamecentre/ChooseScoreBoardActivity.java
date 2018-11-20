@@ -94,10 +94,10 @@ public class ChooseScoreBoardActivity extends AppCompatActivity {
         ArrayList<String> list = new ArrayList<>();
         if (gameType.equals("Sliding Tiles")) {
             list = StartingActivity.scoreBoardManager.getScoreBoard(complexity)
-                    .getScoreContent();
+                    .getScoreContent("Ascending");
         } else if (gameType.equals("Colour Guess")) {
             list = ColourGuessStartingActivity.scoreBoardManager.getScoreBoard(complexity)
-                    .getScoreContentReverse();
+                    .getScoreContent("Descending");
         }
         if (list.size() != 0) {
             userNames = list.get(0);
