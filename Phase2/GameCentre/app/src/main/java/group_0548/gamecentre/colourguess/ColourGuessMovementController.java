@@ -20,7 +20,7 @@ public class ColourGuessMovementController {
      *
      * @param memoryManager the board manager
      */
-    void setBoardManager(MemoryManager memoryManager) {
+    void setMemoryManager(MemoryManager memoryManager) {
         this.memoryManager = memoryManager;
     }
 
