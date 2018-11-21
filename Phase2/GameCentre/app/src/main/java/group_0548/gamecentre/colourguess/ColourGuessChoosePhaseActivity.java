@@ -12,6 +12,7 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 import android.content.Context;
+import java.util.Random;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -41,12 +42,15 @@ public class ColourGuessChoosePhaseActivity extends AppCompatActivity implements
      * The TextView for the timer.
      */
     private TextView countdownTimerText;
+    private TextView chooseColour;
 
     private Context myContext = this;
 
     private static int columnWidth, columnHeight;
 
     private ArrayList<Button> tileButtons;
+    String[] colours = {"Purple", "Blue", "Green", "Yellow",
+            "Orange", "Red"};
 
     /**
      * The colour guess manager.
@@ -61,16 +65,22 @@ public class ColourGuessChoosePhaseActivity extends AppCompatActivity implements
         loadFromFile();
         createTileButtons(this);
         addConfirmButtonListener();
+        Random randomGen = new Random();
+        int randomInt = randomGen.nextInt(6);
+        memoryManager.setId(randomInt);
+        String colour = colours[randomInt];
+        chooseColour = findViewById(R.id.ChooseColour);
+        chooseColour.setText("Please choose all the " + colour + " tiles.");
 
         // Add View to activity
-        countdownTimerText = findViewById(R.id.MemoryTime);
+        countdownTimerText = findViewById(R.id.ChooseTime);
         startTimer(60000);
         currentScore = findViewById(R.id.ColourGuessScore);
-        currentScore.setText(String.valueOf(memoryManager.getBoard2().getScore()));
+        currentScore.setText(String.valueOf(memoryManager.getScore()));
         gridView = findViewById(R.id.ChooseGrid);
         gridView.setNumColumns(memoryManager.getBoard2().getNumCol());
-        gridView.setBoardManager(memoryManager);
-        memoryManager.getBoard2().addObserver(this);
+        gridView.setMemoryManager(memoryManager);
+        memoryManager.addObserver(this);
         // Observer sets up desired dimensions as well as calls our display function
         gridView.getViewTreeObserver().addOnGlobalLayoutListener(
                 new ViewTreeObserver.OnGlobalLayoutListener() {
@@ -205,28 +215,29 @@ public class ColourGuessChoosePhaseActivity extends AppCompatActivity implements
         String gameType = ColourGuessStartingActivity.GAME_TYPE + " " + memoryManager.getComplexity();
         if (memoryManager.puzzleSolved()) {
             ColourGuessStartingActivity.scoreBoardManager.updateScoreBoard(memoryManager.getComplexity(),
-                    UsersManager.getCurrentUser().getUserName(), memoryManager.getBoard2().getScore());
+                    UsersManager.getCurrentUser().getUserName(), memoryManager.getScore());
             UsersManager.getCurrentUser().updateScore(gameType, ColourGuessStartingActivity.ORDER,
-                    memoryManager.getBoard2().getScore());
+                    memoryManager.getScore());
             saveToFile(ColourGuessStartingActivity.SCOREBOARD_SAVE_FILENAME, ColourGuessStartingActivity.scoreBoardManager);
         }
     }
 
     public void switchToStart() {
         saveToScoreBoard();
-        Toast.makeText(myContext, "Your score is :" + memoryManager.getBoard2().getScore(), Toast.LENGTH_SHORT).show();
+        Toast.makeText(myContext, "Your score is :" + memoryManager.getScore(), Toast.LENGTH_LONG).show();
         Intent tep = new Intent(this, ColourGuessStartingActivity.class);
         startActivity(tep);
     }
 
     public void switchToMemory() {
         if (memoryManager.puzzleSolved()) {
-            memoryManager.getBoard2().increaseScore(1);
+            memoryManager.increaseScore(1);
+            memoryManager.reset();
             saveToFile(ColourGuessStartingActivity.TEMP_SAVE_FILENAME, memoryManager);
             Intent tep = new Intent(this, ColourGuessMemoryPhaseActivity.class);
             startActivity(tep);
         } else {
-            Toast.makeText(myContext, "INCORRECT!", Toast.LENGTH_SHORT).show();
+            Toast.makeText(myContext, "INCORRECT!", Toast.LENGTH_LONG).show();
             switchToStart();
         }
     }
