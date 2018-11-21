@@ -29,18 +29,27 @@ public class StartingActivity extends AppCompatActivity {
      * The save file for scoreboard.
      */
     public static final String SCOREBOARD_SAVE_FILENAME = "sliding_scoreboard_save_file.ser";
+
     /**
      * The game type for current game.
      */
     public static final String GAME_TYPE = "Sliding Tiles";
+
+    /**
+     * The arrange method for current game.
+     */
+    public static final String ORDER = "Ascending";
+
     /**
      * A temporary save file.
      */
     public static final String TEMP_SAVE_FILENAME = "sliding_save_file_tmp.ser";
+
     /**
      * The scoreboard manager.
      */
     public static ScoreBoardManager scoreBoardManager = new ScoreBoardManager();
+
     /**
      * The board manager.
      */
