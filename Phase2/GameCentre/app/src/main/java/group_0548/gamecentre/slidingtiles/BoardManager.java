@@ -1,6 +1,6 @@
 package group_0548.gamecentre.slidingtiles;
 
-import java.io.Serializable;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
@@ -12,13 +12,7 @@ import group_0548.gamecentre.States;
 /**
  * Manage a board, including swapping tiles, checking for a win, and managing taps.
  */
-public class BoardManager extends AbstractManager implements Serializable {
-
-    /**
-     * String
-     */
-
-    private String gameType = "SlidingTiles";
+public class BoardManager extends AbstractManager {
 
     /**
      * Max number of undos
@@ -42,6 +36,10 @@ public class BoardManager extends AbstractManager implements Serializable {
      * The complexity of the board.
      */
     private String complexity;
+    /**
+     * The game type.
+     */
+    private final String gameType = "SlidingTiles";
 
     /**
      * Manage a new shuffled board.
@@ -56,6 +54,18 @@ public class BoardManager extends AbstractManager implements Serializable {
 
         Collections.shuffle(tiles);
         this.board = new Board(tiles, rowNum, colNum);
+
+        /*while not solvable board, shuffle until solvable
+        source for algorithm to determine solvability: https://www.cs.bham.ac.uk/~mdr/
+        teaching/modules04/java2/TilesSolvability.html?
+        fbclid=IwAR2MrTIGbUXv5sUInqTUJVER28xMxqzcZ7B2mCLHqKdZ7gJ8l2AvU0lO43Q
+        */
+        while(!( (colNum % 2 != 0) && (inversions() % 2 == 0) )  ||
+                ( (colNum % 2 == 0) && ((blankOddRowBottom()) == (inversions() % 2 == 0)) )) {
+            Collections.shuffle(tiles);
+            this.board = new Board(tiles, rowNum, colNum);
+        }
+
         MAX_UNDO = maxUndo;
         this.currUndo = MAX_UNDO - 1;
         pastStates.updateStates(this.getBoard().copy(), MAX_UNDO);
@@ -78,7 +88,7 @@ public class BoardManager extends AbstractManager implements Serializable {
      * <p>
      * Return the current board.
      */
-    public Board getBoard() {
+    Board getBoard() {
         return board;
     }
 
@@ -262,6 +272,49 @@ public class BoardManager extends AbstractManager implements Serializable {
         this.currUndo = MAX_UNDO - 1;
     }
 
+
+    // return the number of inversions for this board
+    private int inversions() {
+        int inversions = 0;
+        for (int i = 0; i < this.getBoard().numTiles(); i++) {
+            int n = i + 1;
+            while (n < this.getBoard().numTiles()) {
+                int row = i / this.getBoard().getNumCol();
+                int col = i % this.getBoard().getNumCol();
+                if (this.getBoard().getTiles()[row][col].getBackground() <
+                        this.getBoard().getTiles()[row][col + 1].getBackground()) {
+                    inversions = inversions + 1;
+                }
+                n = n + 1;
+            }
+        }
+        return inversions;
+    }
+
+    private boolean blankOddRowBottom() {
+        int i = 0;
+        int cols = this.getBoard().getNumCol();
+        int rows = this.getBoard().getNumRow();
+        final int numTiles = cols * rows;
+        while (i < numTiles) {
+            int row = i / cols;
+            int col = i % cols;
+
+            // if this is the blank tile
+            if (this.getBoard().getTile(row, col).getBackground() == 24) {
+
+                // odd row from bottom when difference between row containing blank and last
+                // row is even
+                if ((rows - row) % 2 == 0) {
+                    return true;
+                }
+
+            }
+
+            i = i +1;
+        }
+        return false;
+    }
 
     public String getGameType(){
         return this.gameType;
