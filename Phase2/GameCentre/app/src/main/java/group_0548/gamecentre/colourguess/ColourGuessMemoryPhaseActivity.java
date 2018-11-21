@@ -57,7 +57,7 @@ public class ColourGuessMemoryPhaseActivity extends AppCompatActivity {
         startTimer(5000);
         gridView = findViewById(R.id.ColourGrid);
         gridView.setNumColumns(memoryManager.getBoard1().getNumCol());
-        gridView.setBoardManager(memoryManager);
+        gridView.setMemoryManager(memoryManager);
         // Observer sets up desired dimensions as well as calls our display function
         gridView.getViewTreeObserver().addOnGlobalLayoutListener(
                 new ViewTreeObserver.OnGlobalLayoutListener() {
