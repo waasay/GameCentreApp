@@ -6,12 +6,19 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 
+import group_0548.gamecentre.AbstractManager;
 import group_0548.gamecentre.States;
 
 /**
  * Manage a board, including swapping tiles, checking for a win, and managing taps.
  */
-public class BoardManager implements Serializable {
+public class BoardManager extends AbstractManager implements Serializable {
+
+    /**
+     * String
+     */
+
+    private String gameType = "SlidingTiles";
 
     /**
      * Max number of undos
@@ -71,7 +78,7 @@ public class BoardManager implements Serializable {
      * <p>
      * Return the current board.
      */
-    Board getBoard() {
+    public Board getBoard() {
         return board;
     }
 
@@ -80,7 +87,7 @@ public class BoardManager implements Serializable {
      *
      * @return whether the tiles are in row-major order
      */
-    boolean puzzleSolved() {
+    public boolean puzzleSolved() {
         boolean solved = true;
         int id = 1;
         for (Tile tile : board) {
@@ -165,7 +172,7 @@ public class BoardManager implements Serializable {
         return tileMap;
     }
 
-    String getComplexity() {
+    public String getComplexity() {
         return complexity;
     }
 
@@ -253,5 +260,10 @@ public class BoardManager implements Serializable {
 
     private void resetCurrUndo() {
         this.currUndo = MAX_UNDO - 1;
+    }
+
+
+    public String getGameType(){
+        return this.gameType;
     }
 }

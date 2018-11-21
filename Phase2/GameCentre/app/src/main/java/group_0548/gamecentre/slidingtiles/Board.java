@@ -9,10 +9,13 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Observable;
 
+import group_0548.gamecentre.AbstractBoard;
+import group_0548.gamecentre.AbstractTile;
+
 /**
  * The sliding tiles board.
  */
-public class Board extends Observable implements Serializable, Iterable<Tile> {
+public class Board extends AbstractBoard implements Serializable, Iterable<Tile> {
     /**
      * The number of rows.
      */
@@ -64,7 +67,7 @@ public class Board extends Observable implements Serializable, Iterable<Tile> {
      *
      * @return the number of tiles on the board
      */
-    int numTiles() {
+    public int numTiles() {
         return numRow * numCol;
     }
 
@@ -75,7 +78,7 @@ public class Board extends Observable implements Serializable, Iterable<Tile> {
      * @param col the tile column
      * @return the tile at (row, col)
      */
-    Tile getTile(int row, int col) {
+    public Tile getTile(int row, int col) {
         return tiles[row][col];
     }
 
@@ -91,8 +94,23 @@ public class Board extends Observable implements Serializable, Iterable<Tile> {
         Tile temp = this.tiles[row1][col1];
         this.tiles[row1][col1] = this.tiles[row2][col2];
         this.tiles[row2][col2] = temp;
-        setChanged();
-        notifyObservers();
+        super.changeAndNotify();
+    }
+
+    /**
+     * Getter for tiles
+     */
+
+    public Tile[][] getTiles() {
+        return this.tiles;
+    }
+
+    /**
+     * Setter for tiles
+     */
+
+    public void setTiles(Tile[][] newTiles){
+        this.tiles = newTiles;
     }
 
     /**
@@ -102,9 +120,9 @@ public class Board extends Observable implements Serializable, Iterable<Tile> {
      */
 
     void replaceBoard(Board newBoard) {
-        this.tiles = newBoard.tiles;
-        setChanged();
-        notifyObservers();
+        Tile[][] newTiles = newBoard.getTiles();
+        this.setTiles(newTiles);
+        super.changeAndNotify();
 
     }
 
@@ -114,7 +132,7 @@ public class Board extends Observable implements Serializable, Iterable<Tile> {
      * @return copy of this
      */
 
-    Board copy() {
+    public Board copy() {
         List<Tile> newTiles = new ArrayList<>();
         for (Tile t : this) {
             newTiles.add(t);
@@ -134,10 +152,9 @@ public class Board extends Observable implements Serializable, Iterable<Tile> {
     /**
      * Increase the score by num.
      */
-    void increaseScore(int num) {
+    public void increaseScore(int num) {
         this.score += num;
-        setChanged();
-        notifyObservers();
+        super.changeAndNotify();
     }
 
     /**
@@ -145,7 +162,7 @@ public class Board extends Observable implements Serializable, Iterable<Tile> {
      *
      * @return the row number.
      */
-    int getNumRow() {
+    public int getNumRow() {
         return numRow;
     }
 
@@ -154,7 +171,7 @@ public class Board extends Observable implements Serializable, Iterable<Tile> {
      *
      * @return the current column number.
      */
-    int getNumCol() {
+    public int getNumCol() {
         return numCol;
     }
 
