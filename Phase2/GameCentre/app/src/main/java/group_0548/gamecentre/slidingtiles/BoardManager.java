@@ -278,11 +278,13 @@ public class BoardManager extends AbstractManager {
         int inversions = 0;
         for (int i = 0; i < this.getBoard().numTiles(); i++) {
             int n = i + 1;
+            int row = i / this.getBoard().getNumCol();
+            int col = i % this.getBoard().getNumCol();
             while (n < this.getBoard().numTiles()) {
-                int row = i / this.getBoard().getNumCol();
-                int col = i % this.getBoard().getNumCol();
-                if (this.getBoard().getTiles()[row][col].getBackground() <
-                        this.getBoard().getTiles()[row][col + 1].getBackground()) {
+                int nextRow = n / this.getBoard().getNumCol();
+                int nextCol = n % this.getBoard().getNumCol();
+                if (this.getBoard().getTiles()[row][col].getBackground() >
+                        this.getBoard().getTiles()[nextRow][nextCol].getBackground()) {
                     inversions = inversions + 1;
                 }
                 n = n + 1;
