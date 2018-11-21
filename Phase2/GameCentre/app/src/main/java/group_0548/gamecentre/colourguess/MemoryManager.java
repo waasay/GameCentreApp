@@ -15,7 +15,7 @@ public class MemoryManager extends AbstractManager {
     private ColourBoard board2;
     private int id = 0;
     private int score = 0;
-    private final String gameType = "ColourGuess";
+    private String complexity;
 
     MemoryManager(int rowNum, int colNum, String complex) {
         this.rows = rowNum;
@@ -100,15 +100,10 @@ public class MemoryManager extends AbstractManager {
         return this.id;
     }
 
-    @Override
     public String getComplexity() {
-        return null;
+        return this.complexity;
     }
 
-    @Override
-    public String getGameType() {
-        return gameType;
-    }
 
     public ColourBoard getBoard1() {
         return board1;
