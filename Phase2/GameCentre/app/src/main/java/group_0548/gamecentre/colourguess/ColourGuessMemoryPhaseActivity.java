@@ -1,6 +1,7 @@
 package group_0548.gamecentre.colourguess;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -13,11 +14,22 @@ import java.io.InputStream;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.ArrayList;
+import android.os.CountDownTimer;
+import android.widget.TextView;
+import java.util.concurrent.TimeUnit;
+import java.util.Locale;
 
 import group_0548.gamecentre.CustomAdapter;
 import group_0548.gamecentre.R;
 
 public class ColourGuessMemoryPhaseActivity extends AppCompatActivity {
+
+    /**
+     * The TextView for the timer.
+     */
+    private TextView countdownTimerText;
+
+    private ColourGuessGestureDetectGridView gridView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,8 +40,9 @@ public class ColourGuessMemoryPhaseActivity extends AppCompatActivity {
         createTileButtons(this);
 
         // Add View to activity
-        currentScore = findViewById(R.id.Score);
-        gridView = findViewById(R.id.grid);
+        countdownTimerText = findViewById(R.id.MemoryTime);
+        startTimer(5000);
+        gridView = findViewById(R.id.ColourGrid);
         gridView.setNumColumns(boardManager.getBoard().getNumCol());
         gridView.setBoardManager(boardManager);
         boardManager.getBoard().addObserver(this);
@@ -58,15 +71,6 @@ public class ColourGuessMemoryPhaseActivity extends AppCompatActivity {
     // Display
     public void display() {
         gridView.setAdapter(new CustomAdapter(tileButtons, columnWidth, columnHeight));
-    }
-
-    /**
-     * Dispatch onPause() to fragments.
-     */
-    @Override
-    protected void onPause() {
-        super.onPause();
-        saveToFile(StartingActivity.TEMP_SAVE_FILENAME, boardManager);
     }
 
     /**
@@ -121,5 +125,28 @@ public class ColourGuessMemoryPhaseActivity extends AppCompatActivity {
         } catch (IOException e) {
             Log.e("Exception=", "File write failed: " + e.toString());
         }
+    }
+
+    private void startTimer(int milliSecond) {
+        CountDownTimer  countDownTimer = new CountDownTimer(milliSecond, 1000) {
+            public void onTick(long millisUntilFinished) {
+                long millis = millisUntilFinished;
+                //Convert milliseconds into hour,minute and seconds
+                String hms = String.format(Locale.US, "%02d:%02d",
+                        TimeUnit.MILLISECONDS.toMinutes(millis),
+                        TimeUnit.MILLISECONDS.toSeconds(millis) -
+                                TimeUnit.MINUTES.toSeconds(TimeUnit.MILLISECONDS.toMinutes(millis)));
+                countdownTimerText.setText(hms);//set text
+            }
+            public void onFinish() {
+                countdownTimerText.setText("TIME'S UP!"); //On finish change timer text
+                switchToChoose();
+            }
+        }.start();
+    }
+
+    private void switchToChoose() {
+        Intent tep = new Intent(this, ColourGuessChoosePhaseActivity.class);
+        startActivity(tep);
     }
 }
