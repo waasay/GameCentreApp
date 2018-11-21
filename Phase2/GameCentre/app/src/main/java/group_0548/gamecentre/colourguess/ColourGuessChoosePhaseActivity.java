@@ -2,17 +2,15 @@ package group_0548.gamecentre.colourguess;
 
 import android.content.Context;
 import android.content.Intent;
+import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewTreeObserver;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
-import android.content.Context;
-import java.util.Random;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -23,11 +21,12 @@ import java.util.ArrayList;
 import java.util.Locale;
 import java.util.Observable;
 import java.util.Observer;
+import java.util.Random;
 import java.util.concurrent.TimeUnit;
 
 import group_0548.gamecentre.CustomAdapter;
+import group_0548.gamecentre.LoginActivity;
 import group_0548.gamecentre.R;
-import group_0548.gamecentre.UsersManager;
 
 public class ColourGuessChoosePhaseActivity extends AppCompatActivity implements Observer {
 
@@ -43,6 +42,8 @@ public class ColourGuessChoosePhaseActivity extends AppCompatActivity implements
      */
     private TextView countdownTimerText;
     private TextView chooseColour;
+
+    private static CountDownTimer countDownTimer;
 
     private Context myContext = this;
 
@@ -162,24 +163,8 @@ public class ColourGuessChoosePhaseActivity extends AppCompatActivity implements
         });
     }
 
-    /**
-     * Save the board manager to fileName.
-     *
-     * @param fileName the name of the file
-     */
-    public void saveToFile(String fileName, Object obj) {
-        try {
-            ObjectOutputStream outputStream = new ObjectOutputStream(
-                    this.openFileOutput(fileName, MODE_PRIVATE));
-            outputStream.writeObject(obj);
-            outputStream.close();
-        } catch (IOException e) {
-            Log.e("Exception=", "File write failed: " + e.toString());
-        }
-    }
-
     private void startTimer(int milliSecond) {
-        CountDownTimer countDownTimer = new CountDownTimer(milliSecond, 1000) {
+        countDownTimer = new CountDownTimer(milliSecond, 1000) {
             public void onTick(long millisUntilFinished) {
                 long millis = millisUntilFinished;
                 //Convert milliseconds into hour,minute and seconds
@@ -189,8 +174,9 @@ public class ColourGuessChoosePhaseActivity extends AppCompatActivity implements
                                 TimeUnit.MINUTES.toSeconds(TimeUnit.MILLISECONDS.toMinutes(millis)));
                 countdownTimerText.setText(hms);//set text
             }
+
             public void onFinish() {
-                Toast.makeText(myContext, "TIME'S UP!", Toast.LENGTH_SHORT).show();
+                Toast.makeText(myContext, "Time's up! Your score is : " + memoryManager.getScore(), Toast.LENGTH_LONG).show();
                 switchToStart();
             }
         }.start();
@@ -214,15 +200,15 @@ public class ColourGuessChoosePhaseActivity extends AppCompatActivity implements
     public void saveToScoreBoard() {
         String gameType = ColourGuessStartingActivity.GAME_TYPE + " " + memoryManager.getComplexity();
         ColourGuessStartingActivity.scoreBoardManager.updateScoreBoard(memoryManager.getComplexity(),
-                    UsersManager.getCurrentUser().getUserName(), memoryManager.getScore());
-        UsersManager.getCurrentUser().updateScore(gameType, ColourGuessStartingActivity.ORDER,
-                    memoryManager.getScore());
+                LoginActivity.usersManager.getCurrentUser().getUserName(), memoryManager.getScore());
+        LoginActivity.usersManager.getCurrentUser().updateScore(gameType, ColourGuessStartingActivity.ORDER,
+                memoryManager.getScore());
         saveToFile(ColourGuessStartingActivity.SCOREBOARD_SAVE_FILENAME, ColourGuessStartingActivity.scoreBoardManager);
+        saveToFile(LoginActivity.USER_SAVE_FILENAME, LoginActivity.usersManager);
     }
 
     public void switchToStart() {
         saveToScoreBoard();
-        Toast.makeText(myContext, "Your score is :" + memoryManager.getScore(), Toast.LENGTH_LONG).show();
         Intent tep = new Intent(this, ColourGuessStartingActivity.class);
         startActivity(tep);
     }
@@ -235,9 +221,37 @@ public class ColourGuessChoosePhaseActivity extends AppCompatActivity implements
             Intent tep = new Intent(this, ColourGuessMemoryPhaseActivity.class);
             startActivity(tep);
         } else {
-            Toast.makeText(myContext, "INCORRECT!", Toast.LENGTH_LONG).show();
+            Toast.makeText(myContext, "Incorrect! Your score is : " + memoryManager.getScore(), Toast.LENGTH_LONG).show();
             switchToStart();
         }
     }
-}
 
+    /**
+     * Save the object to fileName.
+     *
+     * @param fileName the name of the file
+     */
+    public void saveToFile(String fileName, Object obj) {
+        try {
+            ObjectOutputStream outputStream = new ObjectOutputStream(
+                    this.openFileOutput(fileName, MODE_PRIVATE));
+            outputStream.writeObject(obj);
+            outputStream.close();
+        } catch (IOException e) {
+            Log.e("Exception=", "File write failed: " + e.toString());
+        }
+    }
+
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        stopCountdown();
+        startActivity(new Intent(this, ColourGuessStartingActivity.class));
+        finish();
+    }
+
+    private void stopCountdown() {
+        countDownTimer.cancel();
+    }
+}
