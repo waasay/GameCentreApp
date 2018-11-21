@@ -8,7 +8,7 @@ import group_0548.gamecentre.AbstractManager;
 
 public class MemoryManager extends AbstractManager {
 
-    private int time = 60;
+    private int time = 60000;
     private int rows;
     private int cols;
     private ColourBoard board1;
