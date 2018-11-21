@@ -15,10 +15,10 @@ import java.io.InputStream;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 
+import group_0548.gamecentre.ChooseScoreBoardActivity;
+import group_0548.gamecentre.LoginActivity;
 import group_0548.gamecentre.R;
 import group_0548.gamecentre.ScoreBoardManager;
-import group_0548.gamecentre.UsersManager;
-import group_0548.gamecentre.ChooseScoreBoardActivity;
 
 /**
  * The initial activity for the sliding puzzle tile game.
@@ -89,7 +89,7 @@ public class StartingActivity extends AppCompatActivity {
         loadButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                boardManager = UsersManager.getCurrentUser().loadGame(GAME_TYPE);
+                boardManager = LoginActivity.usersManager.getCurrentUser().loadGame(GAME_TYPE);
                 if (boardManager != null) {
                     saveToFile(TEMP_SAVE_FILENAME, boardManager);
                     makeToastLoadedText();
@@ -114,8 +114,8 @@ public class StartingActivity extends AppCompatActivity {
         saveButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                UsersManager.getCurrentUser().saveGame(GAME_TYPE, boardManager);
-                saveToFile(TEMP_SAVE_FILENAME, boardManager);
+                LoginActivity.usersManager.getCurrentUser().saveGame(GAME_TYPE, boardManager);
+                saveToFile(LoginActivity.USER_SAVE_FILENAME, LoginActivity.usersManager);
                 makeToastSavedText();
             }
         });

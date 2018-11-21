@@ -21,8 +21,8 @@ import java.util.Observable;
 import java.util.Observer;
 
 import group_0548.gamecentre.CustomAdapter;
+import group_0548.gamecentre.LoginActivity;
 import group_0548.gamecentre.R;
-import group_0548.gamecentre.UsersManager;
 
 /**
  * The game activity.
@@ -109,7 +109,6 @@ public class GameActivity extends AppCompatActivity implements Observer {
     private void updateTileButtons() {
         Board board = boardManager.getBoard();
         currentScore.setText(String.valueOf(board.getScore()));
-        saveToScoreBoard();
         int nextPos = 0;
         for (Button b : tileButtons) {
             int row = nextPos / boardManager.getBoard().getNumRow();
@@ -117,7 +116,9 @@ public class GameActivity extends AppCompatActivity implements Observer {
             b.setBackgroundResource(board.getTile(row, col).getBackground());
             nextPos++;
         }
-        UsersManager.getCurrentUser().saveGame(StartingActivity.GAME_TYPE, boardManager);
+        LoginActivity.usersManager.getCurrentUser().saveGame(StartingActivity.GAME_TYPE, boardManager);
+        saveToFile(LoginActivity.USER_SAVE_FILENAME, LoginActivity.usersManager);
+        saveToScoreBoard();
         saveToFile(StartingActivity.TEMP_SAVE_FILENAME, boardManager);
     }
 
@@ -152,7 +153,7 @@ public class GameActivity extends AppCompatActivity implements Observer {
     }
 
     /**
-     * Save the board manager to fileName.
+     * Save the object to fileName.
      *
      * @param fileName the name of the file
      */
@@ -164,6 +165,23 @@ public class GameActivity extends AppCompatActivity implements Observer {
             outputStream.close();
         } catch (IOException e) {
             Log.e("Exception=", "File write failed: " + e.toString());
+        }
+    }
+
+    /**
+     * Saving the score when the game is finish and when the maximum undo is default
+     * at 3
+     */
+
+    public void saveToScoreBoard() {
+        String gameType = StartingActivity.GAME_TYPE + " " + boardManager.getComplexity();
+        if (boardManager.puzzleSolved() && BoardManager.getMaxUndo() == 3) {
+            StartingActivity.scoreBoardManager.updateScoreBoard(boardManager.getComplexity(),
+                    LoginActivity.usersManager.getCurrentUser().getUserName(), boardManager.getBoard().getScore());
+            LoginActivity.usersManager.getCurrentUser().updateScore(gameType, StartingActivity.ORDER,
+                    boardManager.getBoard().getScore());
+            saveToFile(StartingActivity.SCOREBOARD_SAVE_FILENAME, StartingActivity.scoreBoardManager);
+            saveToFile(LoginActivity.USER_SAVE_FILENAME, LoginActivity.usersManager);
         }
     }
 
@@ -197,22 +215,6 @@ public class GameActivity extends AppCompatActivity implements Observer {
             Toast toast = Toast.makeText(getApplicationContext(), "No more redo", Toast.LENGTH_SHORT);
             toast.setGravity(Gravity.BOTTOM, 0, 0);
             toast.show();
-        }
-    }
-
-    /**
-     * Saving the score when the game is finish and when the maximum undo is default
-     * at 3
-     */
-
-    public void saveToScoreBoard() {
-        String gameType = StartingActivity.GAME_TYPE + " " + boardManager.getComplexity();
-        if (boardManager.puzzleSolved() && BoardManager.getMaxUndo() == 3) {
-            StartingActivity.scoreBoardManager.updateScoreBoard(boardManager.getComplexity(),
-                    UsersManager.getCurrentUser().getUserName(), boardManager.getBoard().getScore());
-            UsersManager.getCurrentUser().updateScore(gameType, StartingActivity.ORDER,
-                    boardManager.getBoard().getScore());
-            saveToFile(StartingActivity.SCOREBOARD_SAVE_FILENAME, StartingActivity.scoreBoardManager);
         }
     }
 
