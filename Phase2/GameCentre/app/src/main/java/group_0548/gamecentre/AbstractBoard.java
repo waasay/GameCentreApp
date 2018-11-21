@@ -25,11 +25,6 @@ public abstract class AbstractBoard extends Observable implements Serializable {
      */
     private AbstractTile[][] tiles;
 
-    /**
-     * The score of the board.
-     */
-    private int score;
-
 
     abstract public int numTiles();
 
@@ -39,18 +34,6 @@ public abstract class AbstractBoard extends Observable implements Serializable {
     abstract public AbstractTile[][] getTiles();
 
 
-
-    /**
-     * Return the score for the abstract board.
-     *
-     * @return the score for the abstract board.
-     */
-    abstract public int getScore();
-
-    /**
-     * Increase the score by num.
-     */
-    abstract public void increaseScore(int num);
 
     /**
      * Get the current row number.
