@@ -46,6 +46,7 @@ public class ChooseScoreBoardActivity extends AppCompatActivity {
         addEasyButtonListener();
         addMediumButtonListener();
         addHardButtonListener();
+        addUserButtonListener();
     }
 
     /**
@@ -88,16 +89,37 @@ public class ChooseScoreBoardActivity extends AppCompatActivity {
     }
 
     /**
+     * Activate the user button.
+     */
+    private void addUserButtonListener() {
+        Button returnButton = findViewById(R.id.ScoreBoardUserButton);
+        returnButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                switchToUser();
+            }
+        });
+    }
+
+    /**
+     * Switch to the scoreboard for current user.
+     */
+    private void switchToUser() {
+        Intent tep = new Intent(this, UserScoreBoardActivity.class);
+        startActivity(tep);
+    }
+
+    /**
      * Switch to the scoreboard for easy difficult.
      */
     private void switchToScore(String complexity) {
         ArrayList<String> list = new ArrayList<>();
-        if (gameType.equals("Sliding Tiles")) {
+        if (gameType.equals(StartingActivity.GAME_TYPE)) {
             list = StartingActivity.scoreBoardManager.getScoreBoard(complexity)
-                    .getScoreContent("Ascending");
-        } else if (gameType.equals("Colour Guess")) {
+                    .getScoreContent(StartingActivity.ORDER);
+        } else if (gameType.equals(ColourGuessStartingActivity.GAME_TYPE)) {
             list = ColourGuessStartingActivity.scoreBoardManager.getScoreBoard(complexity)
-                    .getScoreContent("Descending");
+                    .getScoreContent(ColourGuessStartingActivity.ORDER);
         }
         if (list.size() != 0) {
             userNames = list.get(0);
