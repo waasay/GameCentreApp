@@ -37,7 +37,7 @@
     <string name="sign_up">Sign Up</string>
     <string name="show_scoreboard">Show the Scoreboard for:</string>
     <string name="time_left_text">Time left: \u0020</string>
-    <string name="timer">00:00:00</string>
+    <string name="timer">00:00</string>
     <string name="welcome_text_colourguess">Welcome To Colour Guess! \n A Memory Game where you
         must memorize all the colours and locate the indicated colours in correct position.</string>
 </resources>
