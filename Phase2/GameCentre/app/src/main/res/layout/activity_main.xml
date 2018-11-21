@@ -39,16 +39,16 @@
         android:layout_marginTop="50dp" />
 
     <Button
-        android:id="@+id/SlidingUndo"
+        android:id="@+id/SlidingUndoButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
-        android:layout_toEndOf="@id/SlidingRedo"
+        android:layout_toEndOf="@id/SlidingRedoButton"
         android:onClick="undo"
         android:text="@string/undo_text" />
 
     <Button
-        android:id="@+id/SlidingRedo"
+        android:id="@+id/SlidingRedoButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
