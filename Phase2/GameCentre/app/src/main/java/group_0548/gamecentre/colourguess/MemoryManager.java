@@ -71,8 +71,7 @@ public class MemoryManager extends AbstractManager {
             ColourTile[][] newTiles = board2.getTiles();
             newTiles[row][col] = new ColourTile(6);
             board2.setTiles(newTiles);
-        }
-        if (board2.getTile(row, col).getId() == 6) {
+        } else if (board2.getTile(row, col).getId() == 6) {
             ColourTile[][] newTiles = board2.getTiles();
             newTiles[row][col] = new ColourTile(7);
             board2.setTiles(newTiles);
