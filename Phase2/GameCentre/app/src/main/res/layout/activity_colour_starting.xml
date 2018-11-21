@@ -18,7 +18,7 @@
         android:textAppearance="@style/TextAppearance.AppCompat.Body2" />
 
     <Button
-        android:id="@+id/ColourStartButton"
+        android:id="@+id/ColourNewButton"
         android:layout_width="120dp"
         android:layout_height="70dp"
         android:layout_centerHorizontal="true"
