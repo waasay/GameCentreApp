@@ -2,6 +2,7 @@ package group_0548.gamecentre;
 
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.HashMap;
 
 import group_0548.gamecentre.slidingtiles.BoardManager;
@@ -27,6 +28,12 @@ public class User implements Serializable {
      * any arbitrary game's type complexity
      */
     private HashMap<String, BoardManager> hashMapOfPastGames = new HashMap<>();
+
+    /**
+     * The hash map that maps a a user's game type to its highest score in that
+     * game type
+     */
+    private HashMap<String, Integer> hashMapOfHighScore = new HashMap<>();
 
     /**
      * A User with his corresponding username and password as input.
@@ -76,5 +83,45 @@ public class User implements Serializable {
      */
     public String getPassword() {
         return password;
+    }
+
+    /**
+     * Updating the score once the game is finished and
+     * the new score is better than the last score.
+     *
+     * @param gameType a game type's score to be updated
+     * @param order    the method for ordering the score
+     * @param score    the new score
+     */
+    public void updateScore(String gameType, String order, int score) {
+        if (this.hashMapOfHighScore.containsKey(gameType)) {
+            if (order.equals("Ascending")) {
+                if (this.hashMapOfHighScore.get(gameType) > score) {
+                    this.hashMapOfHighScore.put(gameType, score);
+                }
+            } else if (order.equals("Descending")) {
+                if (this.hashMapOfHighScore.get(gameType) < score) {
+                    this.hashMapOfHighScore.put(gameType, score);
+                }
+
+            } else {
+                this.hashMapOfHighScore.put(gameType, score);
+            }
+        }
+    }
+
+    public ArrayList<String> getUserScore() {
+        ArrayList<String> scoreContent = new ArrayList<>();
+        String name = "";
+        String score = "";
+        for (Object o : hashMapOfHighScore.keySet().toArray()) {
+            name = name + o.toString() + "\r\n";
+        }
+        for (Object o : hashMapOfHighScore.values().toArray()) {
+            score = score + o.toString() + "\r\n";
+        }
+        scoreContent.add(name);
+        scoreContent.add(score);
+        return scoreContent;
     }
 }

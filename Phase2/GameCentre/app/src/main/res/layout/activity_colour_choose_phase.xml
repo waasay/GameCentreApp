@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context="group_0548.gamecentre.slidingtiles.GameActivity">
+    tools:context="group_0548.gamecentre.colourguess.ColourGuessChoosePhaseActivity">
 
     <TextView
         android:id="@+id/ScoreText"

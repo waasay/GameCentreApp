@@ -43,7 +43,7 @@ public class LoginActivity extends AppCompatActivity {
      * else redirects to the sign up page
      */
     private void addSignInButtonListener() {
-        Button signIn = findViewById(R.id.SignIn);
+        Button signIn = findViewById(R.id.SignInButton);
         signIn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -65,7 +65,7 @@ public class LoginActivity extends AppCompatActivity {
      * Initialize the sign up button
      */
     private void addSignUpButtonListener() {
-        Button signUpButton = findViewById(R.id.SignUp);
+        Button signUpButton = findViewById(R.id.SignUpButton);
         signUpButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

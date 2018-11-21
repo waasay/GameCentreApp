@@ -29,18 +29,27 @@ public class StartingActivity extends AppCompatActivity {
      * The save file for scoreboard.
      */
     public static final String SCOREBOARD_SAVE_FILENAME = "sliding_scoreboard_save_file.ser";
+
     /**
      * The game type for current game.
      */
     public static final String GAME_TYPE = "Sliding Tiles";
+
+    /**
+     * The arrange method for current game.
+     */
+    public static final String ORDER = "Ascending";
+
     /**
      * A temporary save file.
      */
     public static final String TEMP_SAVE_FILENAME = "sliding_save_file_tmp.ser";
+
     /**
      * The scoreboard manager.
      */
     public static ScoreBoardManager scoreBoardManager = new ScoreBoardManager();
+
     /**
      * The board manager.
      */
@@ -120,7 +129,7 @@ public class StartingActivity extends AppCompatActivity {
         scoreButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                switchToScore();
+                switchToScoreBoard();
             }
         });
     }
@@ -153,7 +162,7 @@ public class StartingActivity extends AppCompatActivity {
     /**
      * Switch to the ChooseScoreBoardActivity view to see the leader board.
      */
-    private void switchToScore() {
+    private void switchToScoreBoard() {
         ChooseScoreBoardActivity.gameType = GAME_TYPE;
         Intent tep = new Intent(this, ChooseScoreBoardActivity.class);
         startActivity(tep);

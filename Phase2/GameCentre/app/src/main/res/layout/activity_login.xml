@@ -7,7 +7,7 @@
     tools:context="group_0548.gamecentre.LoginActivity">
 
     <Button
-        android:id="@+id/SignIn"
+        android:id="@+id/SignInButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignStart="@+id/Password"
@@ -16,7 +16,7 @@
         android:text="@string/sign_in" />
 
     <Button
-        android:id="@+id/SignUp"
+        android:id="@+id/SignUpButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignEnd="@id/Password"

@@ -206,9 +206,12 @@ public class GameActivity extends AppCompatActivity implements Observer {
      */
 
     public void saveToScoreBoard() {
+        String gameType = StartingActivity.GAME_TYPE + " " + boardManager.getComplexity();
         if (boardManager.puzzleSolved() && BoardManager.getMaxUndo() == 3) {
             StartingActivity.scoreBoardManager.updateScoreBoard(boardManager.getComplexity(),
                     UsersManager.getCurrentUser().getUserName(), boardManager.getBoard().getScore());
+            UsersManager.getCurrentUser().updateScore(gameType, StartingActivity.ORDER,
+                    boardManager.getBoard().getScore());
             saveToFile(StartingActivity.SCOREBOARD_SAVE_FILENAME, StartingActivity.scoreBoardManager);
         }
     }

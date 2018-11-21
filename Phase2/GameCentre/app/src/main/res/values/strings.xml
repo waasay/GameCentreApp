@@ -9,6 +9,8 @@
     <string name="start_text">New Game</string>
     <string name="load_text">Load Saved Game</string>
     <string name="save_text">Save Game</string>
+    <string name="user_text">User</string>
+    <string name="games_text">Games</string>
     <string name="scoreboard_text">Scoreboard</string>
     <string name="easy_text">Easy</string>
     <string name="medium_text">Medium</string>
@@ -19,7 +21,9 @@
     <string name="create_user">Create a New Account</string>
     <string name="create_user_button">Create Account</string>
     <string name="current_undo_text">Current allowed undo: \u0020</string>
-    <string name="scoreboard_note_text">(Only display games solved with 3 allowed undo.)</string>
+    <string name="scoreboard_note_text">(Only display the best score for each user that solved with
+        3 allowed undo.)</string>
+    <string name="user_scoreboard_note">(Only display the best score for each game.)</string>
     <string name="complex_text">Please choose the complexity of the game.</string>
     <string name="maximum_undo">Set maximum undo</string>
     <string name="set_text">Set</string>
