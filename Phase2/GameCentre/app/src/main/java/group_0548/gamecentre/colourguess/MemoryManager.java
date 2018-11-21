@@ -14,6 +14,7 @@ public class MemoryManager extends AbstractManager {
     private ColourBoard board1;
     private ColourBoard board2;
     private int id = 0;
+    private int score = 0;
     private final String gameType = "ColourGuess";
 
     MemoryManager(int rowNum, int colNum, String complex) {
@@ -64,8 +65,8 @@ public class MemoryManager extends AbstractManager {
     }
 
     public void select(int position) {
-        int row = position / board.getNumRow();
-        int col = position % board.getNumCol();
+        int row = position / board2.getNumRow();
+        int col = position % board2.getNumCol();
         if (board2.getTile(row, col).getId() == 7) {
             ColourTile[][] newTiles = board2.getTiles();
             newTiles[row][col] = new ColourTile(6);
@@ -76,6 +77,19 @@ public class MemoryManager extends AbstractManager {
             newTiles[row][col] = new ColourTile(7);
             board2.setTiles(newTiles);
         }
+        super.changeAndNotify();
+    }
+
+    /**
+     * Increase the score by num.
+     */
+    public void increaseScore(int num){
+        this.score += num;
+        super.changeAndNotify();
+    }
+
+    public int getScore() {
+        return this.score;
     }
 
     public void setId(int id) {
