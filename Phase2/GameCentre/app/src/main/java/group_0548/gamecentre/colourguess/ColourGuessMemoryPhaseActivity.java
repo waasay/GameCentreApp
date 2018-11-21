@@ -16,6 +16,8 @@ import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 import android.os.CountDownTimer;
 import android.widget.TextView;
+import android.widget.Toast;
+
 import java.util.concurrent.TimeUnit;
 import java.util.Locale;
 
@@ -31,6 +33,17 @@ public class ColourGuessMemoryPhaseActivity extends AppCompatActivity {
 
     private ColourGuessGestureDetectGridView gridView;
 
+    private Context myContext = this;
+
+    private static int columnWidth, columnHeight;
+
+    private ArrayList<Button> tileButtons;
+
+    /**
+     * The colour guess manager.
+     */
+    private MemoryManager memoryManager;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -43,9 +56,8 @@ public class ColourGuessMemoryPhaseActivity extends AppCompatActivity {
         countdownTimerText = findViewById(R.id.MemoryTime);
         startTimer(5000);
         gridView = findViewById(R.id.ColourGrid);
-        gridView.setNumColumns(boardManager.getBoard().getNumCol());
-        gridView.setBoardManager(boardManager);
-        boardManager.getBoard().addObserver(this);
+        gridView.setNumColumns(memoryManager.getBoard1().getNumCol());
+        gridView.setBoardManager(memoryManager);
         // Observer sets up desired dimensions as well as calls our display function
         gridView.getViewTreeObserver().addOnGlobalLayoutListener(
                 new ViewTreeObserver.OnGlobalLayoutListener() {
@@ -56,8 +68,8 @@ public class ColourGuessMemoryPhaseActivity extends AppCompatActivity {
                         int displayWidth = gridView.getMeasuredWidth();
                         int displayHeight = gridView.getMeasuredHeight();
 
-                        columnWidth = displayWidth / boardManager.getBoard().getNumCol();
-                        columnHeight = displayHeight / boardManager.getBoard().getNumRow();
+                        columnWidth = displayWidth / memoryManager.getBoard1().getNumCol();
+                        columnHeight = displayHeight / memoryManager.getBoard1().getNumRow();
 
                         display();
                     }
@@ -79,10 +91,10 @@ public class ColourGuessMemoryPhaseActivity extends AppCompatActivity {
      * @param context the context
      */
     private void createTileButtons(Context context) {
-        Board board = boardManager.getBoard();
+        ColourBoard board = memoryManager.getBoard1();
         tileButtons = new ArrayList<>();
-        for (int row = 0; row != boardManager.getBoard().getNumRow(); row++) {
-            for (int col = 0; col != boardManager.getBoard().getNumCol(); col++) {
+        for (int row = 0; row != memoryManager.getBoard1().getNumRow(); row++) {
+            for (int col = 0; col != memoryManager.getBoard1().getNumCol(); col++) {
                 Button tmp = new Button(context);
                 tmp.setBackgroundResource(board.getTile(row, col).getBackground());
                 this.tileButtons.add(tmp);
@@ -96,10 +108,10 @@ public class ColourGuessMemoryPhaseActivity extends AppCompatActivity {
     private void loadFromFile() {
 
         try {
-            InputStream inputStream = this.openFileInput(StartingActivity.TEMP_SAVE_FILENAME);
+            InputStream inputStream = this.openFileInput(ColourGuessStartingActivity.TEMP_SAVE_FILENAME);
             if (inputStream != null) {
                 ObjectInputStream input = new ObjectInputStream(inputStream);
-                boardManager = (BoardManager) input.readObject();
+                memoryManager = (MemoryManager) input.readObject();
                 inputStream.close();
             }
         } catch (FileNotFoundException e) {
@@ -139,7 +151,7 @@ public class ColourGuessMemoryPhaseActivity extends AppCompatActivity {
                 countdownTimerText.setText(hms);//set text
             }
             public void onFinish() {
-                countdownTimerText.setText("TIME'S UP!"); //On finish change timer text
+                Toast.makeText(myContext, "TIME'S UP!", Toast.LENGTH_SHORT).show();
                 switchToChoose();
             }
         }.start();

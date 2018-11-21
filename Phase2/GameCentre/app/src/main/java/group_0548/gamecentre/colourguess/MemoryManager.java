@@ -63,7 +63,9 @@ public class MemoryManager extends AbstractManager {
         return true;
     }
 
-    public void select(int row, int col) {
+    public void select(int position) {
+        int row = position / board.getNumRow();
+        int col = position % board.getNumCol();
         if (board2.getTile(row, col).getId() == 7) {
             ColourTile[][] newTiles = board2.getTiles();
             newTiles[row][col] = new ColourTile(6);

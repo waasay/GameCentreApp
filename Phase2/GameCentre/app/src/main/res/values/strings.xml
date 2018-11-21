@@ -27,6 +27,7 @@
     <string name="complex_text">Please choose the complexity of the game.</string>
     <string name="maximum_undo">Set maximum undo</string>
     <string name="set_text">Set</string>
+    <string name="confirm_text">Confirm</string>
     <string name="undo_note">The default allowed undo is 3 (if nothing is inputted).</string>
     <string name="username">Username</string>
     <string name="password">Password</string>

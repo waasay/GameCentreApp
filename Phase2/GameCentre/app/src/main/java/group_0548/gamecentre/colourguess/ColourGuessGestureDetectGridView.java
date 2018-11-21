@@ -24,7 +24,7 @@ public class ColourGuessGestureDetectGridView extends GridView {
     private boolean mFlingConfirmed = false;
     private float mTouchX;
     private float mTouchY;
-    private BoardManager boardManager;
+    private MemoryManager memoryManager;
 
     public ColourGuessGestureDetectGridView(Context context) {
         super(context);
@@ -101,8 +101,8 @@ public class ColourGuessGestureDetectGridView extends GridView {
         return gDetector.onTouchEvent(ev);
     }
 
-    public void setBoardManager(BoardManager boardManager) {
-        this.boardManager = boardManager;
-        mController.setBoardManager(boardManager);
+    public void setBoardManager(MemoryManager memoryManager) {
+        this.memoryManager = memoryManager;
+        mController.setBoardManager(memoryManager);
     }
 }

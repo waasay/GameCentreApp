@@ -14,15 +14,13 @@ import java.io.ObjectOutputStream;
 import java.util.Observable;
 
 import group_0548.gamecentre.R;
-import group_0548.gamecentre.slidingtiles.BoardManager;
-import group_0548.gamecentre.slidingtiles.GameActivity;
 
 public class ColourGuessChooseComplexityActivity extends AppCompatActivity {
 
     /**
-     * The board manager.
+     * The colour guess manager.
      */
-    private BoardManager boardManager;
+    private MemoryManager memoryManager;
 
     /**
      * Initialize the layout activity of Complete
@@ -32,7 +30,7 @@ public class ColourGuessChooseComplexityActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_choose_complexity);
+        setContentView(R.layout.activity_colour_choose_complexity);
         addEasyButtonListener();
         addMediumButtonListener();
         addHardButtonListener();
@@ -46,7 +44,7 @@ public class ColourGuessChooseComplexityActivity extends AppCompatActivity {
         threeButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                boardManager = new BoardManager(3, 3, "Easy", MAX_UNDO);
+                memoryManager = new MemoryManager(3, 3, "Easy");
                 switchToGame();
             }
         });
@@ -60,7 +58,7 @@ public class ColourGuessChooseComplexityActivity extends AppCompatActivity {
         fourButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                boardManager = new BoardManager(4, 4, "Medium", MAX_UNDO);
+                memoryManager = new MemoryManager(4, 4, "Medium");
                 switchToGame();
             }
         });
@@ -74,7 +72,7 @@ public class ColourGuessChooseComplexityActivity extends AppCompatActivity {
         fiveButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                boardManager = new BoardManager(5, 5, "Hard", MAX_UNDO);
+                memoryManager = new MemoryManager(5, 5, "Hard");
                 switchToGame();
             }
         });
@@ -84,7 +82,7 @@ public class ColourGuessChooseComplexityActivity extends AppCompatActivity {
      * Switch to the GameActivity view to play the game.
      */
     private void switchToGame() {
-        Intent tmp = new Intent(this, GameActivity.class);
+        Intent tmp = new Intent(this, ColourGuessMemoryPhaseActivity.class);
         saveToFile(ColourGuessStartingActivity.TEMP_SAVE_FILENAME);
         startActivity(tmp);
     }
@@ -98,7 +96,7 @@ public class ColourGuessChooseComplexityActivity extends AppCompatActivity {
         try {
             ObjectOutputStream outputStream = new ObjectOutputStream(
                     this.openFileOutput(fileName, MODE_PRIVATE));
-            outputStream.writeObject(boardManager);
+            outputStream.writeObject(memoryManager);
             outputStream.close();
         } catch (IOException e) {
             Log.e("Exception", "File write failed: " + e.toString());

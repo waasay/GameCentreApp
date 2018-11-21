@@ -24,4 +24,8 @@ public class ColourTile extends AbstractTile{
         return this.id;
     }
 
+    public int getBackground() {
+        return background;
+    }
+
 }

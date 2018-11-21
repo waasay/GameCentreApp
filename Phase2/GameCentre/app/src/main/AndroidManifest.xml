@@ -23,10 +23,10 @@
         <activity android:name=".SignUpActivity" />
         <activity android:name=".ChooseScoreBoardActivity" />
         <activity android:name=".ScoreBoardActivity" />
-        <!-- <activity android:name=".colourguess.ColourGuessStartingActivity" /> -->
-        <!-- <activity android:name=".colourguess.ColourGuessChooseComplexityActivity" /> -->
-        <!-- <activity android:name=".colourguess.ColourGuessMemoryPhaseActivity" /> -->
-        <!-- <activity android:name=".colourguess.ColourGuessChoosePhaseActivity" /> -->
+        <activity android:name=".colourguess.ColourGuessStartingActivity" />
+        <activity android:name=".colourguess.ColourGuessChooseComplexityActivity" />
+        <activity android:name=".colourguess.ColourGuessMemoryPhaseActivity" />
+        <activity android:name=".colourguess.ColourGuessChoosePhaseActivity" />
         <activity android:name=".UserScoreBoardActivity"></activity>
     </application>
 
