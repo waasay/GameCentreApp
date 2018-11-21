@@ -213,13 +213,11 @@ public class ColourGuessChoosePhaseActivity extends AppCompatActivity implements
 
     public void saveToScoreBoard() {
         String gameType = ColourGuessStartingActivity.GAME_TYPE + " " + memoryManager.getComplexity();
-        if (memoryManager.puzzleSolved()) {
-            ColourGuessStartingActivity.scoreBoardManager.updateScoreBoard(memoryManager.getComplexity(),
+        ColourGuessStartingActivity.scoreBoardManager.updateScoreBoard(memoryManager.getComplexity(),
                     UsersManager.getCurrentUser().getUserName(), memoryManager.getScore());
-            UsersManager.getCurrentUser().updateScore(gameType, ColourGuessStartingActivity.ORDER,
+        UsersManager.getCurrentUser().updateScore(gameType, ColourGuessStartingActivity.ORDER,
                     memoryManager.getScore());
-            saveToFile(ColourGuessStartingActivity.SCOREBOARD_SAVE_FILENAME, ColourGuessStartingActivity.scoreBoardManager);
-        }
+        saveToFile(ColourGuessStartingActivity.SCOREBOARD_SAVE_FILENAME, ColourGuessStartingActivity.scoreBoardManager);
     }
 
     public void switchToStart() {
