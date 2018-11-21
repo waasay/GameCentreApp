@@ -3,19 +3,16 @@ package group_0548.gamecentre.colourguess;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
-
-// change to memory versions
 import group_0548.gamecentre.AbstractManager;
-import group_0548.gamecentre.slidingtiles.Board;
-import group_0548.gamecentre.slidingtiles.Tile;
+
 
 public class MemoryManager extends AbstractManager {
 
     private int time = 60;
     private int rows;
     private int cols;
-    private Board board1;
-    private Board board2;
+    private ColourBoard board1;
+    private ColourBoard board2;
     private int id = 0;
     private final String gameType = "ColourGuess";
 
@@ -31,7 +28,7 @@ public class MemoryManager extends AbstractManager {
         final int numTiles = rows * cols;
 
         // creating a random board1
-        List<Tile> tiles1 = new ArrayList<>();
+        List<ColourTile> tiles1 = new ArrayList<>();
         Random randomGen = new Random();
         for (int tileNum = 0; tileNum != numTiles; tileNum++) {
             int randomInt = randomGen.nextInt(6);
@@ -40,7 +37,7 @@ public class MemoryManager extends AbstractManager {
         this.board1 = new ColourBoard(tiles1, rows, cols);
 
         // creating a white board2
-        List<Tile> tiles2 = new ArrayList<>();
+        List<ColourTile> tiles2 = new ArrayList<>();
         for (int tileNum = 0; tileNum != numTiles; tileNum++) {
             tiles2.add(new ColourTile(6));
         }
@@ -68,13 +65,13 @@ public class MemoryManager extends AbstractManager {
 
     public void select(int row, int col) {
         if (board2.getTile(row, col).getId() == 7) {
-            ColourTile[][] newTiles = (ColourTile)board2.getTiles();
-            newTiles[row][col] = ColourTile(6);
+            ColourTile[][] newTiles = board2.getTiles();
+            newTiles[row][col] = new ColourTile(6);
             board2.setTiles(newTiles);
         }
         if (board2.getTile(row, col).getId() == 6) {
-            ColourTile[][] newTiles = (ColourTile)board2.getTiles();
-            newTiles[row][col] = ColourTile(7);
+            ColourTile[][] newTiles = board2.getTiles();
+            newTiles[row][col] = new ColourTile(7);
             board2.setTiles(newTiles);
         }
     }
@@ -97,11 +94,11 @@ public class MemoryManager extends AbstractManager {
         return gameType;
     }
 
-    public Board getBoard1() {
+    public ColourBoard getBoard1() {
         return board1;
     }
 
-    public Board getBoard2() {
+    public ColourBoard getBoard2() {
         return board2;
     }
 
