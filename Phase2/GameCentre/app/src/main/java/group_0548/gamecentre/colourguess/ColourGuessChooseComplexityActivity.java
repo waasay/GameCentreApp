@@ -11,6 +11,7 @@ import android.widget.TextView;
 
 import java.io.IOException;
 import java.io.ObjectOutputStream;
+import java.util.Observable;
 
 import group_0548.gamecentre.R;
 import group_0548.gamecentre.slidingtiles.BoardManager;
@@ -41,7 +42,7 @@ public class ColourGuessChooseComplexityActivity extends AppCompatActivity {
      * Initialize the listener for the easy complexity button
      */
     private void addEasyButtonListener() {
-        Button threeButton = findViewById(R.id.EasyButton);
+        Button threeButton = findViewById(R.id.ColourEasyButton);
         threeButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -55,7 +56,7 @@ public class ColourGuessChooseComplexityActivity extends AppCompatActivity {
      * Initialize the listener for the medium complexity button
      */
     private void addMediumButtonListener() {
-        Button fourButton = findViewById(R.id.MediumButton);
+        Button fourButton = findViewById(R.id.ColourMediumButton);
         fourButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -69,7 +70,7 @@ public class ColourGuessChooseComplexityActivity extends AppCompatActivity {
      * Initialize the listener for the hard complexity button
      */
     private void addHardButtonListener() {
-        Button fiveButton = findViewById(R.id.HardButton);
+        Button fiveButton = findViewById(R.id.ColourHardButton);
         fiveButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
