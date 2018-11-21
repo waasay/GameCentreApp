@@ -18,14 +18,12 @@ public class ColourBoard extends AbstractBoard implements Iterable<ColourTile> {
 
     private ColourTile[][] tiles;
 
-    private int score;
 
     public ColourBoard(List<ColourTile> tilesList, int rowNum, int colNum) {
         tiles = new ColourTile[rowNum][colNum];
         Iterator<ColourTile> iterator = tilesList.iterator();
         this.numRow = rowNum;
         this.numCol = colNum;
-        this.score = 0;
         for (int row = 0; row != rowNum; row++) {
             for (int col = 0; col != colNum; col++) {
                 this.tiles[row][col] = iterator.next();
@@ -51,17 +49,7 @@ public class ColourBoard extends AbstractBoard implements Iterable<ColourTile> {
     }
 
 
-   public int getScore(){
-        return this.score;
-   }
 
-    /**
-     * Increase the score by num.
-     */
-    public void increaseScore(int num){
-        this.score += num;
-        super.changeAndNotify();
-    }
 
     /**
      * Get the number of rows.
