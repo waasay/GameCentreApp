@@ -15,6 +15,7 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 
 import group_0548.gamecentre.ChooseScoreBoardActivity;
+import group_0548.gamecentre.GameCentreActivity;
 import group_0548.gamecentre.R;
 import group_0548.gamecentre.ScoreBoardManager;
 
@@ -138,5 +139,12 @@ public class ColourGuessStartingActivity extends AppCompatActivity {
         } catch (IOException e) {
             Log.e("Exception", "File write failed: " + e.toString());
         }
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        startActivity(new Intent(this, GameCentreActivity.class));
+        finish();
     }
 }
