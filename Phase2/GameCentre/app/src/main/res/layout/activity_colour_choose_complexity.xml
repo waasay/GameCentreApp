@@ -7,7 +7,7 @@
     tools:context="group_0548.gamecentre.colourguess.ColourGuessChooseComplexityActivity">
 
     <TextView
-        android:id="@+id/SlidingComplexText"
+        android:id="@+id/ColourComplexText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
