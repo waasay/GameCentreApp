@@ -21,14 +21,14 @@
     <string name="create_user">Create a New Account</string>
     <string name="create_user_button">Create Account</string>
     <string name="current_undo_text">Current allowed undo: \u0020</string>
-    <string name="scoreboard_note_text">(Only display the best score for each user that solved with
-        3 allowed undo.)</string>
+    <string name="scoreboard_note_text">(Only display the best score for each user.)</string>
     <string name="user_scoreboard_note">(Only display the best score for each game.)</string>
     <string name="complex_text">Please choose the complexity of the game.</string>
     <string name="maximum_undo">Set maximum undo</string>
     <string name="set_text">Set</string>
     <string name="confirm_text">Confirm</string>
     <string name="undo_note">The default allowed undo is 3 (if nothing is inputted).</string>
+    <string name="undo_score_note">Only store the score for 3 allowed undo.</string>
     <string name="username">Username</string>
     <string name="password">Password</string>
     <string name="slidingtiles_text">Sliding Tiles</string>
