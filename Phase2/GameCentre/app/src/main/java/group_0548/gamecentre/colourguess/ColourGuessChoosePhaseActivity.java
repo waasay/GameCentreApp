@@ -50,8 +50,12 @@ public class ColourGuessChoosePhaseActivity extends AppCompatActivity implements
     private static int columnWidth, columnHeight;
 
     private ArrayList<Button> tileButtons;
-    String[] colours = {"Purple", "Blue", "Green", "Yellow",
-            "Orange", "Red"};
+
+    private String[] colours = {"Purple", "Blue", "Green", "Yellow", "Orange", "Red"};
+
+    private int startTime;
+
+    private int endTime;
 
     /**
      * The colour guess manager.
@@ -73,9 +77,11 @@ public class ColourGuessChoosePhaseActivity extends AppCompatActivity implements
         chooseColour = findViewById(R.id.ChooseColour);
         chooseColour.setText("Please choose all the " + colour + " tiles.");
 
-        // Add View to activity
+        // Add Timer to activity
         countdownTimerText = findViewById(R.id.ChooseTime);
-        startTimer(60000);
+        startTimer(memoryManager.getTime());
+        startTime= (int) System.currentTimeMillis();
+
         currentScore = findViewById(R.id.ColourGuessScore);
         currentScore.setText(String.valueOf(memoryManager.getScore()));
         gridView = findViewById(R.id.ChooseGrid);
@@ -214,6 +220,9 @@ public class ColourGuessChoosePhaseActivity extends AppCompatActivity implements
     }
 
     public void switchToMemory() {
+        endTime= (int) System.currentTimeMillis();
+        stopCountdown();
+        memoryManager.setTime(memoryManager.getTime() - endTime + startTime);
         if (memoryManager.puzzleSolved()) {
             memoryManager.increaseScore(1);
             memoryManager.reset();
