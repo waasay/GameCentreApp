@@ -1,7 +1,7 @@
 package group_0548.gamecentre;
 
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -29,7 +29,7 @@ public class UserScoreBoardActivity extends AppCompatActivity {
     }
 
     private void showScore() {
-        ArrayList<String> score = UsersManager.getCurrentUser().getUserScore();
+        ArrayList<String> score = LoginActivity.usersManager.getCurrentUser().getUserScore();
         gameText.setText(score.get(0));
         scoreText.setText(score.get(1));
     }
