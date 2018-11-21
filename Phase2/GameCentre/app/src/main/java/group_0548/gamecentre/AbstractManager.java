@@ -1,26 +1,22 @@
 package group_0548.gamecentre;
 
-public abstract class AbstractManager {
+import java.io.Serializable;
+
+public abstract class AbstractManager implements Serializable {
 
     /**
      * The board being managed.
      */
-    private AbstractBoard board;
-    /**
-     * The state object that represents the past MAX_UNDO number of states
-     * and the current states
-     */
-    private States pastStates = new States();
+    protected AbstractBoard board;
+
     /**
      * The complexity of the board.
      */
-    private String complexity;
+    protected String complexity;
 
 
 
     public abstract boolean puzzleSolved();
-
-    public abstract AbstractBoard getBoard();
 
     public abstract String getComplexity();
 
