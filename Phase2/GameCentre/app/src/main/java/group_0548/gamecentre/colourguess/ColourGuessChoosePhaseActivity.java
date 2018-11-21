@@ -1,11 +1,13 @@
 package group_0548.gamecentre.colourguess;
 
 import android.content.Context;
+import android.os.CountDownTimer;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.ViewTreeObserver;
 import android.widget.Button;
+import android.widget.TextView;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -13,11 +15,29 @@ import java.io.InputStream;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.ArrayList;
+import java.util.Locale;
+import java.util.Observable;
+import java.util.concurrent.TimeUnit;
 
 import group_0548.gamecentre.CustomAdapter;
 import group_0548.gamecentre.R;
+import group_0548.gamecentre.UsersManager;
+import group_0548.gamecentre.slidingtiles.Board;
+import group_0548.gamecentre.slidingtiles.StartingActivity;
 
 public class ColourGuessChoosePhaseActivity extends AppCompatActivity {
+
+    private ColourGuessGestureDetectGridView gridView;
+
+    /**
+     * The TextView for the score.
+     */
+    private TextView currentScore;
+
+    /**
+     * The TextView for the timer.
+     */
+    private TextView countdownTimerText;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,8 +48,10 @@ public class ColourGuessChoosePhaseActivity extends AppCompatActivity {
         createTileButtons(this);
 
         // Add View to activity
-        currentScore = findViewById(R.id.Score);
-        gridView = findViewById(R.id.grid);
+        countdownTimerText = findViewById(R.id.MemoryTime);
+        startTimer(60000);
+        currentScore = findViewById(R.id.ColourGuessScore);
+        gridView = findViewById(R.id.ChooseGrid);
         gridView.setNumColumns(boardManager.getBoard().getNumCol());
         gridView.setBoardManager(boardManager);
         boardManager.getBoard().addObserver(this);
@@ -60,14 +82,6 @@ public class ColourGuessChoosePhaseActivity extends AppCompatActivity {
         gridView.setAdapter(new CustomAdapter(tileButtons, columnWidth, columnHeight));
     }
 
-    /**
-     * Dispatch onPause() to fragments.
-     */
-    @Override
-    protected void onPause() {
-        super.onPause();
-        saveToFile(StartingActivity.TEMP_SAVE_FILENAME, boardManager);
-    }
 
     /**
      * Create the buttons for displaying the tiles.
@@ -84,6 +98,24 @@ public class ColourGuessChoosePhaseActivity extends AppCompatActivity {
                 this.tileButtons.add(tmp);
             }
         }
+    }
+
+    /**
+     * Update the backgrounds on the buttons to match the tiles and the current score.
+     */
+    private void updateTileButtons() {
+        Board board = boardManager.getBoard();
+        currentScore.setText(String.valueOf(board.getScore()));
+        saveToScoreBoard();
+        int nextPos = 0;
+        for (Button b : tileButtons) {
+            int row = nextPos / boardManager.getBoard().getNumRow();
+            int col = nextPos % boardManager.getBoard().getNumCol();
+            b.setBackgroundResource(board.getTile(row, col).getBackground());
+            nextPos++;
+        }
+        UsersManager.getCurrentUser().saveGame(StartingActivity.GAME_TYPE, boardManager);
+        saveToFile(StartingActivity.TEMP_SAVE_FILENAME, boardManager);
     }
 
     /**
@@ -122,6 +154,38 @@ public class ColourGuessChoosePhaseActivity extends AppCompatActivity {
             Log.e("Exception=", "File write failed: " + e.toString());
         }
     }
+
+    private void startTimer(int milliSecond) {
+        CountDownTimer countDownTimer = new CountDownTimer(milliSecond, 1000) {
+            public void onTick(long millisUntilFinished) {
+                long millis = millisUntilFinished;
+                //Convert milliseconds into hour,minute and seconds
+                String hms = String.format(Locale.US, "%02d:%02d",
+                        TimeUnit.MILLISECONDS.toMinutes(millis),
+                        TimeUnit.MILLISECONDS.toSeconds(millis) -
+                                TimeUnit.MINUTES.toSeconds(TimeUnit.MILLISECONDS.toMinutes(millis)));
+                countdownTimerText.setText(hms);//set text
+            }
+            public void onFinish() {
+                countdownTimerText.setText("TIME'S UP!"); //On finish change timer text
+                switchToChoose();
+            }
+        }.start();
+    }
+
+    /**
+     * Set up the background image for each button based on the master list
+     * of positions, and then call the adapter to set the view.
+     */
+    // Display
+    public void display() {
+        updateTileButtons();
+        gridView.setAdapter(new CustomAdapter(tileButtons, columnWidth, columnHeight));
+    }
+
+    @Override
+    public void update(Observable o, Object arg) {
+        display();
+    }
 }
 
-}

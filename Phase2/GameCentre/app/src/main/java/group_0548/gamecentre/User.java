@@ -2,6 +2,7 @@ package group_0548.gamecentre;
 
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.HashMap;
 
 import group_0548.gamecentre.slidingtiles.BoardManager;
@@ -107,5 +108,20 @@ public class User implements Serializable {
                 this.hashMapOfHighScore.put(gameType, score);
             }
         }
+    }
+
+    public ArrayList<String> getUserScore() {
+        ArrayList<String> scoreContent = new ArrayList<>();
+        String name = "";
+        String score = "";
+        for (Object o : hashMapOfHighScore.keySet().toArray()) {
+            name = name + o.toString() + "\r\n";
+        }
+        for (Object o : hashMapOfHighScore.values().toArray()) {
+            score = score + o.toString() + "\r\n";
+        }
+        scoreContent.add(name);
+        scoreContent.add(score);
+        return scoreContent;
     }
 }

@@ -79,17 +79,6 @@ public class ColourGuessStartingActivity extends AppCompatActivity {
         });
     }
 
-
-    /**
-     * Read the temporary board from disk.
-     */
-    @Override
-    protected void onResume() {
-        super.onResume();
-        loadFromFile(TEMP_SAVE_FILENAME);
-    }
-
-
     /**
      * Switch to the ScoreBoardActivity view to see the leader board.
      */

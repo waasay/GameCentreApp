@@ -31,12 +31,13 @@
     <string name="username">Username</string>
     <string name="password">Password</string>
     <string name="slidingtiles_text">Sliding Tiles</string>
+    <string name="colourguess_text">Colour Guess</string>
     <string name="choose_game">Please choose the game.</string>
     <string name="sign_in">Sign In</string>
     <string name="sign_up">Sign Up</string>
     <string name="show_scoreboard">Show the Scoreboard for:</string>
     <string name="time_left_text">Time left: \u0020</string>
-    <string name="timer">00:00:00</string>
+    <string name="timer">00:00</string>
     <string name="welcome_text_colourguess">Welcome To Colour Guess! \n A Memory Game where you
         must memorize all the colours and locate the indicated colours in correct position.</string>
 </resources>

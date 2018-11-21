@@ -65,7 +65,6 @@ public abstract class AbstractBoard extends Observable {
      */
     public abstract int getNumCol();
 
-    public abstract AbstractBoard copy();
 
     public void changeAndNotify(){
         setChanged();
