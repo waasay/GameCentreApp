@@ -103,10 +103,9 @@ public class User implements Serializable {
                 if (this.hashMapOfHighScore.get(gameType) < score) {
                     this.hashMapOfHighScore.put(gameType, score);
                 }
-
-            } else {
-                this.hashMapOfHighScore.put(gameType, score);
             }
+        } else {
+            this.hashMapOfHighScore.put(gameType, score);
         }
     }
 
