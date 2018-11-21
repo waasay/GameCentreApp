@@ -57,7 +57,7 @@ public class ColourGuessStartingActivity extends AppCompatActivity {
      * Activate the start button.
      */
     private void addStartButtonListener() {
-        Button startButton = findViewById(R.id.ColourStartButton);
+        Button startButton = findViewById(R.id.ColourNewButton);
         startButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
