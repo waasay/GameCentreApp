@@ -26,23 +26,23 @@ public class ColourGuessGestureDetectGridView extends GridView {
     private float mTouchY;
     private BoardManager boardManager;
 
-    public GestureDetectGridView(Context context) {
+    public ColourGuessGestureDetectGridView(Context context) {
         super(context);
         init(context);
     }
 
-    public GestureDetectGridView(Context context, AttributeSet attrs) {
+    public ColourGuessGestureDetectGridView(Context context, AttributeSet attrs) {
         super(context, attrs);
         init(context);
     }
 
-    public GestureDetectGridView(Context context, AttributeSet attrs, int defStyleAttr) {
+    public ColourGuessGestureDetectGridView(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
         init(context);
     }
 
     @TargetApi(Build.VERSION_CODES.LOLLIPOP) // API 21
-    public GestureDetectGridView(Context context, AttributeSet attrs, int defStyleAttr,
+    public ColourGuessGestureDetectGridView(Context context, AttributeSet attrs, int defStyleAttr,
                                  int defStyleRes) {
         super(context, attrs, defStyleAttr, defStyleRes);
         init(context);
