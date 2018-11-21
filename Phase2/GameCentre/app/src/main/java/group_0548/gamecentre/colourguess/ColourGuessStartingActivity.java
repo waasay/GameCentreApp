@@ -23,7 +23,7 @@ public class ColourGuessStartingActivity extends AppCompatActivity {
     /**
      * The save file for scoreboard.
      */
-    public static final String SCOREBOARD_SAVE_FILENAME = "scoreboard_colour_save_file.ser";
+    public static final String SCOREBOARD_SAVE_FILENAME = "colour_scoreboard_save_file.ser";
     /**
      * The game type for current game.
      */
@@ -36,15 +36,16 @@ public class ColourGuessStartingActivity extends AppCompatActivity {
      * The scoreboard manager.
      */
     public static ScoreBoardManager scoreBoardManager = new ScoreBoardManager();
+
     /**
-     * The board manager.
+     * The arrange method for current game.
      */
-    private BoardManager boardManager;
+    public static final String ORDER = "Descending";
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        saveToFile(TEMP_SAVE_FILENAME, boardManager);
 
         setContentView(R.layout.activity_colour_starting);
         addStartButtonListener();
@@ -56,7 +57,7 @@ public class ColourGuessStartingActivity extends AppCompatActivity {
      * Activate the start button.
      */
     private void addStartButtonListener() {
-        Button startButton = findViewById(R.id.StartButton);
+        Button startButton = findViewById(R.id.ColourStartButton);
         startButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -69,11 +70,11 @@ public class ColourGuessStartingActivity extends AppCompatActivity {
      * Activate the scoreboard button.
      */
     private void addScoreButtonListener() {
-        Button scoreButton = findViewById(R.id.ScoreButton);
+        Button scoreButton = findViewById(R.id.ColourScoreButton);
         scoreButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                switchToScore();
+                switchToScoreBoard();
             }
         });
     }
@@ -92,9 +93,9 @@ public class ColourGuessStartingActivity extends AppCompatActivity {
     /**
      * Switch to the ScoreBoardActivity view to see the leader board.
      */
-    private void switchToScore() {
+    private void switchToScoreBoard() {
         ChooseScoreBoardActivity.gameType = GAME_TYPE;
-        Intent tep = new Intent(this, ColourGuessScoreBoardActivity.class);
+        Intent tep = new Intent(this, ChooseScoreBoardActivity.class);
         startActivity(tep);
     }
 
