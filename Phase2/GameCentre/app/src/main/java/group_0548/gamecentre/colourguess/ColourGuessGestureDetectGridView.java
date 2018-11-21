@@ -101,8 +101,8 @@ public class ColourGuessGestureDetectGridView extends GridView {
         return gDetector.onTouchEvent(ev);
     }
 
-    public void setBoardManager(MemoryManager memoryManager) {
+    public void setMemoryManager(MemoryManager memoryManager) {
         this.memoryManager = memoryManager;
-        mController.setBoardManager(memoryManager);
+        mController.setMemoryManager(memoryManager);
     }
 }
