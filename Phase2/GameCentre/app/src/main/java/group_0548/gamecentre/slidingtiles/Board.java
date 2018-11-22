@@ -57,7 +57,7 @@ public class Board extends AbstractBoard implements Serializable, Iterable<Tile>
         }
     }
 
-    private Board(List<Tile> tilesBoard, int score, int rowNum, int colNum) {
+    public Board(List<Tile> tilesBoard, int score, int rowNum, int colNum) {
         this(tilesBoard, rowNum, colNum);
         this.score = score;
     }

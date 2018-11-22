@@ -60,8 +60,10 @@ public class BoardManager extends AbstractManager {
         teaching/modules04/java2/TilesSolvability.html?
         fbclid=IwAR2MrTIGbUXv5sUInqTUJVER28xMxqzcZ7B2mCLHqKdZ7gJ8l2AvU0lO43Q
         */
+
+
         while(!( (colNum % 2 != 0) && (inversions() % 2 == 0) )  ||
-                ( (colNum % 2 == 0) && ((blankOddRowBottom()) == (inversions() % 2 == 0)) )) {
+               ( (colNum % 2 == 0) && ((blankOddRowBottom()) == (inversions() % 2 == 0)) )) {
             Collections.shuffle(tiles);
             this.board = new Board(tiles, rowNum, colNum);
         }
@@ -100,7 +102,7 @@ public class BoardManager extends AbstractManager {
     public boolean puzzleSolved() {
         boolean solved = true;
         int id = 1;
-        for (Tile tile : board) {
+        for (Tile tile : this.getBoard()) {
             if (tile.getId() != id) {
                 solved = false;
             }
@@ -164,7 +166,7 @@ public class BoardManager extends AbstractManager {
      * @param position the tile to check
      * @return return a HashMap of the four surrounding tiles
      */
-    private HashMap<String, Tile> getSurroundTiles(int position) {
+    public HashMap<String, Tile> getSurroundTiles(int position) {
         int row = position / board.getNumRow();
         int col = position % board.getNumCol();
         HashMap<String, Tile> tileMap = new HashMap<>();
@@ -189,7 +191,6 @@ public class BoardManager extends AbstractManager {
     /**
      * Precondition: when calling this method
      * this.currUndo must be < MAX_UNDO - 1
-     * <p>
      * This state update this.pastStates accordingly
      * after undo is done prior to a touchmove, to
      * prevent undo is being abused
