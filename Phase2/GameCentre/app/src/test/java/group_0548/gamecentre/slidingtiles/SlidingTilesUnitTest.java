@@ -101,14 +101,15 @@ public class SlidingTilesUnitTest {
     }
 
     /**
-     * Test whether swapping the last two tiles works.
+     * Test getSurroundTile works, so could use it to test other methods.
      */
     @Test
-    public void testSwapLastTwo() {
+    public void testGetSurroundTiles(){
         this.setUpAndResetBoard();
-        this.solvedBoardManager.getBoard().swapTiles(3, 3, 3, 2);
-        assertEquals(16, this.solvedBoardManager.getBoard().getTile(3, 2).getId());
-        assertEquals(15, this.solvedBoardManager.getBoard().getTile(3, 3).getId());
+        Tile emptyTile = this.findEmptyTile(this.solvedBoardManager.getBoard());
+        int emptyPos = this.getPosition(emptyTile,this.mediumBoardManager.getBoard());
+        HashMap<String, Tile> around = this.mediumBoardManager.getSurroundTiles(emptyPos);
+
     }
 
     /**
@@ -132,7 +133,8 @@ public class SlidingTilesUnitTest {
     }
 
     /**
-     * Test score increase after touch move
+     * Test score increase after touch move and whether undo resets after a
+     * touch move is called
      */
     @Test
     public void testScoreIncreaseAndCurrentUndoResetAfterTouchMove() {
@@ -152,6 +154,171 @@ public class SlidingTilesUnitTest {
             assertEquals(oldScore + 1, this.mediumBoardManager.getBoard().getScore());
         }
         assertEquals(valueOfResetUndo, this.mediumBoardManager.getCurrUndo());
+    }
+
+    /**
+     * Test whether ableToUndo and ableToRedo actually works
+     */
+    @Test
+    public void testAbleToUndoAndAbleToRedo(){
+        this.setUpAndResetBoard();
+        assertEquals(false,this.solvedBoardManager.ableToUndo());
+        Tile emptyTile = this.findEmptyTile(this.mediumBoardManager.getBoard());
+        int emptyPos = this.getPosition(emptyTile,this.mediumBoardManager.getBoard());
+        HashMap<String, Tile> around = this.mediumBoardManager.getSurroundTiles(emptyPos);
+        if (around.get("above") != null) {
+            int abovePos = this.getPosition(around.get("above"), this.mediumBoardManager.getBoard());
+            this.mediumBoardManager.touchMove(abovePos);
+            assertEquals(true, this.mediumBoardManager.ableToUndo());
+        } else {
+            int belowPos = this.getPosition(around.get("below"), this.mediumBoardManager.getBoard());
+            this.mediumBoardManager.touchMove(belowPos);
+            assertEquals(true, this.mediumBoardManager.ableToUndo());
+        }
+        this.mediumBoardManager.undoToPastState();
+        assertEquals(true, this.mediumBoardManager.ableToRedo());
+        assertEquals(false,this.solvedBoardManager.ableToRedo());
+
+    }
+
+    @Test
+    /**
+     * Test whether updates states work when performing a series of moves
+     */
+
+    public void testUpdateStatesWith10Moves(){
+        this.setUpAndResetBoard();
+        for (int moves = 0; moves < 10; moves++){
+            Tile emptyTile = findEmptyTile(this.mediumBoardManager.getBoard());
+            int emptyPos = this.getPosition(emptyTile,this.mediumBoardManager.getBoard());
+            HashMap<String, Tile> around = this.mediumBoardManager.getSurroundTiles(emptyPos);
+            if (around.get("above") != null) {
+                int abovePos = this.getPosition(around.get("above"), this.mediumBoardManager.getBoard());
+                this.mediumBoardManager.touchMove(abovePos);
+            } else {
+                int belowPos = this.getPosition(around.get("below"), this.mediumBoardManager.getBoard());
+                this.mediumBoardManager.touchMove(belowPos);
+            }
+        }
+
+        assertEquals(4,this.mediumBoardManager.getPastStates().getBoards().size());
+
+    }
+
+    @Test
+    /**
+     * Test whether undo and redo actually points to the current board
+     * in pastStates
+     */
+    public void testUpdateToPastStateAndRedoToFutureState(){
+        this.setUpAndResetBoard();
+        Tile emptyTile = findEmptyTile(this.mediumBoardManager.getBoard());
+        int emptyPos = this.getPosition(emptyTile,this.mediumBoardManager.getBoard());
+        HashMap<String, Tile> around = this.mediumBoardManager.getSurroundTiles(emptyPos);
+        if (around.get("above") != null) {
+            int abovePos = this.getPosition(around.get("above"), this.mediumBoardManager.getBoard());
+            this.mediumBoardManager.touchMove(abovePos);
+        } else {
+            int belowPos = this.getPosition(around.get("below"), this.mediumBoardManager.getBoard());
+            this.mediumBoardManager.touchMove(belowPos);
+        }
+        emptyTile = findEmptyTile(this.mediumBoardManager.getBoard());
+        emptyPos = this.getPosition(emptyTile,this.mediumBoardManager.getBoard());
+        around = this.mediumBoardManager.getSurroundTiles(emptyPos);
+        if (around.get("above") != null) {
+            int abovePos = this.getPosition(around.get("above"), this.mediumBoardManager.getBoard());
+            this.mediumBoardManager.touchMove(abovePos);
+        } else {
+            int belowPos = this.getPosition(around.get("below"), this.mediumBoardManager.getBoard());
+            this.mediumBoardManager.touchMove(belowPos);
+        }
+        int currUndo = this.mediumBoardManager.getCurrUndo();
+        this.mediumBoardManager.undoToPastState();
+
+        assertEquals(currUndo-1,this.mediumBoardManager.getCurrUndo());
+
+        this.mediumBoardManager.undoToPastState();
+        currUndo = this.mediumBoardManager.getCurrUndo();
+        this.mediumBoardManager.redoToFutureState();
+        assertEquals(currUndo+1, this.mediumBoardManager.getCurrUndo());
+    }
+
+    @Test
+    /**
+     * Test getBackground and compareTo in Tile
+     */
+    public void testGetBackgroundAndCompareTo(){
+        this.setUpAndResetBoard();
+        Tile emptyTile = findEmptyTile(this.solvedBoardManager.getBoard());
+        Tile toCompare = this.solvedBoardManager.getBoard().getTile(0,0);
+        assertEquals(false, emptyTile.getBackground() == toCompare.getBackground());
+        assertEquals(-15, emptyTile.compareTo(toCompare));
+    }
+
+    @Test
+    /**
+     * Test whether UpdateStatesAfterUndo works
+     * (Note this will be a long test method as the code to setup the board to test
+     * for different scenarios to test is long)
+     */
+    public void testUpdateStatesAfterUndo(){
+        this.setUpAndResetBoard();
+        for (int moves = 0; moves < 3; moves++){
+            Tile emptyTile = findEmptyTile(this.mediumBoardManager.getBoard());
+            int emptyPos = this.getPosition(emptyTile,this.mediumBoardManager.getBoard());
+            HashMap<String, Tile> around = this.mediumBoardManager.getSurroundTiles(emptyPos);
+            if (around.get("above") != null) {
+                int abovePos = this.getPosition(around.get("above"), this.mediumBoardManager.getBoard());
+                this.mediumBoardManager.touchMove(abovePos);
+            } else {
+                int belowPos = this.getPosition(around.get("below"), this.mediumBoardManager.getBoard());
+                this.mediumBoardManager.touchMove(belowPos);
+            }
+        }
+        this.mediumBoardManager.undoToPastState();
+        this.mediumBoardManager.undoToPastState();
+        this.mediumBoardManager.undoToPastState();
+        Tile emptyTile = this.findEmptyTile(this.mediumBoardManager.getBoard());
+        int emptyPos = this.getPosition(emptyTile,this.mediumBoardManager.getBoard());
+        HashMap<String,Tile> around = this.mediumBoardManager.getSurroundTiles(emptyPos);
+        if (around.get("above") != null) {
+            int abovePos = this.getPosition(around.get("above"), this.mediumBoardManager.getBoard());
+            this.mediumBoardManager.touchMove(abovePos);
+        } else {
+            int belowPos = this.getPosition(around.get("below"), this.mediumBoardManager.getBoard());
+            this.mediumBoardManager.touchMove(belowPos);
+        }
+
+        assertEquals(2,this.mediumBoardManager.getPastStates().getBoards().size());
+
+
+        this.setUpAndResetBoard();
+        for (int moves = 0; moves < 3; moves++){
+            emptyTile = findEmptyTile(this.mediumBoardManager.getBoard());
+            emptyPos = this.getPosition(emptyTile,this.mediumBoardManager.getBoard());
+            around = this.mediumBoardManager.getSurroundTiles(emptyPos);
+            if (around.get("above") != null) {
+                int abovePos = this.getPosition(around.get("above"), this.mediumBoardManager.getBoard());
+                this.mediumBoardManager.touchMove(abovePos);
+            } else {
+                int belowPos = this.getPosition(around.get("below"), this.mediumBoardManager.getBoard());
+                this.mediumBoardManager.touchMove(belowPos);
+            }
+        }
+
+        this.mediumBoardManager.undoToPastState();
+        this.mediumBoardManager.undoToPastState();
+        emptyTile = this.findEmptyTile(this.mediumBoardManager.getBoard());
+        emptyPos = this.getPosition(emptyTile,this.mediumBoardManager.getBoard());
+        around = this.mediumBoardManager.getSurroundTiles(emptyPos);
+        if (around.get("above") != null) {
+            int abovePos = this.getPosition(around.get("above"), this.mediumBoardManager.getBoard());
+            this.mediumBoardManager.touchMove(abovePos);
+        } else {
+            int belowPos = this.getPosition(around.get("below"), this.mediumBoardManager.getBoard());
+            this.mediumBoardManager.touchMove(belowPos);
+        }
+        assertEquals(3,this.mediumBoardManager.getPastStates().getBoards().size());
     }
 
 
