@@ -7,7 +7,6 @@ import java.util.HashMap;
 import java.util.List;
 
 import group_0548.gamecentre.AbstractManager;
-import group_0548.gamecentre.States;
 
 /**
  * Manage a board, including swapping tiles, checking for a win, and managing taps.
@@ -26,7 +25,7 @@ public class BoardManager extends AbstractManager {
      * The state object that represents the past MAX_UNDO number of states
      * and the current states
      */
-    private States pastStates = new States();
+    private SlidingTileStates pastStates = new SlidingTileStates();
     /**
      * The current number of undo left, it is define as MAX_UNDO - 1
      */
@@ -62,25 +61,15 @@ public class BoardManager extends AbstractManager {
         */
 
 
-        while(!( (colNum % 2 != 0) && (inversions() % 2 == 0) )  ||
-               ( (colNum % 2 == 0) && ((blankOddRowBottom()) == (inversions() % 2 == 0)) )) {
-            Collections.shuffle(tiles);
-            this.board = new Board(tiles, rowNum, colNum);
-        }
+        //while(!( (colNum % 2 != 0) && (inversions() % 2 == 0) )  ||
+          //     ( (colNum % 2 == 0) && ((blankOddRowBottom()) == (inversions() % 2 == 0)) )) {
+            //Collections.shuffle(tiles);
+            //this.board = new Board(tiles, rowNum, colNum);
+        //}
 
         MAX_UNDO = maxUndo;
         this.currUndo = MAX_UNDO - 1;
         pastStates.updateStates(this.getBoard().copy(), MAX_UNDO);
-    }
-
-    /**
-     * Getter for the maximum undo
-     *
-     * @return the maximum undo
-     */
-
-    static int getMaxUndo() {
-        return MAX_UNDO;
     }
 
     /**
@@ -166,7 +155,7 @@ public class BoardManager extends AbstractManager {
      * @param position the tile to check
      * @return return a HashMap of the four surrounding tiles
      */
-    public HashMap<String, Tile> getSurroundTiles(int position) {
+    HashMap<String, Tile> getSurroundTiles(int position) {
         int row = position / board.getNumRow();
         int col = position % board.getNumCol();
         HashMap<String, Tile> tileMap = new HashMap<>();
@@ -261,15 +250,24 @@ public class BoardManager extends AbstractManager {
      *
      * @return the current undo
      */
-    private int getCurrUndo() {
+    public int getCurrUndo() {
         return this.currUndo;
+    }
+
+    /**
+     * Getter for getting the MAX_UNDO
+     *
+     * @return the maximum number of undo
+     */
+    public static int getMaxUndo(){
+        return MAX_UNDO;
     }
 
     /**
      * Reset undo to MAX_UNDO - 1
      */
 
-    private void resetCurrUndo() {
+    public void resetCurrUndo() {
         this.currUndo = MAX_UNDO - 1;
     }
 
@@ -321,5 +319,9 @@ public class BoardManager extends AbstractManager {
 
     public String getGameType(){
         return this.gameType;
+    }
+
+    public SlidingTileStates getPastStates() {
+        return pastStates;
     }
 }
