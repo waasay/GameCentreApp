@@ -11,13 +11,17 @@ import java.util.List;
 import static org.junit.Assert.*;
 
 /**
- * Example local unit test, which will execute on the development machine (host).
- *
- * @see <a href="http://d.android.com/tools/testing">Testing documentation</a>
+ * Unit test for the sliding tiles game
  */
 public class SlidingTilesUnitTest {
-    /** The board manager for testing. */
-    private BoardManager mediumBoardManager ;
+    /**
+     * The medium complexity board manager for testing
+     */
+    private BoardManager mediumBoardManager;
+    /**
+     * The medium complexity board manger for testing, the board for this
+     * one however is solved
+     */
     private BoardManager solvedBoardManager;
 
     /**
@@ -243,10 +247,11 @@ public class SlidingTilesUnitTest {
         assertEquals(currUndo+1, this.mediumBoardManager.getCurrUndo());
     }
 
-    @Test
+
     /**
      * Test getBackground and compareTo in Tile
      */
+    @Test
     public void testGetBackgroundAndCompareTo(){
         this.setUpAndResetBoard();
         Tile emptyTile = findEmptyTile(this.solvedBoardManager.getBoard());
