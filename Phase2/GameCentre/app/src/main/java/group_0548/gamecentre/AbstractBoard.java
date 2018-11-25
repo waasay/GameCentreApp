@@ -2,14 +2,13 @@ package group_0548.gamecentre;
 
 import java.io.Serializable;
 import java.util.Arrays;
-import java.util.Observable;
-import java.util.Iterator;
-import android.support.annotation.NonNull;
+
+
 /**
  * Abstract class for other board objects
  */
 
-public abstract class AbstractBoard extends Observable implements Serializable {
+public abstract class AbstractBoard implements Serializable {
     /**
      * The number of rows.
      */
@@ -49,11 +48,6 @@ public abstract class AbstractBoard extends Observable implements Serializable {
      */
     public abstract int getNumCol();
 
-
-    public void changeAndNotify(){
-        setChanged();
-        notifyObservers();
-    }
 
     public String toString(){
         return "Board{" +
