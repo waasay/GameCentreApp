@@ -5,11 +5,12 @@ import java.util.HashMap;
 import java.util.Random;
 
 import group_0548.gamecentre.AbstractManager;
+import group_0548.gamecentre.Undoable;
 import group_0548.gamecentre.slidingtiles.Board;
 import group_0548.gamecentre.slidingtiles.SlidingTileStates;
 
 
-public class TwentyManager extends AbstractManager {
+public class TwentyManager extends AbstractManager implements Undoable {
     /**
      * Max number of undos
      */
@@ -327,7 +328,7 @@ public class TwentyManager extends AbstractManager {
      * prevent undo is being abused
      */
 
-    private void updateStateAfterUndo() {
+    public void updateStateAfterUndo() {
         if (this.currUndo < 0) {
             this.pastStates.getBoards().clear();
         } else {
@@ -344,7 +345,7 @@ public class TwentyManager extends AbstractManager {
     /**
      * Checking whether the game can undo to last state
      */
-    boolean ableToUndo() {
+    public boolean ableToUndo() {
         if (this.pastStates.getBoards().size() < this.maxUndo + 1) {
             this.currUndo = this.pastStates.getBoards().size() - 2;
         }
@@ -360,7 +361,7 @@ public class TwentyManager extends AbstractManager {
      * Undo to last state
      */
 
-    void undoToPastState() {
+    public void undoToPastState() {
         TwentyBoard temp;
         temp = this.pastStates.getBoards().get(this.currUndo);
         this.currUndo -= 1;
@@ -372,14 +373,14 @@ public class TwentyManager extends AbstractManager {
     /**
      * Checking whether the game can redo to the next state
      */
-    boolean ableToRedo() {
+    public boolean ableToRedo() {
         return (this.getCurrUndo() + 1 < this.pastStates.getBoards().size() - 1);
     }
 
     /**
      * Redo to the next state
      */
-    void redoToFutureState() {
+    public void redoToFutureState() {
         TwentyBoard temp;
         this.currUndo += 1;
         int currRedo;

@@ -7,11 +7,12 @@ import java.util.HashMap;
 import java.util.List;
 
 import group_0548.gamecentre.AbstractManager;
+import group_0548.gamecentre.Undoable;
 
 /**
  * Manage a board, including swapping tiles, checking for a win, and managing taps.
  */
-public class BoardManager extends AbstractManager {
+public class BoardManager extends AbstractManager implements Undoable {
 
     /**
      * Max number of undos
@@ -186,7 +187,7 @@ public class BoardManager extends AbstractManager {
      * prevent undo is being abused
      */
 
-    private void updateStateAfterUndo() {
+    public void updateStateAfterUndo() {
         if (this.currUndo < 0) {
             this.pastStates.getBoards().clear();
         } else {
@@ -203,7 +204,7 @@ public class BoardManager extends AbstractManager {
     /**
      * Checking whether the game can undo to last state
      */
-    boolean ableToUndo() {
+    public boolean ableToUndo() {
         if (this.pastStates.getBoards().size() < MAX_UNDO + 1) {
             this.currUndo = this.pastStates.getBoards().size() - 2;
         }
@@ -219,7 +220,7 @@ public class BoardManager extends AbstractManager {
      * Undo to last state
      */
 
-    void undoToPastState() {
+    public void undoToPastState() {
         Board temp;
         temp = this.pastStates.getBoards().get(this.currUndo);
         this.currUndo -= 1;
@@ -231,14 +232,14 @@ public class BoardManager extends AbstractManager {
     /**
      * Checking whether the game can redo to the next state
      */
-    boolean ableToRedo() {
+    public boolean ableToRedo() {
         return (this.getCurrUndo() + 1 < this.pastStates.getBoards().size() - 1);
     }
 
     /**
      * Redo to the next state
      */
-    void redoToFutureState() {
+    public void redoToFutureState() {
         Board temp;
         this.currUndo += 1;
         int currRedo;
