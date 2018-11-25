@@ -61,8 +61,8 @@ public class BoardManager extends AbstractManager {
         */
 
 
-        while(!( (colNum % 2 != 0) && (inversions() % 2 == 0) )  ||
-               ( (colNum % 2 == 0) && ((blankOddRowBottom()) == (inversions() % 2 == 0)) )) {
+        while(!( ((colNum % 2 != 0) && (inversions() % 2 == 0))  ||
+               ((colNum % 2 == 0) && ((blankOddRowBottom()) == (inversions() % 2 == 0))) )) {
             Collections.shuffle(tiles);
             this.board = new Board(tiles, rowNum, colNum);
         }
