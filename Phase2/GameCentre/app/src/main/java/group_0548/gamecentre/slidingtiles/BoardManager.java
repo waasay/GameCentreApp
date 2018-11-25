@@ -146,6 +146,7 @@ public class BoardManager extends AbstractManager {
 
         pastStates.updateStates(this.getBoard().copy(), MAX_UNDO);
         this.resetCurrUndo();
+        super.changeAndNotify();
 
     }
 
@@ -223,6 +224,7 @@ public class BoardManager extends AbstractManager {
         temp = this.pastStates.getBoards().get(this.currUndo);
         this.currUndo -= 1;
         this.board.replaceBoard(temp);
+        super.changeAndNotify();
 
     }
 
@@ -243,6 +245,7 @@ public class BoardManager extends AbstractManager {
         currRedo = this.currUndo + 1;
         temp = this.pastStates.getBoards().get(currRedo);
         this.board.replaceBoard(temp);
+        super.changeAndNotify();
     }
 
     /**

@@ -3,7 +3,7 @@ package group_0548.gamecentre.slidingtiles;
 import java.io.Serializable;
 import java.util.ArrayList;
 
-import group_0548.gamecentre.slidingtiles.Board;
+
 
 /**
  * The states of the boards

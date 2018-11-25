@@ -7,10 +7,9 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Observable;
 
 import group_0548.gamecentre.AbstractBoard;
-import group_0548.gamecentre.AbstractTile;
+
 
 /**
  * The sliding tiles board.
@@ -94,7 +93,7 @@ public class Board extends AbstractBoard implements Serializable, Iterable<Tile>
         Tile temp = this.tiles[row1][col1];
         this.tiles[row1][col1] = this.tiles[row2][col2];
         this.tiles[row2][col2] = temp;
-        super.changeAndNotify();
+
     }
 
     /**
@@ -122,7 +121,6 @@ public class Board extends AbstractBoard implements Serializable, Iterable<Tile>
     void replaceBoard(Board newBoard) {
         Tile[][] newTiles = newBoard.getTiles();
         this.setTiles(newTiles);
-        super.changeAndNotify();
 
     }
 
@@ -154,7 +152,6 @@ public class Board extends AbstractBoard implements Serializable, Iterable<Tile>
      */
     public void increaseScore(int num) {
         this.score += num;
-        super.changeAndNotify();
     }
 
     /**
