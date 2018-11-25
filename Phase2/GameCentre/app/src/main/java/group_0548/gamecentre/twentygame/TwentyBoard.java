@@ -2,7 +2,9 @@ package group_0548.gamecentre.twentygame;
 
 import android.support.annotation.NonNull;
 
+import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Random;
 
 import group_0548.gamecentre.AbstractBoard;
@@ -10,12 +12,14 @@ import group_0548.gamecentre.AbstractBoard;
 
 public class TwentyBoard extends AbstractBoard implements Iterable<TwentyTile> {
 
+
+    private int score;
+
     private int numRow;
 
     private int numCol;
 
     private TwentyTile[][] tiles;
-
 
     public TwentyBoard(int rowNum, int colNum) {
 
@@ -31,7 +35,7 @@ public class TwentyBoard extends AbstractBoard implements Iterable<TwentyTile> {
         int randomCol1 = randomGen.nextInt(colNum);
         int randomCol2 = randomGen.nextInt(colNum);
 
-        while (randomRow1 == randomRow2 && randomCol1 == randomCol2){
+        while (randomRow1 == randomRow2 && randomCol1 == randomCol2) {
             randomRow1 = randomGen.nextInt(rowNum);
             randomRow2 = randomGen.nextInt(rowNum);
             randomCol1 = randomGen.nextInt(colNum);
@@ -52,8 +56,26 @@ public class TwentyBoard extends AbstractBoard implements Iterable<TwentyTile> {
 
         tiles[randomRow1][randomCol1] = randomTile1;
         tiles[randomRow2][randomCol2] = randomTile2;
+        this.score = 0;
 
+    }
+
+    public TwentyBoard(List<TwentyTile> tileSet, int score, int numRow, int numCol){
+        tiles = new TwentyTile[numRow][numCol];
+        Iterator<TwentyTile> iterator = tileSet.iterator();
+        this.numRow = numRow;
+        this.numCol = numCol;
+        this.score = 0;
+        for (int row = 0; row != numRow; row++) {
+            for (int col = 0; col != numCol; col++) {
+                this.tiles[row][col] = iterator.next();
+            }
         }
+
+
+
+    }
+
 
 
     public int numTiles(){
@@ -149,5 +171,24 @@ public class TwentyBoard extends AbstractBoard implements Iterable<TwentyTile> {
         }
     }
 
+    public int getScore(){
+        return this.score;
+    }
 
+    TwentyBoard copy() {
+        List<TwentyTile> newTiles = new ArrayList<>();
+        for (TwentyTile t : this) {
+            newTiles.add(t);
+        }
+        return new TwentyBoard(newTiles, this.getScore(), numRow, numCol);
+    }
+
+    void updateScore(int adjustment){
+        this.score += adjustment;
+    }
+
+    void replaceBoard(TwentyBoard newBoard) {
+        TwentyTile[][] newTiles = newBoard.getTiles();
+        this.setTiles(newTiles);
+    }
 }

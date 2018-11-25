@@ -13,16 +13,16 @@ public class TwentyManager extends AbstractManager {
     /**
      * Max number of undos
      */
-    private static int MAX_UNDO;
+    private final int maxUndo;
     /**
      * The board being managed.
      */
     private TwentyBoard board;
     /**
-     * The state object that represents the past MAX_UNDO number of states
+     * The state object that represents the past maxUndo number of states
      * and the current states
      */
-    //private TwentyStates pastStates = new SlidingTileStates();
+    private TwentyStates pastStates = new TwentyStates();
     /**
      * The current number of undo left, it is define as MAX_UNDO - 1
      */
@@ -37,8 +37,8 @@ public class TwentyManager extends AbstractManager {
      */
     private final String gameType = "2048";
 
-    private int rowNum = 0;
-    private int colNum = 0;
+    private int rowNum;
+    private int colNum;
 
     /**
      * Manage a new shuffled board.
@@ -49,9 +49,9 @@ public class TwentyManager extends AbstractManager {
         this.rowNum = rowNum;
         this.colNum = colNum;
 
-        MAX_UNDO = maxUndo;
-        this.currUndo = MAX_UNDO - 1;
-        //pastStates.updateStates(this.getBoard().copy(), MAX_UNDO);
+        this.maxUndo = maxUndo;
+        this.currUndo = this.maxUndo - 1;
+        pastStates.updateStates(this.getBoard().copy(), this.maxUndo);
     }
 
     /**
@@ -195,6 +195,8 @@ public class TwentyManager extends AbstractManager {
         }
         this.board.setTiles(newTiles);
         autoGen();
+        this.getBoard().updateScore(1);
+        super.changeAndNotify();
 
     }
 
@@ -229,6 +231,8 @@ public class TwentyManager extends AbstractManager {
         }
         this.board.setTiles(newTiles);
         autoGen();
+        this.getBoard().updateScore(1);
+        super.changeAndNotify();
     }
 
     public void swipeUp(TwentyTile[][] tiles) {
@@ -258,6 +262,8 @@ public class TwentyManager extends AbstractManager {
 
         this.board.setTiles(newTiles);
         autoGen();
+        this.getBoard().updateScore(1);
+        super.changeAndNotify();
     }
     public void swipeDown(TwentyTile[][] tiles) {
 
@@ -305,6 +311,8 @@ public class TwentyManager extends AbstractManager {
 
         this.board.setTiles(newTiles);
         autoGen();
+        this.getBoard().updateScore(1);
+        super.changeAndNotify();
     }
 
     public String getComplexity() {
@@ -319,25 +327,25 @@ public class TwentyManager extends AbstractManager {
      * prevent undo is being abused
      */
 
-    /*private void updateStateAfterUndo() {
+    private void updateStateAfterUndo() {
         if (this.currUndo < 0) {
             this.pastStates.getBoards().clear();
         } else {
             int i;
-            Board temp;
+            TwentyBoard temp;
             temp = this.pastStates.getBoards().get(this.currUndo);
             i = this.pastStates.getBoards().indexOf(temp);
             this.pastStates.keepStatesUpTill(i);
         }
-        this.pastStates.updateStates(this.getBoard().copy(), MAX_UNDO);
+        this.pastStates.updateStates(this.getBoard().copy(), this.maxUndo);
 
-    }*/
+    }
 
     /**
      * Checking whether the game can undo to last state
      */
-    /*boolean ableToUndo() {
-        if (this.pastStates.getBoards().size() < MAX_UNDO + 1) {
+    boolean ableToUndo() {
+        if (this.pastStates.getBoards().size() < this.maxUndo + 1) {
             this.currUndo = this.pastStates.getBoards().size() - 2;
         }
 
@@ -346,38 +354,40 @@ public class TwentyManager extends AbstractManager {
         }
         return (this.currUndo >= 0);
 
-    }*/
+    }
 
     /**
      * Undo to last state
      */
-/*
+
     void undoToPastState() {
-        Board temp;
+        TwentyBoard temp;
         temp = this.pastStates.getBoards().get(this.currUndo);
         this.currUndo -= 1;
         this.board.replaceBoard(temp);
+        super.changeAndNotify();
 
-    }*/
+    }
 
     /**
      * Checking whether the game can redo to the next state
      */
-    /*boolean ableToRedo() {
+    boolean ableToRedo() {
         return (this.getCurrUndo() + 1 < this.pastStates.getBoards().size() - 1);
-    }*/
+    }
 
     /**
      * Redo to the next state
      */
-    /*void redoToFutureState() {
-        Board temp;
+    void redoToFutureState() {
+        TwentyBoard temp;
         this.currUndo += 1;
         int currRedo;
         currRedo = this.currUndo + 1;
         temp = this.pastStates.getBoards().get(currRedo);
         this.board.replaceBoard(temp);
-    }*/
+        super.changeAndNotify();
+    }
 
     /**
      * Getter for the current undo
@@ -389,20 +399,20 @@ public class TwentyManager extends AbstractManager {
     }
 
     /**
-     * Getter for getting the MAX_UNDO
+     * Getter for maxUndo
      *
      * @return the maximum number of undo
      */
-    public static int getMaxUndo(){
-        return MAX_UNDO;
+    public int getMaxUndo(){
+        return this.maxUndo;
     }
 
     /**
-     * Reset undo to MAX_UNDO - 1
+     * Reset currUndo to maxUndo - 1
      */
 
     public void resetCurrUndo() {
-        this.currUndo = MAX_UNDO - 1;
+        this.currUndo = this.maxUndo - 1;
     }
 
 
@@ -411,9 +421,9 @@ public class TwentyManager extends AbstractManager {
         return this.gameType;
     }
 
-   /* public TwentyStates getPastStates() {
+    public TwentyStates getPastStates() {
         return pastStates;
-    }*/
+    }
 }
 
 
