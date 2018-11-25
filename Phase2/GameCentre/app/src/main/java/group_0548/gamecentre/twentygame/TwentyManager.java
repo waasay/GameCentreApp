@@ -2,6 +2,7 @@ package group_0548.gamecentre.twentygame;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Random;
 
 import group_0548.gamecentre.AbstractManager;
 import group_0548.gamecentre.slidingtiles.Board;
@@ -137,6 +138,41 @@ public class TwentyManager extends AbstractManager {
         return newRows;
     }
 
+    // Randomly changes a background tile of this TwentyBoard to a 2 or 4 tile, if a background tile
+    // exists
+    private void autoGen() {
+        // ArrayList of all [row,col] pairs of background tiles.
+        ArrayList<int[]> rowColBackgrounds = new ArrayList<>();
+
+        for (int row = 0; row < this.board.getNumRow(); row++) {
+            for (int col = 0; col < this.board.getNumCol(); col++) {
+                if (this.board.getTiles()[row][col].getId() == 11) {
+                    int[] rowCol = {row, col};
+                    rowColBackgrounds.add(rowCol);
+                }
+            }
+        }
+        // if there are any background tiles.
+        if (rowColBackgrounds.size() > 0) {
+            // choose random background tile
+            Random randomGen = new Random();
+            int randomIndex = randomGen.nextInt(rowColBackgrounds.size());
+            int[] randomRowCol = rowColBackgrounds.get(randomIndex);
+
+            // randomly select a 2 or 4 tile to generate
+            int randomGenTileIndex = randomGen.nextInt(2);
+            TwentyTile randomGenTile = new TwentyTile(randomGenTileIndex);
+
+            // change tiles to new tiles
+            TwentyTile[][] newTiles = this.board.getTiles();
+            newTiles[randomRowCol[0]][randomRowCol[1]] = randomGenTile;
+
+            this.board.setTiles(newTiles);
+        }
+
+
+    }
+
     public void swipeRight(TwentyTile[][] tiles) {
         // Rough outline of algorithm
         // divide board into rows
@@ -158,6 +194,7 @@ public class TwentyManager extends AbstractManager {
             }
         }
         this.board.setTiles(newTiles);
+        autoGen();
 
     }
 
@@ -191,6 +228,7 @@ public class TwentyManager extends AbstractManager {
             }
         }
         this.board.setTiles(newTiles);
+        autoGen();
     }
 
     public void swipeUp(TwentyTile[][] tiles) {
@@ -219,6 +257,7 @@ public class TwentyManager extends AbstractManager {
         }
 
         this.board.setTiles(newTiles);
+        autoGen();
     }
     public void swipeDown(TwentyTile[][] tiles) {
 
@@ -265,29 +304,7 @@ public class TwentyManager extends AbstractManager {
         }
 
         this.board.setTiles(newTiles);
-    }
-    /**
-     * Return a HashMap of the four surrounding tiles.
-     *
-     * @param position the tile to check
-     * @return return a HashMap of the four surrounding tiles
-     */
-    HashMap<String, TwentyTile> getSurroundTiles(int position) {
-        int row = position / board.getNumRow();
-        int col = position % board.getNumCol();
-        HashMap<String, TwentyTile> tileMap = new HashMap<>();
-
-        TwentyTile above = row == 0 ? null : board.getTile(row - 1, col);
-        TwentyTile below = row == board.getNumRow() - 1 ? null : board.getTile(row + 1, col);
-        TwentyTile left = col == 0 ? null : board.getTile(row, col - 1);
-        TwentyTile right = col == board.getNumCol() - 1 ? null : board.getTile(row, col + 1);
-
-        tileMap.put("above", above);
-        tileMap.put("below", below);
-        tileMap.put("left", left);
-        tileMap.put("right", right);
-
-        return tileMap;
+        autoGen();
     }
 
     public String getComplexity() {
