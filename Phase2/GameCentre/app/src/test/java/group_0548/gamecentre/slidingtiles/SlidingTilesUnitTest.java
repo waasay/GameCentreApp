@@ -161,7 +161,8 @@ public class SlidingTilesUnitTest {
     }
 
     /**
-     * Test whether ableToUndo and ableToRedo actually works
+     * Test whether ableToUndo and ableToRedo actually works, and whether it actually
+     * prevents the user from undoing when the board is solved
      */
     @Test
     public void testAbleToUndoAndAbleToRedo(){
@@ -182,6 +183,8 @@ public class SlidingTilesUnitTest {
         this.mediumBoardManager.undoToPastState();
         assertEquals(true, this.mediumBoardManager.ableToRedo());
         assertEquals(false,this.solvedBoardManager.ableToRedo());
+        assertEquals(false, this.solvedBoardManager.ableToUndo());
+
 
     }
 
@@ -248,6 +251,8 @@ public class SlidingTilesUnitTest {
     }
 
 
+
+
     /**
      * Test getBackground and compareTo in Tile
      */
@@ -262,11 +267,12 @@ public class SlidingTilesUnitTest {
 
     @Test
     /**
-     * Test whether UpdateStatesAfterUndo works
+     * Test whether UpdateStatesAfterUndo works and whether the code actually stops the user from
+     * undoing after undoing MAX_UNDO number of times
      * (Note this will be a long test method as the code to setup the board to test
      * for different scenarios to test is long)
      */
-    public void testUpdateStatesAfterUndo(){
+    public void testUpdateStatesAfterUndoAndUndoingAfterMaxUndo(){
         this.setUpAndResetBoard();
         for (int moves = 0; moves < 3; moves++){
             Tile emptyTile = findEmptyTile(this.mediumBoardManager.getBoard());
@@ -283,6 +289,7 @@ public class SlidingTilesUnitTest {
         this.mediumBoardManager.undoToPastState();
         this.mediumBoardManager.undoToPastState();
         this.mediumBoardManager.undoToPastState();
+        assertEquals(false,this.mediumBoardManager.ableToUndo());
         Tile emptyTile = this.findEmptyTile(this.mediumBoardManager.getBoard());
         int emptyPos = this.getPosition(emptyTile,this.mediumBoardManager.getBoard());
         HashMap<String,Tile> around = this.mediumBoardManager.getSurroundTiles(emptyPos);
@@ -325,9 +332,5 @@ public class SlidingTilesUnitTest {
         }
         assertEquals(3,this.mediumBoardManager.getPastStates().getBoards().size());
     }
-
-
-
-
 
 }
