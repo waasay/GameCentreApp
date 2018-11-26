@@ -17,7 +17,7 @@ public class ColourGuessChooseComplexityActivity extends AppCompatActivity {
     /**
      * The colour guess manager.
      */
-    private ColourManager colourManager;
+    private ColourGuessManager colourGuessManager;
 
     /**
      * Initialize the layout activity of Complete
@@ -41,7 +41,7 @@ public class ColourGuessChooseComplexityActivity extends AppCompatActivity {
         threeButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                colourManager = new ColourManager(3, 3, "Easy");
+                colourGuessManager = new ColourGuessManager(3, 3, "Easy");
                 switchToGame();
             }
         });
@@ -55,7 +55,7 @@ public class ColourGuessChooseComplexityActivity extends AppCompatActivity {
         fourButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                colourManager = new ColourManager(4, 4, "Medium");
+                colourGuessManager = new ColourGuessManager(4, 4, "Medium");
                 switchToGame();
             }
         });
@@ -69,7 +69,7 @@ public class ColourGuessChooseComplexityActivity extends AppCompatActivity {
         fiveButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                colourManager = new ColourManager(5, 5, "Hard");
+                colourGuessManager = new ColourGuessManager(5, 5, "Hard");
                 switchToGame();
             }
         });
@@ -93,7 +93,7 @@ public class ColourGuessChooseComplexityActivity extends AppCompatActivity {
         try {
             ObjectOutputStream outputStream = new ObjectOutputStream(
                     this.openFileOutput(fileName, MODE_PRIVATE));
-            outputStream.writeObject(colourManager);
+            outputStream.writeObject(colourGuessManager);
             outputStream.close();
         } catch (IOException e) {
             Log.e("Exception", "File write failed: " + e.toString());

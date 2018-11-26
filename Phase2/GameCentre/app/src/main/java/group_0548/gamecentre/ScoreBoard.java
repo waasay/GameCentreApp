@@ -36,10 +36,11 @@ public class ScoreBoard implements Serializable {
      * @param name  the name of the user.
      * @param score the score for the current finished game.
      */
-    public void addScore(String name, int score) {
+    public void addScore(String name, int score, String order) {
         if (this.topScores.size() < this.numScore) {
             if (this.topScores.containsKey(name)) {
-                if (this.topScores.get(name) > score) {
+                if ((order.equals("Ascending") && this.topScores.get(name) > score)
+                        || (order.equals("Descending") && this.topScores.get(name) < score)) {
                     this.topScores.put(name, score);
                 }
             } else {
@@ -54,6 +55,7 @@ public class ScoreBoard implements Serializable {
         }
         this.topScores = sort(this.topScores);
     }
+
 
     /**
      * Sort the scoreboard in ascending order. The lower the score, the better.

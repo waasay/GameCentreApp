@@ -11,7 +11,7 @@ import group_0548.gamecentre.slidingtiles.SlidingManager;
 /**
  * A user of the game center
  */
-public class User<T> implements Serializable {
+public class User implements Serializable {
 
     /**
      * The username of the user
@@ -27,7 +27,7 @@ public class User<T> implements Serializable {
      * The hash map that maps a a user's game type (a game type is referring to
      * any arbitrary game's type complexity
      */
-    private HashMap<String, AbstractManager<T>> hashMapOfPastGames = new HashMap<>();
+    private HashMap<String, AbstractManager> hashMapOfPastGames = new HashMap<>();
 
     /**
      * The hash map that maps a a user's game type to its highest score in that
@@ -53,7 +53,7 @@ public class User<T> implements Serializable {
      * @param gameType a game type
      * @param game     the game that will be saved
      */
-    public void saveGame(String gameType, AbstractManager<T> game) {
+    public void saveGame(String gameType, SlidingManager game) {
         this.hashMapOfPastGames.put(gameType, game);
     }
 
@@ -63,7 +63,7 @@ public class User<T> implements Serializable {
      * @param gameType the game type to load
      * @return The game to be loaded
      */
-    public AbstractManager<T> loadGame(String gameType) {
+    public AbstractManager loadGame(String gameType) {
         return this.hashMapOfPastGames.get(gameType);
     }
 
@@ -93,16 +93,11 @@ public class User<T> implements Serializable {
      * @param order    the method for ordering the score
      * @param score    the new score
      */
-    public void updateScore(String gameType, String order, int score) {
+    public void updateScore(String gameType, int score, String order) {
         if (this.hashMapOfHighScore.containsKey(gameType)) {
-            if (order.equals("Ascending")) {
-                if (this.hashMapOfHighScore.get(gameType) > score) {
-                    this.hashMapOfHighScore.put(gameType, score);
-                }
-            } else if (order.equals("Descending")) {
-                if (this.hashMapOfHighScore.get(gameType) < score) {
-                    this.hashMapOfHighScore.put(gameType, score);
-                }
+            if ((order.equals("Ascending") && this.hashMapOfHighScore.get(gameType) > score)
+                    || (order.equals("Descending") && this.hashMapOfHighScore.get(gameType) < score)){
+                this.hashMapOfHighScore.put(gameType, score);
             }
         } else {
             this.hashMapOfHighScore.put(gameType, score);

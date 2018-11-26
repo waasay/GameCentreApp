@@ -4,24 +4,21 @@ import android.support.annotation.NonNull;
 
 import java.util.Iterator;
 import java.util.List;
-import java.util.ArrayList;
 
 import group_0548.gamecentre.AbstractBoard;
-import group_0548.gamecentre.AbstractTile;
-import group_0548.gamecentre.colourguess.ColourTile;
 
-public class ColourBoard extends AbstractBoard implements Iterable<ColourTile> {
+public class ColourGuessBoard extends AbstractBoard implements Iterable<ColourGuessTile> {
 
     private int numRow;
 
     private int numCol;
 
-    private ColourTile[][] tiles;
+    private ColourGuessTile[][] tiles;
 
 
-    public ColourBoard(List<ColourTile> tilesList, int rowNum, int colNum) {
-        tiles = new ColourTile[rowNum][colNum];
-        Iterator<ColourTile> iterator = tilesList.iterator();
+    public ColourGuessBoard(List<ColourGuessTile> tilesList, int rowNum, int colNum) {
+        tiles = new ColourGuessTile[rowNum][colNum];
+        Iterator<ColourGuessTile> iterator = tilesList.iterator();
         this.numRow = rowNum;
         this.numCol = colNum;
         for (int row = 0; row != rowNum; row++) {
@@ -36,15 +33,15 @@ public class ColourBoard extends AbstractBoard implements Iterable<ColourTile> {
         return this.numCol*this.numRow;
     }
 
-    public ColourTile getTile(int row, int col){
+    public ColourGuessTile getTile(int row, int col){
         return this.tiles[row][col];
     }
 
-    public ColourTile[][] getTiles(){
+    public ColourGuessTile[][] getTiles(){
         return this.tiles;
     }
 
-    public void setTiles(ColourTile[][] newTiles){
+    public void setTiles(ColourGuessTile[][] newTiles){
         this.tiles = newTiles;
     }
 
@@ -76,14 +73,14 @@ public class ColourBoard extends AbstractBoard implements Iterable<ColourTile> {
      */
     @NonNull
     @Override
-    public Iterator<ColourTile> iterator() {
-        return new ColourBoard.BoardIterator();
+    public Iterator<ColourGuessTile> iterator() {
+        return new ColourGuessBoard.BoardIterator();
     }
 
     /**
      * An Iterator for SlidingBoard tiles.
      */
-    private class BoardIterator implements Iterator<ColourTile> {
+    private class BoardIterator implements Iterator<ColourGuessTile> {
 
         /**
          * The row number of the next SlidingTile to return.
@@ -111,8 +108,8 @@ public class ColourBoard extends AbstractBoard implements Iterable<ColourTile> {
          * @return the next SlidingTile.
          */
         @Override
-        public ColourTile next() {
-            ColourTile result = tiles[rowIndex][colIndex];
+        public ColourGuessTile next() {
+            ColourGuessTile result = tiles[rowIndex][colIndex];
             if (rowIndex != numRow) {
                 if (colIndex != numCol - 1) {
                     colIndex++;

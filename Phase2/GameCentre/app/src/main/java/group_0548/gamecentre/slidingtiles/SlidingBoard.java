@@ -115,11 +115,11 @@ public class SlidingBoard extends AbstractBoard implements Serializable, Iterabl
     /**
      * Replace the current SlidingBoard with a New SlidingBoard
      *
-     * @param newBoard the new board to be replaced
+     * @param newSlidingBoard the new board to be replaced
      */
 
-    void replaceBoard(SlidingBoard newBoard) {
-        SlidingTile[][] newTiles = newBoard.getTiles();
+    void replaceBoard(SlidingBoard newSlidingBoard) {
+        SlidingTile[][] newTiles = newSlidingBoard.getTiles();
         this.setTiles(newTiles);
 
     }
@@ -196,19 +196,19 @@ public class SlidingBoard extends AbstractBoard implements Serializable, Iterabl
     private class BoardIterator implements Iterator<SlidingTile> {
 
         /**
-         * The row number of the next SlidingTile to return.
+         * The row number of the next Tile to return.
          */
         int rowIndex = 0;
 
         /**
-         * The column number of the next SlidingTile to return.
+         * The column number of the next Tile to return.
          */
         int colIndex = 0;
 
         /**
-         * Returns whether there is another SlidingTile to return.
+         * Returns whether there is another Tile to return.
          *
-         * @return whether there is another SlidingTile to return.
+         * @return whether there is another Tile to return.
          */
         @Override
         public boolean hasNext() {
@@ -216,9 +216,9 @@ public class SlidingBoard extends AbstractBoard implements Serializable, Iterabl
         }
 
         /**
-         * Returns the next SlidingTile.
+         * Returns the next Tile.
          *
-         * @return the next SlidingTile.
+         * @return the next Tile.
          */
         @Override
         public SlidingTile next() {

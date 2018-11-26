@@ -6,18 +6,18 @@ import java.util.Random;
 import group_0548.gamecentre.AbstractManager;
 
 
-public class ColourManager extends AbstractManager {
+public class ColourGuessManager extends AbstractManager {
 
     private int time = 60000;
     private int rows;
     private int cols;
-    private ColourBoard board1;
-    private ColourBoard board2;
+    private ColourGuessBoard board1;
+    private ColourGuessBoard board2;
     private int id = 0;
     private int score = 0;
     private String complexity;
 
-    ColourManager(int rowNum, int colNum, String complex) {
+    ColourGuessManager(int rowNum, int colNum, String complex) {
         this.rows = rowNum;
         this.cols = colNum;
         this.complexity = complex;
@@ -29,20 +29,20 @@ public class ColourManager extends AbstractManager {
         final int numTiles = rows * cols;
 
         // creating a random board1
-        List<ColourTile> tiles1 = new ArrayList<>();
+        List<ColourGuessTile> tiles1 = new ArrayList<>();
         Random randomGen = new Random();
         for (int tileNum = 0; tileNum != numTiles; tileNum++) {
             int randomInt = randomGen.nextInt(6);
-            tiles1.add(new ColourTile(randomInt));
+            tiles1.add(new ColourGuessTile(randomInt));
         }
-        this.board1 = new ColourBoard(tiles1, rows, cols);
+        this.board1 = new ColourGuessBoard(tiles1, rows, cols);
 
         // creating a white board2
-        List<ColourTile> tiles2 = new ArrayList<>();
+        List<ColourGuessTile> tiles2 = new ArrayList<>();
         for (int tileNum = 0; tileNum != numTiles; tileNum++) {
-            tiles2.add(new ColourTile(6));
+            tiles2.add(new ColourGuessTile(6));
         }
-        this.board2 = new ColourBoard(tiles2, rows, cols);
+        this.board2 = new ColourGuessBoard(tiles2, rows, cols);
     }
 
     // id by default is set to 0
@@ -68,12 +68,12 @@ public class ColourManager extends AbstractManager {
         int row = position / board2.getNumRow();
         int col = position % board2.getNumCol();
         if (board2.getTile(row, col).getId() == 7) {
-            ColourTile[][] newTiles = board2.getTiles();
-            newTiles[row][col] = new ColourTile(6);
+            ColourGuessTile[][] newTiles = board2.getTiles();
+            newTiles[row][col] = new ColourGuessTile(6);
             board2.setTiles(newTiles);
         } else if (board2.getTile(row, col).getId() == 6) {
-            ColourTile[][] newTiles = board2.getTiles();
-            newTiles[row][col] = new ColourTile(7);
+            ColourGuessTile[][] newTiles = board2.getTiles();
+            newTiles[row][col] = new ColourGuessTile(7);
             board2.setTiles(newTiles);
         }
         super.changeAndNotify();
@@ -104,11 +104,11 @@ public class ColourManager extends AbstractManager {
     }
 
 
-    public ColourBoard getBoard1() {
+    public ColourGuessBoard getBoard1() {
         return board1;
     }
 
-    public ColourBoard getBoard2() {
+    public ColourGuessBoard getBoard2() {
         return board2;
     }
 

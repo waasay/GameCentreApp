@@ -26,7 +26,7 @@ public class SlidingManager extends AbstractManager implements Undoable {
      * The state object that represents the past MAX_UNDO number of states
      * and the current states
      */
-    private SlidingTileStates pastStates = new SlidingTileStates();
+    private SlidingStates pastStates = new SlidingStates();
     /**
      * The current number of undo left, it is define as MAX_UNDO - 1
      */
@@ -325,7 +325,7 @@ public class SlidingManager extends AbstractManager implements Undoable {
         return this.gameType;
     }
 
-    public SlidingTileStates getPastStates() {
+    public SlidingStates getPastStates() {
         return pastStates;
     }
 }

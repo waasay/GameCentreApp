@@ -60,7 +60,7 @@ public class ColourGuessChoosePhaseActivity extends AppCompatActivity implements
     /**
      * The colour guess manager.
      */
-    private ColourManager colourManager;
+    private ColourGuessManager colourGuessManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -72,22 +72,22 @@ public class ColourGuessChoosePhaseActivity extends AppCompatActivity implements
         addConfirmButtonListener();
         Random randomGen = new Random();
         int randomInt = randomGen.nextInt(6);
-        colourManager.setId(randomInt);
+        colourGuessManager.setId(randomInt);
         String colour = colours[randomInt];
         chooseColour = findViewById(R.id.ChooseColour);
         chooseColour.setText("Please choose all the " + colour + " tiles.");
 
         // Add Timer to activity
         countdownTimerText = findViewById(R.id.ChooseTime);
-        startTimer(colourManager.getTime());
+        startTimer(colourGuessManager.getTime());
         startTime= (int) System.currentTimeMillis();
 
         currentScore = findViewById(R.id.ColourGuessScore);
-        currentScore.setText(String.valueOf(colourManager.getScore()));
+        currentScore.setText(String.valueOf(colourGuessManager.getScore()));
         gridView = findViewById(R.id.ChooseGrid);
-        gridView.setNumColumns(colourManager.getBoard2().getNumCol());
-        gridView.setColourManager(colourManager);
-        colourManager.addObserver(this);
+        gridView.setNumColumns(colourGuessManager.getBoard2().getNumCol());
+        gridView.setColourGuessManager(colourGuessManager);
+        colourGuessManager.addObserver(this);
         // Observer sets up desired dimensions as well as calls our display function
         gridView.getViewTreeObserver().addOnGlobalLayoutListener(
                 new ViewTreeObserver.OnGlobalLayoutListener() {
@@ -98,8 +98,8 @@ public class ColourGuessChoosePhaseActivity extends AppCompatActivity implements
                         int displayWidth = gridView.getMeasuredWidth();
                         int displayHeight = gridView.getMeasuredHeight();
 
-                        columnWidth = displayWidth / colourManager.getBoard2().getNumCol();
-                        columnHeight = displayHeight / colourManager.getBoard2().getNumRow();
+                        columnWidth = displayWidth / colourGuessManager.getBoard2().getNumCol();
+                        columnHeight = displayHeight / colourGuessManager.getBoard2().getNumRow();
 
                         display();
                     }
@@ -112,10 +112,10 @@ public class ColourGuessChoosePhaseActivity extends AppCompatActivity implements
      * @param context the context
      */
     private void createTileButtons(Context context) {
-        ColourBoard board = colourManager.getBoard2();
+        ColourGuessBoard board = colourGuessManager.getBoard2();
         tileButtons = new ArrayList<>();
-        for (int row = 0; row != colourManager.getBoard2().getNumRow(); row++) {
-            for (int col = 0; col != colourManager.getBoard2().getNumCol(); col++) {
+        for (int row = 0; row != colourGuessManager.getBoard2().getNumRow(); row++) {
+            for (int col = 0; col != colourGuessManager.getBoard2().getNumCol(); col++) {
                 Button tmp = new Button(context);
                 tmp.setBackgroundResource(board.getTile(row, col).getBackground());
                 this.tileButtons.add(tmp);
@@ -127,15 +127,15 @@ public class ColourGuessChoosePhaseActivity extends AppCompatActivity implements
      * Update the backgrounds on the buttons to match the tiles and the current score.
      */
     private void updateTileButtons() {
-        ColourBoard board = colourManager.getBoard2();
+        ColourGuessBoard board = colourGuessManager.getBoard2();
         int nextPos = 0;
         for (Button b : tileButtons) {
-            int row = nextPos / colourManager.getBoard2().getNumRow();
-            int col = nextPos % colourManager.getBoard2().getNumCol();
+            int row = nextPos / colourGuessManager.getBoard2().getNumRow();
+            int col = nextPos % colourGuessManager.getBoard2().getNumCol();
             b.setBackgroundResource(board.getTile(row, col).getBackground());
             nextPos++;
         }
-        saveToFile(ColourGuessStartingActivity.TEMP_SAVE_FILENAME, colourManager);
+        saveToFile(ColourGuessStartingActivity.TEMP_SAVE_FILENAME, colourGuessManager);
     }
 
     /**
@@ -144,10 +144,11 @@ public class ColourGuessChoosePhaseActivity extends AppCompatActivity implements
     private void loadFromFile() {
 
         try {
-            InputStream inputStream = this.openFileInput(ColourGuessStartingActivity.TEMP_SAVE_FILENAME);
+            InputStream inputStream = this.openFileInput(ColourGuessStartingActivity
+                    .TEMP_SAVE_FILENAME);
             if (inputStream != null) {
                 ObjectInputStream input = new ObjectInputStream(inputStream);
-                colourManager = (ColourManager) input.readObject();
+                colourGuessManager = (ColourGuessManager) input.readObject();
                 inputStream.close();
             }
         } catch (FileNotFoundException e) {
@@ -182,7 +183,8 @@ public class ColourGuessChoosePhaseActivity extends AppCompatActivity implements
             }
 
             public void onFinish() {
-                Toast.makeText(myContext, "Time's up! Your score is : " + colourManager.getScore(), Toast.LENGTH_LONG).show();
+                Toast.makeText(myContext, "Time's up! Your score is : " + colourGuessManager
+                        .getScore(), Toast.LENGTH_LONG).show();
                 switchToStart();
             }
         }.start();
@@ -204,12 +206,15 @@ public class ColourGuessChoosePhaseActivity extends AppCompatActivity implements
     }
 
     public void saveToScoreBoard() {
-        String gameType = ColourGuessStartingActivity.GAME_TYPE + " " + colourManager.getComplexity();
-        ColourGuessStartingActivity.scoreBoardManager.updateScoreBoard(colourManager.getComplexity(),
-                LoginActivity.usersManager.getCurrentUser().getUserName(), colourManager.getScore());
-        LoginActivity.usersManager.getCurrentUser().updateScore(gameType, ColourGuessStartingActivity.ORDER,
-                colourManager.getScore());
-        saveToFile(ColourGuessStartingActivity.SCOREBOARD_SAVE_FILENAME, ColourGuessStartingActivity.scoreBoardManager);
+        String gameType = ColourGuessStartingActivity.GAME_TYPE + " " +
+                colourGuessManager.getComplexity();
+        ColourGuessStartingActivity.scoreBoardManager.updateScoreBoard(colourGuessManager
+                .getComplexity(), LoginActivity.usersManager.getCurrentUser().getUserName(),
+                colourGuessManager.getScore(), ColourGuessStartingActivity.ORDER);
+        LoginActivity.usersManager.getCurrentUser().updateScore(gameType, colourGuessManager
+                .getScore(), ColourGuessStartingActivity.ORDER);
+        saveToFile(ColourGuessStartingActivity.SCOREBOARD_SAVE_FILENAME,
+                ColourGuessStartingActivity.scoreBoardManager);
         saveToFile(LoginActivity.USER_SAVE_FILENAME, LoginActivity.usersManager);
     }
 
@@ -222,15 +227,16 @@ public class ColourGuessChoosePhaseActivity extends AppCompatActivity implements
     public void switchToMemory() {
         endTime= (int) System.currentTimeMillis();
         stopCountdown();
-        colourManager.setTime(colourManager.getTime() - endTime + startTime);
-        if (colourManager.puzzleSolved()) {
-            colourManager.increaseScore(1);
-            colourManager.reset();
-            saveToFile(ColourGuessStartingActivity.TEMP_SAVE_FILENAME, colourManager);
+        colourGuessManager.setTime(colourGuessManager.getTime() - endTime + startTime);
+        if (colourGuessManager.puzzleSolved()) {
+            colourGuessManager.increaseScore(1);
+            colourGuessManager.reset();
+            saveToFile(ColourGuessStartingActivity.TEMP_SAVE_FILENAME, colourGuessManager);
             Intent tep = new Intent(this, ColourGuessMemoryPhaseActivity.class);
             startActivity(tep);
         } else {
-            Toast.makeText(myContext, "Incorrect! Your score is : " + colourManager.getScore(), Toast.LENGTH_LONG).show();
+            Toast.makeText(myContext, "Incorrect! Your score is : " + colourGuessManager
+                    .getScore(), Toast.LENGTH_LONG).show();
             switchToStart();
         }
     }

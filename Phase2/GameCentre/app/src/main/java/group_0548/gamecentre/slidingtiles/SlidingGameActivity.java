@@ -177,10 +177,12 @@ public class SlidingGameActivity extends AppCompatActivity implements Observer {
         String gameType = SlidingStartingActivity.GAME_TYPE + " " + slidingManager.getComplexity();
         if (slidingManager.puzzleSolved() && SlidingManager.getMaxUndo() == 3) {
             SlidingStartingActivity.scoreBoardManager.updateScoreBoard(slidingManager.getComplexity(),
-                    LoginActivity.usersManager.getCurrentUser().getUserName(), slidingManager.getBoard().getScore());
-            LoginActivity.usersManager.getCurrentUser().updateScore(gameType, SlidingStartingActivity.ORDER,
-                    slidingManager.getBoard().getScore());
-            saveToFile(SlidingStartingActivity.SCOREBOARD_SAVE_FILENAME, SlidingStartingActivity.scoreBoardManager);
+                    LoginActivity.usersManager.getCurrentUser().getUserName(),
+                    slidingManager.getBoard().getScore(), SlidingStartingActivity.ORDER);
+            LoginActivity.usersManager.getCurrentUser().updateScore(gameType,
+                    slidingManager.getBoard().getScore(), SlidingStartingActivity.ORDER);
+            saveToFile(SlidingStartingActivity.SCOREBOARD_SAVE_FILENAME,
+                    SlidingStartingActivity.scoreBoardManager);
             saveToFile(LoginActivity.USER_SAVE_FILENAME, LoginActivity.usersManager);
         }
     }

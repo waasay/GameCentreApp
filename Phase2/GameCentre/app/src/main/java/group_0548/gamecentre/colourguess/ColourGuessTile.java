@@ -2,14 +2,14 @@ package group_0548.gamecentre.colourguess;
 import group_0548.gamecentre.R;
 import group_0548.gamecentre.AbstractTile;
 
-public class ColourTile extends AbstractTile{
+public class ColourGuessTile extends AbstractTile{
 
     private int id;
 
     private int background;
 
 
-    ColourTile(int id) {
+    ColourGuessTile(int id) {
 
         this.id = id;
 

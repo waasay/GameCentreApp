@@ -53,10 +53,6 @@ public class TwentyManager extends AbstractManager implements Undoable {
     }
 
     /**
-     * SlidingManager(SlidingBoard board) {
-     * this.board = board;
-     * }
-     * <p>
      * Return the current board.
      */
     TwentyBoard getBoard() {
@@ -64,9 +60,9 @@ public class TwentyManager extends AbstractManager implements Undoable {
     }
 
     /**
-     * Return whether the SlidingBoard contains a 2048 tile
+     * Return whether the TwentyBoard contains a 2048 tile
      *
-     * @return whether the SlidingBoard contains a 2048 tile.
+     * @return whether the TwentyBoard contains a 2048 tile.
      */
     public boolean puzzleSolved() {
         for (TwentyTile t : this.board) {

@@ -7,7 +7,7 @@ import java.util.ArrayList;
 /**
  * The states of the boards
  */
-public class SlidingTileStates implements Serializable {
+public class SlidingStates implements Serializable {
 
 
     /**
@@ -18,7 +18,7 @@ public class SlidingTileStates implements Serializable {
     /**
      * Initialize the states.
      */
-    public SlidingTileStates() {
+    public SlidingStates() {
         this.boards = new ArrayList<>();
     }
 

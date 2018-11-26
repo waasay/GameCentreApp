@@ -5,8 +5,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import static org.junit.Assert.*;
-
 /**
  * Unit test for the colour guess game
  */
@@ -15,26 +13,26 @@ public class ColourGuessUnitTest {
     /**
      * The medium complexity board for testing
      */
-    ColourManager regularColourManager;
+    ColourGuessManager regularMemoryManager;
     /**
      * The medium complexity board for testing, but the board is hard coded
      */
-    ColourManager hardcodedColourManager;
+    ColourGuessManager hardcodedMemoryManager;
 
     /**
      * The method for setting up and resetting the board for testing.
      */
     private void setupAndResetBoard(){
-        this.regularColourManager = new ColourManager(4,4,"Medium");
-        this.hardcodedColourManager = new ColourManager(4,4,"Medium");
-        List<ColourTile> hardcodedTiles= new ArrayList<>();
+        this.regularMemoryManager = new ColourGuessManager(4,4,"Medium");
+        this.hardcodedMemoryManager = new ColourGuessManager(4,4,"Medium");
+        List<ColourGuessTile> hardcodedTiles= new ArrayList<>();
         List<Integer> idList = Arrays.asList(0,1,2,3,4,5,2,1,2,3,4,5,3,1,2,5);
-        for (int j = 0; j < this.hardcodedColourManager.getBoard1().numTiles(); j++){
-            hardcodedTiles.add(new ColourTile(idList.get(j)));
+        for (int j = 0; j < this.hardcodedMemoryManager.getBoard1().numTiles(); j++){
+            hardcodedTiles.add(new ColourGuessTile(idList.get(j)));
         }
-        ColourBoard board = new ColourBoard(hardcodedTiles,4,4);
-        ColourTile[][] newTile = board.getTiles();
-        this.hardcodedColourManager.getBoard1().setTiles(newTile);
+        ColourGuessBoard board = new ColourGuessBoard(hardcodedTiles,4,4);
+        ColourGuessTile[][] newTile = board.getTiles();
+        this.hardcodedMemoryManager.getBoard1().setTiles(newTile);
 
     }
     /**
@@ -44,8 +42,8 @@ public class ColourGuessUnitTest {
     public void testIsSolved(){
 
         this.setupAndResetBoard();
-        this.regularColourManager.select(0);
-        assertEquals(true, this.regularColourManager.puzzleSolved());
+        this.regularMemoryManager.select(0);
+        assertEquals(true, this.regularMemoryManager.puzzleSolved());
     }
     /**
      * Test whether the tile has a checkmark if tapped
@@ -54,8 +52,8 @@ public class ColourGuessUnitTest {
     public void testIfTileHasCheckAfterTap(){
 
         this.setupAndResetBoard();
-        this.regularColourManager.select(1);
-        assertEquals(7, this.regularColourManager.getBoard2().getTile(1 / 4, 1 % 4).getId());
+        this.regularMemoryManager.select(1);
+        assertEquals(7, this.regularMemoryManager.getBoard2().getTile(1 / 4, 1 % 4).getId());
 
 
 
@@ -68,9 +66,9 @@ public class ColourGuessUnitTest {
     public void testIfTileIsBlankAfterTap(){
 
         this.setupAndResetBoard();
-        this.regularColourManager.select(1);
-        this.regularColourManager.select(1);
-        assertEquals(6, this.regularColourManager.getBoard2().getTile(1 / 4, 1 % 4).getId());
+        this.regularMemoryManager.select(1);
+        this.regularMemoryManager.select(1);
+        assertEquals(6, this.regularMemoryManager.getBoard2().getTile(1 / 4, 1 % 4).getId());
 
 
 
@@ -83,8 +81,8 @@ public class ColourGuessUnitTest {
     public void testScoreIncreased(){
 
         this.setupAndResetBoard();
-        this.regularColourManager.select(0);
-        assertEquals(1, this.regularColourManager.getScore());
+        this.regularMemoryManager.select(0);
+        assertEquals(1, this.regularMemoryManager.getScore());
     }
 
 }

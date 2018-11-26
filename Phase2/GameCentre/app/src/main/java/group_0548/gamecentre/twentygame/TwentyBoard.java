@@ -127,24 +127,24 @@ public class TwentyBoard extends AbstractBoard implements Iterable<TwentyTile> {
     }
 
     /**
-     * An Iterator for SlidingBoard tiles.
+     * An Iterator for TwentyTile.
      */
     private class BoardIterator implements Iterator<TwentyTile> {
 
         /**
-         * The row number of the next SlidingTile to return.
+         * The row number of the next Tile to return.
          */
         int rowIndex = 0;
 
         /**
-         * The column number of the next SlidingTile to return.
+         * The column number of the next Tile to return.
          */
         int colIndex = 0;
 
         /**
-         * Returns whether there is another SlidingTile to return.
+         * Returns whether there is another Tile to return.
          *
-         * @return whether there is another SlidingTile to return.
+         * @return whether there is another Tile to return.
          */
         @Override
         public boolean hasNext() {
@@ -152,9 +152,9 @@ public class TwentyBoard extends AbstractBoard implements Iterable<TwentyTile> {
         }
 
         /**
-         * Returns the next SlidingTile.
+         * Returns the next Tile.
          *
-         * @return the next SlidingTile.
+         * @return the next Tile.
          */
         @Override
         public TwentyTile next() {
