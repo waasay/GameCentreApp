@@ -16,10 +16,10 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".slidingtiles.GameActivity" />
-        <activity android:name=".slidingtiles.ChooseComplexityActivity" />
+        <activity android:name=".slidingtiles.SlidingGameActivity" />
+        <activity android:name=".slidingtiles.SlidingChooseComplexityActivity" />
         <activity android:name=".GameCentreActivity" />
-        <activity android:name=".slidingtiles.StartingActivity" />
+        <activity android:name=".slidingtiles.SlidingStartingActivity" />
         <activity android:name=".SignUpActivity" />
         <activity android:name=".ChooseScoreBoardActivity" />
         <activity android:name=".ScoreBoardActivity" />
