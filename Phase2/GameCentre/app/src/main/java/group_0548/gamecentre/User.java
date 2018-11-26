@@ -96,7 +96,7 @@ public class User implements Serializable {
     public void updateScore(String gameType, int score, String order) {
         if (this.hashMapOfHighScore.containsKey(gameType)) {
             if ((order.equals("Ascending") && this.hashMapOfHighScore.get(gameType) > score)
-                    || (order.equals("Descending") && this.hashMapOfHighScore.get(gameType) < score)){
+                    || (order.equals("Descending") && this.hashMapOfHighScore.get(gameType) < score)) {
                 this.hashMapOfHighScore.put(gameType, score);
             }
         } else {

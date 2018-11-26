@@ -7,12 +7,14 @@ public interface Undoable {
 
     /**
      * Check whether at the current phase it is possible to undo
+     *
      * @return whether it is able to undo
      */
     boolean ableToUndo();
 
     /**
      * Check whether at the current phase it is possible to redo
+     *
      * @return whether it is able to redo
      */
     boolean ableToRedo();

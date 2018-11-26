@@ -29,23 +29,21 @@ public class ColourGuessBoard extends AbstractBoard implements Iterable<ColourGu
     }
 
 
-    public int numTiles(){
-        return this.numCol*this.numRow;
+    public int numTiles() {
+        return this.numCol * this.numRow;
     }
 
-    public ColourGuessTile getTile(int row, int col){
+    public ColourGuessTile getTile(int row, int col) {
         return this.tiles[row][col];
     }
 
-    public ColourGuessTile[][] getTiles(){
+    public ColourGuessTile[][] getTiles() {
         return this.tiles;
     }
 
-    public void setTiles(ColourGuessTile[][] newTiles){
+    public void setTiles(ColourGuessTile[][] newTiles) {
         this.tiles = newTiles;
     }
-
-
 
 
     /**
@@ -53,7 +51,7 @@ public class ColourGuessBoard extends AbstractBoard implements Iterable<ColourGu
      *
      * @return the amount of rows.
      */
-    public int getNumRow(){
+    public int getNumRow() {
         return this.numRow;
     }
 
@@ -62,7 +60,7 @@ public class ColourGuessBoard extends AbstractBoard implements Iterable<ColourGu
      *
      * @return the amount of column.
      */
-    public int getNumCol(){
+    public int getNumCol() {
         return this.numCol;
     }
 
@@ -121,7 +119,6 @@ public class ColourGuessBoard extends AbstractBoard implements Iterable<ColourGu
             return result;
         }
     }
-
 
 
 }

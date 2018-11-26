@@ -30,25 +30,19 @@ import group_0548.gamecentre.R;
 
 public class ColourGuessChoosePhaseActivity extends AppCompatActivity implements Observer {
 
+    private static CountDownTimer countDownTimer;
+    private static int columnWidth, columnHeight;
     private ColourGuessGestureDetectGridView gridView;
-
     /**
      * The TextView for the score.
      */
     private TextView currentScore;
-
     /**
      * The TextView for the timer.
      */
     private TextView countdownTimerText;
     private TextView chooseColour;
-
-    private static CountDownTimer countDownTimer;
-
     private Context myContext = this;
-
-    private static int columnWidth, columnHeight;
-
     private ArrayList<Button> tileButtons;
 
     private String[] colours = {"Purple", "Blue", "Green", "Yellow", "Orange", "Red"};
@@ -80,7 +74,7 @@ public class ColourGuessChoosePhaseActivity extends AppCompatActivity implements
         // Add Timer to activity
         countdownTimerText = findViewById(R.id.ChooseTime);
         startTimer(colourGuessManager.getTime());
-        startTime= (int) System.currentTimeMillis();
+        startTime = (int) System.currentTimeMillis();
 
         currentScore = findViewById(R.id.ColourGuessScore);
         currentScore.setText(String.valueOf(colourGuessManager.getScore()));
@@ -209,7 +203,7 @@ public class ColourGuessChoosePhaseActivity extends AppCompatActivity implements
         String gameType = ColourGuessStartingActivity.GAME_TYPE + " " +
                 colourGuessManager.getComplexity();
         ColourGuessStartingActivity.scoreBoardManager.updateScoreBoard(colourGuessManager
-                .getComplexity(), LoginActivity.usersManager.getCurrentUser().getUserName(),
+                        .getComplexity(), LoginActivity.usersManager.getCurrentUser().getUserName(),
                 colourGuessManager.getScore(), ColourGuessStartingActivity.ORDER);
         LoginActivity.usersManager.getCurrentUser().updateScore(gameType, colourGuessManager
                 .getScore(), ColourGuessStartingActivity.ORDER);
@@ -225,7 +219,7 @@ public class ColourGuessChoosePhaseActivity extends AppCompatActivity implements
     }
 
     public void switchToMemory() {
-        endTime= (int) System.currentTimeMillis();
+        endTime = (int) System.currentTimeMillis();
         stopCountdown();
         colourGuessManager.setTime(colourGuessManager.getTime() - endTime + startTime);
         if (colourGuessManager.puzzleSolved()) {

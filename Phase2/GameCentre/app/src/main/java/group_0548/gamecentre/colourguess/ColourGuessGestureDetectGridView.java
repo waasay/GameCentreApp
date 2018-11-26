@@ -43,7 +43,7 @@ public class ColourGuessGestureDetectGridView extends GridView {
 
     @TargetApi(Build.VERSION_CODES.LOLLIPOP) // API 21
     public ColourGuessGestureDetectGridView(Context context, AttributeSet attrs, int defStyleAttr,
-                                 int defStyleRes) {
+                                            int defStyleRes) {
         super(context, attrs, defStyleAttr, defStyleRes);
         init(context);
     }

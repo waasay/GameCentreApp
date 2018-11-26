@@ -19,6 +19,10 @@ public class SlidingManager extends AbstractManager implements Undoable {
      */
     private static int MAX_UNDO;
     /**
+     * The game type.
+     */
+    private final String gameType = "SlidingTiles";
+    /**
      * The board being managed.
      */
     private SlidingBoard board;
@@ -31,15 +35,10 @@ public class SlidingManager extends AbstractManager implements Undoable {
      * The current number of undo left, it is define as MAX_UNDO - 1
      */
     private int currUndo;
-
     /**
      * The complexity of the board.
      */
     private String complexity;
-    /**
-     * The game type.
-     */
-    private final String gameType = "SlidingTiles";
 
     /**
      * Manage a new shuffled board.
@@ -62,8 +61,8 @@ public class SlidingManager extends AbstractManager implements Undoable {
         */
 
 
-        while(!( ((colNum % 2 != 0) && (inversions() % 2 == 0))  ||
-               ((colNum % 2 == 0) && ((blankOddRowBottom()) == (inversions() % 2 == 0))) )) {
+        while (!(((colNum % 2 != 0) && (inversions() % 2 == 0)) ||
+                ((colNum % 2 == 0) && ((blankOddRowBottom()) == (inversions() % 2 == 0))))) {
             Collections.shuffle(tiles);
             this.board = new SlidingBoard(tiles, rowNum, colNum);
         }
@@ -71,6 +70,15 @@ public class SlidingManager extends AbstractManager implements Undoable {
         MAX_UNDO = maxUndo;
         this.currUndo = MAX_UNDO - 1;
         pastStates.updateStates(this.getBoard().copy(), MAX_UNDO);
+    }
+
+    /**
+     * Getter for getting the MAX_UNDO
+     *
+     * @return the maximum number of undo
+     */
+    public static int getMaxUndo() {
+        return MAX_UNDO;
     }
 
     /**
@@ -259,15 +267,6 @@ public class SlidingManager extends AbstractManager implements Undoable {
     }
 
     /**
-     * Getter for getting the MAX_UNDO
-     *
-     * @return the maximum number of undo
-     */
-    public static int getMaxUndo(){
-        return MAX_UNDO;
-    }
-
-    /**
      * Reset undo to MAX_UNDO - 1
      */
 
@@ -316,12 +315,12 @@ public class SlidingManager extends AbstractManager implements Undoable {
 
             }
 
-            i = i +1;
+            i = i + 1;
         }
         return false;
     }
 
-    public String getGameType(){
+    public String getGameType() {
         return this.gameType;
     }
 

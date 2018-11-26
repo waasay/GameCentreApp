@@ -33,7 +33,6 @@ public abstract class AbstractBoard implements Serializable {
     abstract public AbstractTile[][] getTiles();
 
 
-
     /**
      * Get the current row number.
      *
@@ -49,7 +48,7 @@ public abstract class AbstractBoard implements Serializable {
     public abstract int getNumCol();
 
 
-    public String toString(){
+    public String toString() {
         return "SlidingBoard{" +
                 "tiles=" + Arrays.toString(tiles) +
                 '}';

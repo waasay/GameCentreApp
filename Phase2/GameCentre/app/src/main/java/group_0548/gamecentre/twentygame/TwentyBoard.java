@@ -60,7 +60,7 @@ public class TwentyBoard extends AbstractBoard implements Iterable<TwentyTile> {
 
     }
 
-    public TwentyBoard(List<TwentyTile> tileSet, int score, int numRow, int numCol){
+    public TwentyBoard(List<TwentyTile> tileSet, int score, int numRow, int numCol) {
         tiles = new TwentyTile[numRow][numCol];
         Iterator<TwentyTile> iterator = tileSet.iterator();
         this.numRow = numRow;
@@ -73,28 +73,24 @@ public class TwentyBoard extends AbstractBoard implements Iterable<TwentyTile> {
         }
 
 
-
     }
 
 
-
-    public int numTiles(){
-        return this.numCol*this.numRow;
+    public int numTiles() {
+        return this.numCol * this.numRow;
     }
 
-    public TwentyTile getTile(int row, int col){
+    public TwentyTile getTile(int row, int col) {
         return this.tiles[row][col];
     }
 
-    public TwentyTile[][] getTiles(){
+    public TwentyTile[][] getTiles() {
         return this.tiles;
     }
 
-    public void setTiles(TwentyTile[][] newTiles){
+    public void setTiles(TwentyTile[][] newTiles) {
         this.tiles = newTiles;
     }
-
-
 
 
     /**
@@ -102,7 +98,7 @@ public class TwentyBoard extends AbstractBoard implements Iterable<TwentyTile> {
      *
      * @return the amount of rows.
      */
-    public int getNumRow(){
+    public int getNumRow() {
         return this.numRow;
     }
 
@@ -111,7 +107,7 @@ public class TwentyBoard extends AbstractBoard implements Iterable<TwentyTile> {
      *
      * @return the amount of column.
      */
-    public int getNumCol(){
+    public int getNumCol() {
         return this.numCol;
     }
 
@@ -124,6 +120,27 @@ public class TwentyBoard extends AbstractBoard implements Iterable<TwentyTile> {
     @Override
     public Iterator<TwentyTile> iterator() {
         return new TwentyBoard.BoardIterator();
+    }
+
+    public int getScore() {
+        return this.score;
+    }
+
+    TwentyBoard copy() {
+        List<TwentyTile> newTiles = new ArrayList<>();
+        for (TwentyTile t : this) {
+            newTiles.add(t);
+        }
+        return new TwentyBoard(newTiles, this.getScore(), numRow, numCol);
+    }
+
+    void updateScore(int adjustment) {
+        this.score += adjustment;
+    }
+
+    void replaceBoard(TwentyBoard newBoard) {
+        TwentyTile[][] newTiles = newBoard.getTiles();
+        this.setTiles(newTiles);
     }
 
     /**
@@ -169,26 +186,5 @@ public class TwentyBoard extends AbstractBoard implements Iterable<TwentyTile> {
             }
             return result;
         }
-    }
-
-    public int getScore(){
-        return this.score;
-    }
-
-    TwentyBoard copy() {
-        List<TwentyTile> newTiles = new ArrayList<>();
-        for (TwentyTile t : this) {
-            newTiles.add(t);
-        }
-        return new TwentyBoard(newTiles, this.getScore(), numRow, numCol);
-    }
-
-    void updateScore(int adjustment){
-        this.score += adjustment;
-    }
-
-    void replaceBoard(TwentyBoard newBoard) {
-        TwentyTile[][] newTiles = newBoard.getTiles();
-        this.setTiles(newTiles);
     }
 }
