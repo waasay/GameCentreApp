@@ -1,13 +1,10 @@
 package group_0548.gamecentre.twentygame;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.Random;
 
 import group_0548.gamecentre.AbstractManager;
 import group_0548.gamecentre.Undoable;
-import group_0548.gamecentre.slidingtiles.Board;
-import group_0548.gamecentre.slidingtiles.SlidingTileStates;
 
 
 public class TwentyManager extends AbstractManager implements Undoable {
@@ -56,10 +53,6 @@ public class TwentyManager extends AbstractManager implements Undoable {
     }
 
     /**
-     * BoardManager(Board board) {
-     * this.board = board;
-     * }
-     * <p>
      * Return the current board.
      */
     TwentyBoard getBoard() {
@@ -67,9 +60,9 @@ public class TwentyManager extends AbstractManager implements Undoable {
     }
 
     /**
-     * Return whether the Board contains a 2048 tile
+     * Return whether the TwentyBoard contains a 2048 tile
      *
-     * @return whether the Board contains a 2048 tile.
+     * @return whether the TwentyBoard contains a 2048 tile.
      */
     public boolean puzzleSolved() {
         for (TwentyTile t : this.board) {
