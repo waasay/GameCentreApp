@@ -15,11 +15,11 @@ public class ColourGuessUnitTest {
     /**
      * The medium complexity board for testing
      */
-    ColourGuessManager regularColourManager;
+    private ColourGuessManager regularColourManager;
     /**
      * The medium complexity board for testing, but the board is hard coded
      */
-    ColourGuessManager hardcodedColourManager;
+    private ColourGuessManager hardcodedColourManager;
 
     /**
      * The method for setting up and resetting the board for testing.
@@ -28,7 +28,7 @@ public class ColourGuessUnitTest {
         this.regularColourManager = new ColourGuessManager(4,4,"Medium");
         this.hardcodedColourManager = new ColourGuessManager(4,4,"Medium");
         List<ColourGuessTile> hardcodedTiles= new ArrayList<>();
-        List<Integer> idList = Arrays.asList(0,1,2,3,4,5,2,1,2,3,4,5,3,1,2,5);
+        List<Integer> idList = Arrays.asList(0,1,2,3,4,5,0,1,2,3,4,5,3,1,2,5);
         for (int j = 0; j < this.hardcodedColourManager.getBoard1().numTiles(); j++){
             hardcodedTiles.add(new ColourGuessTile(idList.get(j)));
         }
@@ -44,38 +44,39 @@ public class ColourGuessUnitTest {
     public void testIsSolved(){
 
         this.setupAndResetBoard();
-        this.regularColourManager.select(0);
-        assertEquals(true, this.regularColourManager.puzzleSolved());
+        assertEquals(false, this.hardcodedColourManager.puzzleSolved());
+        this.hardcodedColourManager.select(0);
+        this.hardcodedColourManager.select(6);
+        assertEquals(true, this.hardcodedColourManager.puzzleSolved());
+
     }
     /**
-     * Test whether the tile has a checkmark if tapped
+     * Test whether after a tile is tap, the id of that tile changed into a corresponding id
+     * that represents a tile with a checkmark
      */
     @Test
     public void testIfTileHasCheckAfterTap(){
 
         this.setupAndResetBoard();
-        this.regularColourManager.select(1);
-        assertEquals(7, this.regularColourManager.getBoard2().getTile(1 / 4, 1 % 4).getId());
-
-
+        this.regularColourManager.select(0);
+        assertEquals(7, this.regularColourManager.getBoard2().getTile(0, 0).getId());
 
     }
 
     /**
-     * Test whether the tile has a checkmark if tapped
+     * Test whether the after a tile with a checkmark is tap, the id of that tile changed back into
+     * the id that correspond a blank tile
      */
     @Test
     public void testIfTileIsBlankAfterTap(){
 
         this.setupAndResetBoard();
-        this.regularColourManager.select(1);
-        this.regularColourManager.select(1);
-        assertEquals(6, this.regularColourManager.getBoard2().getTile(1 / 4, 1 % 4).getId());
-
+        this.regularColourManager.select(0);
+        this.regularColourManager.select(0);
+        assertEquals(6, this.regularColourManager.getBoard2().getTile(0,0).getId());
 
 
     }
-
     /**
      * Test whether Board2 check marks correspond to the given color in Board1.
      */
@@ -83,8 +84,12 @@ public class ColourGuessUnitTest {
     public void testScoreIncreased(){
 
         this.setupAndResetBoard();
-        this.regularColourManager.select(0);
-        assertEquals(1, this.regularColourManager.getScore());
+        this.hardcodedColourManager.select(0);
+        this.hardcodedColourManager.select(6);
+        this.hardcodedColourManager.puzzleSolved();
+        assertEquals(1, this.hardcodedColourManager.getScore());
     }
+
+
 
 }
