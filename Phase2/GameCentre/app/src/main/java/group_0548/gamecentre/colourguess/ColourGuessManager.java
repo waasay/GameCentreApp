@@ -61,6 +61,7 @@ public class ColourGuessManager extends AbstractManager {
 
             i = i +1;
         }
+        this.increaseScore(1);
         return true;
     }
 
