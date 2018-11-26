@@ -81,24 +81,24 @@ public class ColourBoard extends AbstractBoard implements Iterable<ColourTile> {
     }
 
     /**
-     * An Iterator for Board tiles.
+     * An Iterator for SlidingBoard tiles.
      */
     private class BoardIterator implements Iterator<ColourTile> {
 
         /**
-         * The row number of the next Tile to return.
+         * The row number of the next SlidingTile to return.
          */
         int rowIndex = 0;
 
         /**
-         * The column number of the next Tile to return.
+         * The column number of the next SlidingTile to return.
          */
         int colIndex = 0;
 
         /**
-         * Returns whether there is another Tile to return.
+         * Returns whether there is another SlidingTile to return.
          *
-         * @return whether there is another Tile to return.
+         * @return whether there is another SlidingTile to return.
          */
         @Override
         public boolean hasNext() {
@@ -106,9 +106,9 @@ public class ColourBoard extends AbstractBoard implements Iterable<ColourTile> {
         }
 
         /**
-         * Returns the next Tile.
+         * Returns the next SlidingTile.
          *
-         * @return the next Tile.
+         * @return the next SlidingTile.
          */
         @Override
         public ColourTile next() {

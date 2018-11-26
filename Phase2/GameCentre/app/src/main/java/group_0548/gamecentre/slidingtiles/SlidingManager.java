@@ -12,7 +12,7 @@ import group_0548.gamecentre.Undoable;
 /**
  * Manage a board, including swapping tiles, checking for a win, and managing taps.
  */
-public class BoardManager extends AbstractManager implements Undoable {
+public class SlidingManager extends AbstractManager implements Undoable {
 
     /**
      * Max number of undos
@@ -21,7 +21,7 @@ public class BoardManager extends AbstractManager implements Undoable {
     /**
      * The board being managed.
      */
-    private Board board;
+    private SlidingBoard board;
     /**
      * The state object that represents the past MAX_UNDO number of states
      * and the current states
@@ -44,16 +44,16 @@ public class BoardManager extends AbstractManager implements Undoable {
     /**
      * Manage a new shuffled board.
      */
-    BoardManager(int rowNum, int colNum, String complex, int maxUndo) {
+    SlidingManager(int rowNum, int colNum, String complex, int maxUndo) {
         this.complexity = complex;
-        List<Tile> tiles = new ArrayList<>();
+        List<SlidingTile> tiles = new ArrayList<>();
         final int numTiles = rowNum * colNum;
         for (int tileNum = 0; tileNum != numTiles; tileNum++) {
-            tiles.add(new Tile(tileNum, rowNum, colNum));
+            tiles.add(new SlidingTile(tileNum, rowNum, colNum));
         }
 
         Collections.shuffle(tiles);
-        this.board = new Board(tiles, rowNum, colNum);
+        this.board = new SlidingBoard(tiles, rowNum, colNum);
 
         /*while not solvable board, shuffle until solvable
         source for algorithm to determine solvability: https://www.cs.bham.ac.uk/~mdr/
@@ -65,7 +65,7 @@ public class BoardManager extends AbstractManager implements Undoable {
         while(!( ((colNum % 2 != 0) && (inversions() % 2 == 0))  ||
                ((colNum % 2 == 0) && ((blankOddRowBottom()) == (inversions() % 2 == 0))) )) {
             Collections.shuffle(tiles);
-            this.board = new Board(tiles, rowNum, colNum);
+            this.board = new SlidingBoard(tiles, rowNum, colNum);
         }
 
         MAX_UNDO = maxUndo;
@@ -74,13 +74,13 @@ public class BoardManager extends AbstractManager implements Undoable {
     }
 
     /**
-     * BoardManager(Board board) {
+     * SlidingManager(SlidingBoard board) {
      * this.board = board;
      * }
      * <p>
      * Return the current board.
      */
-    Board getBoard() {
+    SlidingBoard getBoard() {
         return board;
     }
 
@@ -92,7 +92,7 @@ public class BoardManager extends AbstractManager implements Undoable {
     public boolean puzzleSolved() {
         boolean solved = true;
         int id = 1;
-        for (Tile tile : this.getBoard()) {
+        for (SlidingTile tile : this.getBoard()) {
             if (tile.getId() != id) {
                 solved = false;
             }
@@ -109,7 +109,7 @@ public class BoardManager extends AbstractManager implements Undoable {
      */
     boolean isValidTap(int position) {
         int blankId = board.numTiles();
-        HashMap<String, Tile> tiles = getSurroundTiles(position);
+        HashMap<String, SlidingTile> tiles = getSurroundTiles(position);
 
         return (tiles.get("below") != null && tiles.get("below").getId() == blankId)
                 || (tiles.get("above") != null && tiles.get("above").getId() == blankId)
@@ -127,7 +127,7 @@ public class BoardManager extends AbstractManager implements Undoable {
         int col = position % board.getNumCol();
         int blankId = board.numTiles();
 
-        HashMap<String, Tile> tiles = getSurroundTiles(position);
+        HashMap<String, SlidingTile> tiles = getSurroundTiles(position);
 
         board.increaseScore(1);
 
@@ -157,15 +157,15 @@ public class BoardManager extends AbstractManager implements Undoable {
      * @param position the tile to check
      * @return return a HashMap of the four surrounding tiles
      */
-    HashMap<String, Tile> getSurroundTiles(int position) {
+    HashMap<String, SlidingTile> getSurroundTiles(int position) {
         int row = position / board.getNumRow();
         int col = position % board.getNumCol();
-        HashMap<String, Tile> tileMap = new HashMap<>();
+        HashMap<String, SlidingTile> tileMap = new HashMap<>();
 
-        Tile above = row == 0 ? null : board.getTile(row - 1, col);
-        Tile below = row == board.getNumRow() - 1 ? null : board.getTile(row + 1, col);
-        Tile left = col == 0 ? null : board.getTile(row, col - 1);
-        Tile right = col == board.getNumCol() - 1 ? null : board.getTile(row, col + 1);
+        SlidingTile above = row == 0 ? null : board.getTile(row - 1, col);
+        SlidingTile below = row == board.getNumRow() - 1 ? null : board.getTile(row + 1, col);
+        SlidingTile left = col == 0 ? null : board.getTile(row, col - 1);
+        SlidingTile right = col == board.getNumCol() - 1 ? null : board.getTile(row, col + 1);
 
         tileMap.put("above", above);
         tileMap.put("below", below);
@@ -192,7 +192,7 @@ public class BoardManager extends AbstractManager implements Undoable {
             this.pastStates.getBoards().clear();
         } else {
             int i;
-            Board temp;
+            SlidingBoard temp;
             temp = this.pastStates.getBoards().get(this.currUndo);
             i = this.pastStates.getBoards().indexOf(temp);
             this.pastStates.keepStatesUpTill(i);
@@ -221,7 +221,7 @@ public class BoardManager extends AbstractManager implements Undoable {
      */
 
     public void undoToPastState() {
-        Board temp;
+        SlidingBoard temp;
         temp = this.pastStates.getBoards().get(this.currUndo);
         this.currUndo -= 1;
         this.board.replaceBoard(temp);
@@ -240,7 +240,7 @@ public class BoardManager extends AbstractManager implements Undoable {
      * Redo to the next state
      */
     public void redoToFutureState() {
-        Board temp;
+        SlidingBoard temp;
         this.currUndo += 1;
         int currRedo;
         currRedo = this.currUndo + 1;

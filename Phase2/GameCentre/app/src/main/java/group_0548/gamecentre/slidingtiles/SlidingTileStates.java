@@ -4,7 +4,6 @@ import java.io.Serializable;
 import java.util.ArrayList;
 
 
-
 /**
  * The states of the boards
  */
@@ -14,7 +13,7 @@ public class SlidingTileStates implements Serializable {
     /**
      * An Arraylist of board.
      */
-    private ArrayList<Board> boards;
+    private ArrayList<SlidingBoard> boards;
 
     /**
      * Initialize the states.
@@ -29,7 +28,7 @@ public class SlidingTileStates implements Serializable {
      * @param newBoard the new board
      * @param maxUndo  the maximum number of undo
      */
-    public void updateStates(Board newBoard, int maxUndo) {
+    public void updateStates(SlidingBoard newBoard, int maxUndo) {
 
         if (this.boards.size() < maxUndo + 1) {
             this.boards.add(newBoard);
@@ -47,7 +46,7 @@ public class SlidingTileStates implements Serializable {
      *               a larger index than upTill will not be kept)
      */
     public void keepStatesUpTill(int upTill) {
-        ArrayList<Board> temp = new ArrayList<>();
+        ArrayList<SlidingBoard> temp = new ArrayList<>();
         for (int i = 0; i <= upTill; i++) {
             temp.add(this.getBoards().get(i));
         }
@@ -61,7 +60,7 @@ public class SlidingTileStates implements Serializable {
      * @return the boards
      */
 
-    public ArrayList<Board> getBoards() {
+    public ArrayList<SlidingBoard> getBoards() {
         return this.boards;
     }
 }

@@ -1,4 +1,4 @@
-package group_0548.gamecentre.colourguess;
+package group_0548.gamecentre.slidingtiles;
 
 /*
 Adapted from:
@@ -15,46 +15,46 @@ import android.view.GestureDetector;
 import android.view.MotionEvent;
 import android.widget.GridView;
 
-public class ColourGuessGestureDetectGridView extends GridView {
+public class SlidingGestureDetectGridView extends GridView {
     public static final int SWIPE_MIN_DISTANCE = 100;
     public static final int SWIPE_MAX_OFF_PATH = 100;
     public static final int SWIPE_THRESHOLD_VELOCITY = 100;
     private GestureDetector gDetector;
-    private ColourGuessMovementController mController;
+    private SlidingMovementController mController;
     private boolean mFlingConfirmed = false;
     private float mTouchX;
     private float mTouchY;
-    private ColourManager colourManager;
+    private SlidingManager slidingManager;
 
-    public ColourGuessGestureDetectGridView(Context context) {
+    public SlidingGestureDetectGridView(Context context) {
         super(context);
         init(context);
     }
 
-    public ColourGuessGestureDetectGridView(Context context, AttributeSet attrs) {
+    public SlidingGestureDetectGridView(Context context, AttributeSet attrs) {
         super(context, attrs);
         init(context);
     }
 
-    public ColourGuessGestureDetectGridView(Context context, AttributeSet attrs, int defStyleAttr) {
+    public SlidingGestureDetectGridView(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
         init(context);
     }
 
     @TargetApi(Build.VERSION_CODES.LOLLIPOP) // API 21
-    public ColourGuessGestureDetectGridView(Context context, AttributeSet attrs, int defStyleAttr,
-                                 int defStyleRes) {
+    public SlidingGestureDetectGridView(Context context, AttributeSet attrs, int defStyleAttr,
+                                        int defStyleRes) {
         super(context, attrs, defStyleAttr, defStyleRes);
         init(context);
     }
 
     private void init(final Context context) {
-        mController = new ColourGuessMovementController();
+        mController = new SlidingMovementController();
         gDetector = new GestureDetector(context, new GestureDetector.SimpleOnGestureListener() {
 
             @Override
             public boolean onSingleTapConfirmed(MotionEvent event) {
-                int position = ColourGuessGestureDetectGridView.this.pointToPosition
+                int position = SlidingGestureDetectGridView.this.pointToPosition
                         (Math.round(event.getX()), Math.round(event.getY()));
 
                 mController.processTapMovement(context, position, true);
@@ -101,8 +101,8 @@ public class ColourGuessGestureDetectGridView extends GridView {
         return gDetector.onTouchEvent(ev);
     }
 
-    public void setColourManager(ColourManager colourManager) {
-        this.colourManager = colourManager;
-        mController.setColourManager(colourManager);
+    public void setSlidingManager(SlidingManager slidingManager) {
+        this.slidingManager = slidingManager;
+        mController.setSlidingManager(slidingManager);
     }
 }

@@ -39,7 +39,7 @@ public class ColourGuessMemoryPhaseActivity extends AppCompatActivity {
     /**
      * The colour guess manager.
      */
-    private MemoryManager memoryManager;
+    private ColourManager colourManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,8 +53,8 @@ public class ColourGuessMemoryPhaseActivity extends AppCompatActivity {
         countdownTimerText = findViewById(R.id.MemoryTime);
         startTimer(5000);
         gridView = findViewById(R.id.ColourGrid);
-        gridView.setNumColumns(memoryManager.getBoard1().getNumCol());
-        gridView.setMemoryManager(memoryManager);
+        gridView.setNumColumns(colourManager.getBoard1().getNumCol());
+        gridView.setColourManager(colourManager);
         // Observer sets up desired dimensions as well as calls our display function
         gridView.getViewTreeObserver().addOnGlobalLayoutListener(
                 new ViewTreeObserver.OnGlobalLayoutListener() {
@@ -65,8 +65,8 @@ public class ColourGuessMemoryPhaseActivity extends AppCompatActivity {
                         int displayWidth = gridView.getMeasuredWidth();
                         int displayHeight = gridView.getMeasuredHeight();
 
-                        columnWidth = displayWidth / memoryManager.getBoard1().getNumCol();
-                        columnHeight = displayHeight / memoryManager.getBoard1().getNumRow();
+                        columnWidth = displayWidth / colourManager.getBoard1().getNumCol();
+                        columnHeight = displayHeight / colourManager.getBoard1().getNumRow();
 
                         display();
                     }
@@ -88,10 +88,10 @@ public class ColourGuessMemoryPhaseActivity extends AppCompatActivity {
      * @param context the context
      */
     private void createTileButtons(Context context) {
-        ColourBoard board = memoryManager.getBoard1();
+        ColourBoard board = colourManager.getBoard1();
         tileButtons = new ArrayList<>();
-        for (int row = 0; row != memoryManager.getBoard1().getNumRow(); row++) {
-            for (int col = 0; col != memoryManager.getBoard1().getNumCol(); col++) {
+        for (int row = 0; row != colourManager.getBoard1().getNumRow(); row++) {
+            for (int col = 0; col != colourManager.getBoard1().getNumCol(); col++) {
                 Button tmp = new Button(context);
                 tmp.setBackgroundResource(board.getTile(row, col).getBackground());
                 this.tileButtons.add(tmp);
@@ -108,7 +108,7 @@ public class ColourGuessMemoryPhaseActivity extends AppCompatActivity {
             InputStream inputStream = this.openFileInput(ColourGuessStartingActivity.TEMP_SAVE_FILENAME);
             if (inputStream != null) {
                 ObjectInputStream input = new ObjectInputStream(inputStream);
-                memoryManager = (MemoryManager) input.readObject();
+                colourManager = (ColourManager) input.readObject();
                 inputStream.close();
             }
         } catch (FileNotFoundException e) {

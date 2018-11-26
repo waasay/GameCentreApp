@@ -1,4 +1,4 @@
-package group_0548.gamecentre.colourguess;
+package group_0548.gamecentre.slidingtiles;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -6,18 +6,35 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
+import android.widget.TextView;
 
 import java.io.IOException;
 import java.io.ObjectOutputStream;
 
 import group_0548.gamecentre.R;
 
-public class ColourGuessChooseComplexityActivity extends AppCompatActivity {
+/**
+ * The layout activity that allows the user to pick the difficulty
+ * and amount of undo's times of the sliding tile game.
+ */
+public class SlidingChooseComplexityActivity extends AppCompatActivity {
+
 
     /**
-     * The colour guess manager.
+     * The maximum undo of a game
      */
-    private ColourManager colourManager;
+    private static int MAX_UNDO = 3;
+    /**
+     * The board manager.
+     */
+    private SlidingManager slidingManager;
+
+    /**
+     * TextView for the current undo to display on the app
+     */
+    private TextView currentUndo;
+
 
     /**
      * Initialize the layout activity of Complete
@@ -27,21 +44,24 @@ public class ColourGuessChooseComplexityActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_colour_choose_complexity);
+        setContentView(R.layout.activity_choose_complexity);
+        MAX_UNDO = 3;
         addEasyButtonListener();
         addMediumButtonListener();
         addHardButtonListener();
+        customUndo();
+        currentUndo = findViewById(R.id.SlidingCurrUndo);
     }
 
     /**
      * Initialize the listener for the easy complexity button
      */
     private void addEasyButtonListener() {
-        Button threeButton = findViewById(R.id.ColourEasyButton);
+        Button threeButton = findViewById(R.id.SlidingEasyButton);
         threeButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                colourManager = new ColourManager(3, 3, "Easy");
+                slidingManager = new SlidingManager(3, 3, "Easy", MAX_UNDO);
                 switchToGame();
             }
         });
@@ -51,11 +71,11 @@ public class ColourGuessChooseComplexityActivity extends AppCompatActivity {
      * Initialize the listener for the medium complexity button
      */
     private void addMediumButtonListener() {
-        Button fourButton = findViewById(R.id.ColourMediumButton);
+        Button fourButton = findViewById(R.id.SlidingMediumButton);
         fourButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                colourManager = new ColourManager(4, 4, "Medium");
+                slidingManager = new SlidingManager(4, 4, "Medium", MAX_UNDO);
                 switchToGame();
             }
         });
@@ -65,22 +85,42 @@ public class ColourGuessChooseComplexityActivity extends AppCompatActivity {
      * Initialize the listener for the hard complexity button
      */
     private void addHardButtonListener() {
-        Button fiveButton = findViewById(R.id.ColourHardButton);
+        Button fiveButton = findViewById(R.id.SlidingHardButton);
         fiveButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                colourManager = new ColourManager(5, 5, "Hard");
+                slidingManager = new SlidingManager(5, 5, "Hard", MAX_UNDO);
                 switchToGame();
             }
         });
     }
 
     /**
+     * Initialize the EditText for the user to input custom maximum
+     * input, and the confirm button that saves it
+     */
+    private void customUndo() {
+        Button confirmButton = findViewById(R.id.SlidingSetUndo);
+        confirmButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                EditText maxUndo = findViewById(R.id.SlidingCustomUndo);
+                String undos = maxUndo.getText().toString();
+                if (!undos.equals("")) {
+                    MAX_UNDO = Integer.parseInt(undos);
+                    currentUndo.setText(String.valueOf(MAX_UNDO));
+                }
+            }
+        });
+
+    }
+
+    /**
      * Switch to the SlidingGameActivity view to play the game.
      */
     private void switchToGame() {
-        Intent tmp = new Intent(this, ColourGuessMemoryPhaseActivity.class);
-        saveToFile(ColourGuessStartingActivity.TEMP_SAVE_FILENAME);
+        Intent tmp = new Intent(this, SlidingGameActivity.class);
+        saveToFile(SlidingStartingActivity.TEMP_SAVE_FILENAME);
         startActivity(tmp);
     }
 
@@ -93,18 +133,10 @@ public class ColourGuessChooseComplexityActivity extends AppCompatActivity {
         try {
             ObjectOutputStream outputStream = new ObjectOutputStream(
                     this.openFileOutput(fileName, MODE_PRIVATE));
-            outputStream.writeObject(colourManager);
+            outputStream.writeObject(slidingManager);
             outputStream.close();
         } catch (IOException e) {
             Log.e("Exception", "File write failed: " + e.toString());
         }
     }
-
-    @Override
-    public void onBackPressed() {
-        super.onBackPressed();
-        startActivity(new Intent(this, ColourGuessStartingActivity.class));
-        finish();
-    }
 }
-

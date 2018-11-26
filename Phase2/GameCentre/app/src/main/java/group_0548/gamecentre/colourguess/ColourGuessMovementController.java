@@ -1,13 +1,12 @@
 package group_0548.gamecentre.colourguess;
 
 import android.content.Context;
-import android.widget.Toast;
 
 public class ColourGuessMovementController {
     /**
      * The board manager
      */
-    private MemoryManager memoryManager = null;
+    private ColourManager colourManager = null;
 
     /**
      * The movement controller
@@ -18,10 +17,10 @@ public class ColourGuessMovementController {
     /**
      * Setting the board manager
      *
-     * @param memoryManager the board manager
+     * @param colourManager the board manager
      */
-    void setMemoryManager(MemoryManager memoryManager) {
-        this.memoryManager = memoryManager;
+    void setColourManager(ColourManager colourManager) {
+        this.colourManager = colourManager;
     }
 
     /**
@@ -31,7 +30,7 @@ public class ColourGuessMovementController {
      * @param position the position of the tile
      */
     void processTapMovement(Context context, int position, boolean display) {
-        memoryManager.select(position);
+        colourManager.select(position);
     }
 }
 

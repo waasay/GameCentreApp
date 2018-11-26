@@ -6,7 +6,7 @@ import java.util.Random;
 import group_0548.gamecentre.AbstractManager;
 
 
-public class MemoryManager extends AbstractManager {
+public class ColourManager extends AbstractManager {
 
     private int time = 60000;
     private int rows;
@@ -17,7 +17,7 @@ public class MemoryManager extends AbstractManager {
     private int score = 0;
     private String complexity;
 
-    MemoryManager(int rowNum, int colNum, String complex) {
+    ColourManager(int rowNum, int colNum, String complex) {
         this.rows = rowNum;
         this.cols = colNum;
         this.complexity = complex;
