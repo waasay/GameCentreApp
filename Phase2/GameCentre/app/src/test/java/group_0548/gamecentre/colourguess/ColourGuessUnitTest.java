@@ -24,24 +24,25 @@ public class ColourGuessUnitTest {
     /**
      * The method for setting up and resetting the board for testing.
      */
-    private void setupAndResetBoard(){
-        this.regularColourManager = new ColourGuessManager(4,4,"Medium");
-        this.hardcodedColourManager = new ColourGuessManager(4,4,"Medium");
-        List<ColourGuessTile> hardcodedTiles= new ArrayList<>();
-        List<Integer> idList = Arrays.asList(0,1,2,3,4,5,0,1,2,3,4,5,3,1,2,5);
-        for (int j = 0; j < this.hardcodedColourManager.getBoard1().numTiles(); j++){
+    private void setupAndResetBoard() {
+        this.regularColourManager = new ColourGuessManager(4, 4, "Medium");
+        this.hardcodedColourManager = new ColourGuessManager(4, 4, "Medium");
+        List<ColourGuessTile> hardcodedTiles = new ArrayList<>();
+        List<Integer> idList = Arrays.asList(0, 1, 2, 3, 4, 5, 0, 1, 2, 3, 4, 5, 3, 1, 2, 5);
+        for (int j = 0; j < this.hardcodedColourManager.getBoard1().numTiles(); j++) {
             hardcodedTiles.add(new ColourGuessTile(idList.get(j)));
         }
-        ColourGuessBoard board = new ColourGuessBoard(hardcodedTiles,4,4);
+        ColourGuessBoard board = new ColourGuessBoard(hardcodedTiles, 4, 4);
         ColourGuessTile[][] newTile = board.getTiles();
         this.hardcodedColourManager.getBoard1().setTiles(newTile);
 
     }
+
     /**
      * Test whether Board2 check marks correspond to the given color in Board1.
      */
     @Test
-    public void testIsSolved(){
+    public void testIsSolved() {
 
         this.setupAndResetBoard();
         assertEquals(false, this.hardcodedColourManager.puzzleSolved());
@@ -50,12 +51,13 @@ public class ColourGuessUnitTest {
         assertEquals(true, this.hardcodedColourManager.puzzleSolved());
 
     }
+
     /**
      * Test whether after a tile is tap, the id of that tile changed into a corresponding id
      * that represents a tile with a checkmark
      */
     @Test
-    public void testIfTileHasCheckAfterTap(){
+    public void testIfTileHasCheckAfterTap() {
 
         this.setupAndResetBoard();
         this.regularColourManager.select(0);
@@ -68,20 +70,21 @@ public class ColourGuessUnitTest {
      * the id that correspond a blank tile
      */
     @Test
-    public void testIfTileIsBlankAfterTap(){
+    public void testIfTileIsBlankAfterTap() {
 
         this.setupAndResetBoard();
         this.regularColourManager.select(0);
         this.regularColourManager.select(0);
-        assertEquals(6, this.regularColourManager.getBoard2().getTile(0,0).getId());
+        assertEquals(6, this.regularColourManager.getBoard2().getTile(0, 0).getId());
 
 
     }
+
     /**
      * Test whether Board2 check marks correspond to the given color in Board1.
      */
     @Test
-    public void testScoreIncreased(){
+    public void testScoreIncreased() {
 
         this.setupAndResetBoard();
         this.hardcodedColourManager.select(0);
@@ -90,6 +93,51 @@ public class ColourGuessUnitTest {
         assertEquals(1, this.hardcodedColourManager.getScore());
     }
 
+    /**
+     * Test getBackground for the different tile of the same colour gets the same
+     * background
+     */
+    @Test
+    public void testGetBackground() {
+        this.setupAndResetBoard();
+        assertEquals(this.hardcodedColourManager.getBoard1().getTile(0, 0).getBackground(),
+                this.hardcodedColourManager.getBoard1().getTile(1, 2).getBackground());
+    }
 
+    /**
+     * Test whether switching a different color to guess puzzle solve still works
+     */
+    @Test
+    public void testDifferentColor() {
+        this.setupAndResetBoard();
+        this.hardcodedColourManager.setId(1);
+        this.hardcodedColourManager.select(1);
+        this.hardcodedColourManager.select(7);
+        this.hardcodedColourManager.select(13);
+        assertEquals(true, this.hardcodedColourManager.puzzleSolved());
+    }
 
+    /**
+     * Test whether the iterator in ColourGuessBoard actually works
+     */
+    @Test
+    public void testIterator() {
+        this.setupAndResetBoard();
+        this.regularColourManager.setId(2);
+        int i = 0;
+        int row;
+        int col;
+        for (ColourGuessTile t : this.regularColourManager.getBoard1()) {
+            if (t.getId() == 2) {
+                this.regularColourManager.select(i);
+            }
+            i++;
+        }
+
+        assertEquals(true,this.regularColourManager.puzzleSolved());
+    }
 }
+
+
+
+
