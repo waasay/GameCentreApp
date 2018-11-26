@@ -5,12 +5,6 @@ import java.util.Observable;
 
 public abstract class AbstractManager extends Observable implements Serializable {
 
-    /**
-     * The board being managed.
-     */
-    protected AbstractBoard board;
-
-
 
     public abstract boolean puzzleSolved();
 

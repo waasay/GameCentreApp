@@ -50,7 +50,7 @@ public abstract class AbstractBoard implements Serializable {
 
 
     public String toString(){
-        return "Board{" +
+        return "SlidingBoard{" +
                 "tiles=" + Arrays.toString(tiles) +
                 '}';
 

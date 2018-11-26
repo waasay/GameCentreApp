@@ -10,7 +10,7 @@ import java.util.ArrayList;
 
 
 import group_0548.gamecentre.colourguess.ColourGuessStartingActivity;
-import group_0548.gamecentre.slidingtiles.StartingActivity;
+import group_0548.gamecentre.slidingtiles.SlidingStartingActivity;
 
 /**
  * The scoreboard activity.
@@ -114,9 +114,9 @@ public class ChooseScoreBoardActivity extends AppCompatActivity {
      */
     private void switchToScore(String complexity) {
         ArrayList<String> list = new ArrayList<>();
-        if (gameType.equals(StartingActivity.GAME_TYPE)) {
-            list = StartingActivity.scoreBoardManager.getScoreBoard(complexity)
-                    .getScoreContent(StartingActivity.ORDER);
+        if (gameType.equals(SlidingStartingActivity.GAME_TYPE)) {
+            list = SlidingStartingActivity.scoreBoardManager.getScoreBoard(complexity)
+                    .getScoreContent(SlidingStartingActivity.ORDER);
         } else if (gameType.equals(ColourGuessStartingActivity.GAME_TYPE)) {
             list = ColourGuessStartingActivity.scoreBoardManager.getScoreBoard(complexity)
                     .getScoreContent(ColourGuessStartingActivity.ORDER);

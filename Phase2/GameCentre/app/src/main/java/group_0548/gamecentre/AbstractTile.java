@@ -3,7 +3,7 @@ package group_0548.gamecentre;
 import java.io.Serializable;
 
 /**
- * Abstract Tile Object for the individual tile object in the game.
+ * Abstract SlidingTile Object for the individual tile object in the game.
  */
 public abstract class AbstractTile implements Serializable {
 
