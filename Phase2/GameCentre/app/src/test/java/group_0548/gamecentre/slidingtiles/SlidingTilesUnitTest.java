@@ -111,8 +111,12 @@ public class SlidingTilesUnitTest {
     public void testGetSurroundTiles(){
         this.setUpAndResetBoard();
         SlidingTile emptyTile = this.findEmptyTile(this.solvedSlidingManager.getBoard());
-        int emptyPos = this.getPosition(emptyTile,this.mediumSlidingManager.getBoard());
-        HashMap<String, SlidingTile> around = this.mediumSlidingManager.getSurroundTiles(emptyPos);
+        int emptyPos = this.getPosition(emptyTile,this.solvedSlidingManager.getBoard());
+        HashMap<String, SlidingTile> around = this.solvedSlidingManager.getSurroundTiles(emptyPos);
+        assertEquals(null,around.get("below"));
+        assertEquals(null,around.get("right"));
+        assertEquals(15,around.get("left").getId());
+        assertEquals(12,around.get("above").getId());
 
     }
 
