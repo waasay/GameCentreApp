@@ -6,7 +6,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 
-import group_0548.gamecentre.slidingtiles.StartingActivity;
+import group_0548.gamecentre.slidingtiles.SlidingStartingActivity;
 import group_0548.gamecentre.colourguess.ColourGuessStartingActivity;
 
 /**
@@ -27,7 +27,7 @@ public class GameCentreActivity extends AppCompatActivity {
     }
 
     /**
-     * Initializing the Sliding Tile button to go to the sliding tile game
+     * Initializing the Sliding SlidingTile button to go to the sliding tile game
      */
     private void addStartSlidingTilesListener() {
         Button button = findViewById(R.id.SlidingTilesGame);
@@ -56,7 +56,7 @@ public class GameCentreActivity extends AppCompatActivity {
      * Method to go the sliding tile game activity page
      */
     private void switchToSlidingTiles() {
-        Intent tmp = new Intent(this, StartingActivity.class);
+        Intent tmp = new Intent(this, SlidingStartingActivity.class);
         startActivity(tmp);
     }
 

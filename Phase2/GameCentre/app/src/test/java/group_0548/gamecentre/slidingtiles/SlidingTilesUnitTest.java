@@ -17,21 +17,21 @@ public class SlidingTilesUnitTest {
     /**
      * The medium complexity board manager for testing
      */
-    private BoardManager mediumBoardManager;
+    private SlidingManager mediumSlidingManager;
     /**
      * The medium complexity board manger for testing, the board for this
      * one however is solved
      */
-    private BoardManager solvedBoardManager;
+    private SlidingManager solvedSlidingManager;
 
     /**
      * Make a set of tiles that are in order.
      * @return a set of tiles that are in order
      */
-    private List<Tile> makeTiles(int rowNum, int colNum) {
-        List<Tile> tiles = new ArrayList<>();
+    private List<SlidingTile> makeTiles(int rowNum, int colNum) {
+        List<SlidingTile> tiles = new ArrayList<>();
         for (int i = 0; i < colNum*rowNum; i++){
-            tiles.add(new Tile(i,rowNum,colNum));
+            tiles.add(new SlidingTile(i,rowNum,colNum));
         }
 
         return tiles;
@@ -43,10 +43,10 @@ public class SlidingTilesUnitTest {
      * @return the empty tile
      */
 
-    private Tile findEmptyTile(Board board) {
+    private SlidingTile findEmptyTile(SlidingBoard board) {
         int numOfTiles = board.numTiles();
-        Tile toReturn = board.getTile(3,3);
-        for (Tile t : board) {
+        SlidingTile toReturn = board.getTile(3,3);
+        for (SlidingTile t : board) {
             if (t.getId() == numOfTiles) {
                 toReturn = t;
                 break;
@@ -55,7 +55,7 @@ public class SlidingTilesUnitTest {
         return toReturn;
     }
 
-    private int getPosition(Tile tile, Board board) {
+    private int getPosition(SlidingTile tile, SlidingBoard board) {
         int toReturn = 0;
         for (int n = 0; n < board.numTiles(); n++) {
             int i = n / board.getNumRow();
@@ -73,12 +73,12 @@ public class SlidingTilesUnitTest {
      * and 3 other boards at different complexity.
      */
     private void setUpAndResetBoard() {
-        this.mediumBoardManager = new BoardManager(4, 4, "Medium", 3);
-        this.solvedBoardManager = new BoardManager(4, 4, "Medium", 3);
-        List<Tile> tiles = makeTiles(4,4);
-        Board board = new Board(tiles, 4,4);
-        Tile[][] newTiles = board.getTiles();
-        this.solvedBoardManager.getBoard().setTiles(newTiles);
+        this.mediumSlidingManager = new SlidingManager(4, 4, "Medium", 3);
+        this.solvedSlidingManager = new SlidingManager(4, 4, "Medium", 3);
+        List<SlidingTile> tiles = makeTiles(4,4);
+        SlidingBoard board = new SlidingBoard(tiles, 4,4);
+        SlidingTile[][] newTiles = board.getTiles();
+        this.solvedSlidingManager.getBoard().setTiles(newTiles);
 
     }
 
@@ -89,8 +89,8 @@ public class SlidingTilesUnitTest {
     public void testIsSolved(){
 
         this.setUpAndResetBoard();
-        assertEquals(true, this.solvedBoardManager.puzzleSolved());
-        assertEquals(false, this.mediumBoardManager.puzzleSolved());
+        assertEquals(true, this.solvedSlidingManager.puzzleSolved());
+        assertEquals(false, this.mediumSlidingManager.puzzleSolved());
     }
 
     /**
@@ -99,9 +99,9 @@ public class SlidingTilesUnitTest {
     @Test
     public void testSwapFirstTwo() {
         this.setUpAndResetBoard();
-        this.solvedBoardManager.getBoard().swapTiles(0, 0, 0, 1);
-        assertEquals(2, this.solvedBoardManager.getBoard().getTile(0, 0).getId());
-        assertEquals(1, this.solvedBoardManager.getBoard().getTile(0, 1).getId());
+        this.solvedSlidingManager.getBoard().swapTiles(0, 0, 0, 1);
+        assertEquals(2, this.solvedSlidingManager.getBoard().getTile(0, 0).getId());
+        assertEquals(1, this.solvedSlidingManager.getBoard().getTile(0, 1).getId());
     }
 
     /**
@@ -110,9 +110,9 @@ public class SlidingTilesUnitTest {
     @Test
     public void testGetSurroundTiles(){
         this.setUpAndResetBoard();
-        Tile emptyTile = this.findEmptyTile(this.solvedBoardManager.getBoard());
-        int emptyPos = this.getPosition(emptyTile,this.mediumBoardManager.getBoard());
-        HashMap<String, Tile> around = this.mediumBoardManager.getSurroundTiles(emptyPos);
+        SlidingTile emptyTile = this.findEmptyTile(this.solvedSlidingManager.getBoard());
+        int emptyPos = this.getPosition(emptyTile,this.mediumSlidingManager.getBoard());
+        HashMap<String, SlidingTile> around = this.mediumSlidingManager.getSurroundTiles(emptyPos);
 
     }
 
@@ -122,18 +122,18 @@ public class SlidingTilesUnitTest {
     @Test
     public void testIsValidTap() {
         setUpAndResetBoard();
-        Tile emptyTile = this.findEmptyTile(this.mediumBoardManager.getBoard());
-        int emptyPosition = this.getPosition(emptyTile,this.mediumBoardManager.getBoard());
-        HashMap<String, Tile> around = this.mediumBoardManager.getSurroundTiles(emptyPosition);
+        SlidingTile emptyTile = this.findEmptyTile(this.mediumSlidingManager.getBoard());
+        int emptyPosition = this.getPosition(emptyTile,this.mediumSlidingManager.getBoard());
+        HashMap<String, SlidingTile> around = this.mediumSlidingManager.getSurroundTiles(emptyPosition);
         if (around.get("above") != null) {
-            int abovePos = this.getPosition(around.get("above"), this.mediumBoardManager.getBoard());
-            assertEquals(true, this.mediumBoardManager.isValidTap(abovePos));
+            int abovePos = this.getPosition(around.get("above"), this.mediumSlidingManager.getBoard());
+            assertEquals(true, this.mediumSlidingManager.isValidTap(abovePos));
         }
         else{
-            int belowPos = this.getPosition(around.get("below"), this.mediumBoardManager.getBoard());
-            assertEquals(true, this.mediumBoardManager.isValidTap(belowPos));
+            int belowPos = this.getPosition(around.get("below"), this.mediumSlidingManager.getBoard());
+            assertEquals(true, this.mediumSlidingManager.isValidTap(belowPos));
         }
-        assertEquals(false, this.mediumBoardManager.isValidTap(emptyPosition));
+        assertEquals(false, this.mediumSlidingManager.isValidTap(emptyPosition));
     }
 
     /**
@@ -143,21 +143,21 @@ public class SlidingTilesUnitTest {
     @Test
     public void testScoreIncreaseAndCurrentUndoResetAfterTouchMove() {
         this.setUpAndResetBoard();
-        Tile emptyTile = this.findEmptyTile(this.mediumBoardManager.getBoard());
-        int emptyPos = this.getPosition(emptyTile, this.mediumBoardManager.getBoard());
-        HashMap<String, Tile> around = this.mediumBoardManager.getSurroundTiles(emptyPos);
-        int oldScore = this.mediumBoardManager.getBoard().getScore();
-        int valueOfResetUndo = this.mediumBoardManager.getMaxUndo() - 1;
+        SlidingTile emptyTile = this.findEmptyTile(this.mediumSlidingManager.getBoard());
+        int emptyPos = this.getPosition(emptyTile, this.mediumSlidingManager.getBoard());
+        HashMap<String, SlidingTile> around = this.mediumSlidingManager.getSurroundTiles(emptyPos);
+        int oldScore = this.mediumSlidingManager.getBoard().getScore();
+        int valueOfResetUndo = this.mediumSlidingManager.getMaxUndo() - 1;
         if (around.get("above") != null) {
-            int abovePos = this.getPosition(around.get("above"), this.mediumBoardManager.getBoard());
-            this.mediumBoardManager.touchMove(abovePos);
-            assertEquals(oldScore + 1, this.mediumBoardManager.getBoard().getScore());
+            int abovePos = this.getPosition(around.get("above"), this.mediumSlidingManager.getBoard());
+            this.mediumSlidingManager.touchMove(abovePos);
+            assertEquals(oldScore + 1, this.mediumSlidingManager.getBoard().getScore());
         } else {
-            int belowPos = this.getPosition(around.get("below"), this.mediumBoardManager.getBoard());
-            this.mediumBoardManager.touchMove(belowPos);
-            assertEquals(oldScore + 1, this.mediumBoardManager.getBoard().getScore());
+            int belowPos = this.getPosition(around.get("below"), this.mediumSlidingManager.getBoard());
+            this.mediumSlidingManager.touchMove(belowPos);
+            assertEquals(oldScore + 1, this.mediumSlidingManager.getBoard().getScore());
         }
-        assertEquals(valueOfResetUndo, this.mediumBoardManager.getCurrUndo());
+        assertEquals(valueOfResetUndo, this.mediumSlidingManager.getCurrUndo());
     }
 
     /**
@@ -167,23 +167,23 @@ public class SlidingTilesUnitTest {
     @Test
     public void testAbleToUndoAndAbleToRedo(){
         this.setUpAndResetBoard();
-        assertEquals(false,this.solvedBoardManager.ableToUndo());
-        Tile emptyTile = this.findEmptyTile(this.mediumBoardManager.getBoard());
-        int emptyPos = this.getPosition(emptyTile,this.mediumBoardManager.getBoard());
-        HashMap<String, Tile> around = this.mediumBoardManager.getSurroundTiles(emptyPos);
+        assertEquals(false,this.solvedSlidingManager.ableToUndo());
+        SlidingTile emptyTile = this.findEmptyTile(this.mediumSlidingManager.getBoard());
+        int emptyPos = this.getPosition(emptyTile,this.mediumSlidingManager.getBoard());
+        HashMap<String, SlidingTile> around = this.mediumSlidingManager.getSurroundTiles(emptyPos);
         if (around.get("above") != null) {
-            int abovePos = this.getPosition(around.get("above"), this.mediumBoardManager.getBoard());
-            this.mediumBoardManager.touchMove(abovePos);
-            assertEquals(true, this.mediumBoardManager.ableToUndo());
+            int abovePos = this.getPosition(around.get("above"), this.mediumSlidingManager.getBoard());
+            this.mediumSlidingManager.touchMove(abovePos);
+            assertEquals(true, this.mediumSlidingManager.ableToUndo());
         } else {
-            int belowPos = this.getPosition(around.get("below"), this.mediumBoardManager.getBoard());
-            this.mediumBoardManager.touchMove(belowPos);
-            assertEquals(true, this.mediumBoardManager.ableToUndo());
+            int belowPos = this.getPosition(around.get("below"), this.mediumSlidingManager.getBoard());
+            this.mediumSlidingManager.touchMove(belowPos);
+            assertEquals(true, this.mediumSlidingManager.ableToUndo());
         }
-        this.mediumBoardManager.undoToPastState();
-        assertEquals(true, this.mediumBoardManager.ableToRedo());
-        assertEquals(false,this.solvedBoardManager.ableToRedo());
-        assertEquals(false, this.solvedBoardManager.ableToUndo());
+        this.mediumSlidingManager.undoToPastState();
+        assertEquals(true, this.mediumSlidingManager.ableToRedo());
+        assertEquals(false,this.solvedSlidingManager.ableToRedo());
+        assertEquals(false, this.solvedSlidingManager.ableToUndo());
 
 
     }
@@ -196,19 +196,19 @@ public class SlidingTilesUnitTest {
     public void testUpdateStatesWith10Moves(){
         this.setUpAndResetBoard();
         for (int moves = 0; moves < 10; moves++){
-            Tile emptyTile = findEmptyTile(this.mediumBoardManager.getBoard());
-            int emptyPos = this.getPosition(emptyTile,this.mediumBoardManager.getBoard());
-            HashMap<String, Tile> around = this.mediumBoardManager.getSurroundTiles(emptyPos);
+            SlidingTile emptyTile = findEmptyTile(this.mediumSlidingManager.getBoard());
+            int emptyPos = this.getPosition(emptyTile,this.mediumSlidingManager.getBoard());
+            HashMap<String, SlidingTile> around = this.mediumSlidingManager.getSurroundTiles(emptyPos);
             if (around.get("above") != null) {
-                int abovePos = this.getPosition(around.get("above"), this.mediumBoardManager.getBoard());
-                this.mediumBoardManager.touchMove(abovePos);
+                int abovePos = this.getPosition(around.get("above"), this.mediumSlidingManager.getBoard());
+                this.mediumSlidingManager.touchMove(abovePos);
             } else {
-                int belowPos = this.getPosition(around.get("below"), this.mediumBoardManager.getBoard());
-                this.mediumBoardManager.touchMove(belowPos);
+                int belowPos = this.getPosition(around.get("below"), this.mediumSlidingManager.getBoard());
+                this.mediumSlidingManager.touchMove(belowPos);
             }
         }
 
-        assertEquals(4,this.mediumBoardManager.getPastStates().getBoards().size());
+        assertEquals(4,this.mediumSlidingManager.getPastStates().getBoards().size());
 
     }
 
@@ -219,48 +219,48 @@ public class SlidingTilesUnitTest {
      */
     public void testUpdateToPastStateAndRedoToFutureState(){
         this.setUpAndResetBoard();
-        Tile emptyTile = findEmptyTile(this.mediumBoardManager.getBoard());
-        int emptyPos = this.getPosition(emptyTile,this.mediumBoardManager.getBoard());
-        HashMap<String, Tile> around = this.mediumBoardManager.getSurroundTiles(emptyPos);
+        SlidingTile emptyTile = findEmptyTile(this.mediumSlidingManager.getBoard());
+        int emptyPos = this.getPosition(emptyTile,this.mediumSlidingManager.getBoard());
+        HashMap<String, SlidingTile> around = this.mediumSlidingManager.getSurroundTiles(emptyPos);
         if (around.get("above") != null) {
-            int abovePos = this.getPosition(around.get("above"), this.mediumBoardManager.getBoard());
-            this.mediumBoardManager.touchMove(abovePos);
+            int abovePos = this.getPosition(around.get("above"), this.mediumSlidingManager.getBoard());
+            this.mediumSlidingManager.touchMove(abovePos);
         } else {
-            int belowPos = this.getPosition(around.get("below"), this.mediumBoardManager.getBoard());
-            this.mediumBoardManager.touchMove(belowPos);
+            int belowPos = this.getPosition(around.get("below"), this.mediumSlidingManager.getBoard());
+            this.mediumSlidingManager.touchMove(belowPos);
         }
-        emptyTile = findEmptyTile(this.mediumBoardManager.getBoard());
-        emptyPos = this.getPosition(emptyTile,this.mediumBoardManager.getBoard());
-        around = this.mediumBoardManager.getSurroundTiles(emptyPos);
+        emptyTile = findEmptyTile(this.mediumSlidingManager.getBoard());
+        emptyPos = this.getPosition(emptyTile,this.mediumSlidingManager.getBoard());
+        around = this.mediumSlidingManager.getSurroundTiles(emptyPos);
         if (around.get("above") != null) {
-            int abovePos = this.getPosition(around.get("above"), this.mediumBoardManager.getBoard());
-            this.mediumBoardManager.touchMove(abovePos);
+            int abovePos = this.getPosition(around.get("above"), this.mediumSlidingManager.getBoard());
+            this.mediumSlidingManager.touchMove(abovePos);
         } else {
-            int belowPos = this.getPosition(around.get("below"), this.mediumBoardManager.getBoard());
-            this.mediumBoardManager.touchMove(belowPos);
+            int belowPos = this.getPosition(around.get("below"), this.mediumSlidingManager.getBoard());
+            this.mediumSlidingManager.touchMove(belowPos);
         }
-        int currUndo = this.mediumBoardManager.getCurrUndo();
-        this.mediumBoardManager.undoToPastState();
+        int currUndo = this.mediumSlidingManager.getCurrUndo();
+        this.mediumSlidingManager.undoToPastState();
 
-        assertEquals(currUndo-1,this.mediumBoardManager.getCurrUndo());
+        assertEquals(currUndo-1,this.mediumSlidingManager.getCurrUndo());
 
-        this.mediumBoardManager.undoToPastState();
-        currUndo = this.mediumBoardManager.getCurrUndo();
-        this.mediumBoardManager.redoToFutureState();
-        assertEquals(currUndo+1, this.mediumBoardManager.getCurrUndo());
+        this.mediumSlidingManager.undoToPastState();
+        currUndo = this.mediumSlidingManager.getCurrUndo();
+        this.mediumSlidingManager.redoToFutureState();
+        assertEquals(currUndo+1, this.mediumSlidingManager.getCurrUndo());
     }
 
 
 
 
     /**
-     * Test getBackground and compareTo in Tile
+     * Test getBackground and compareTo in SlidingTile
      */
     @Test
     public void testGetBackgroundAndCompareTo(){
         this.setUpAndResetBoard();
-        Tile emptyTile = findEmptyTile(this.solvedBoardManager.getBoard());
-        Tile toCompare = this.solvedBoardManager.getBoard().getTile(0,0);
+        SlidingTile emptyTile = findEmptyTile(this.solvedSlidingManager.getBoard());
+        SlidingTile toCompare = this.solvedSlidingManager.getBoard().getTile(0,0);
         assertEquals(false, emptyTile.getBackground() == toCompare.getBackground());
         assertEquals(-15, emptyTile.compareTo(toCompare));
     }
@@ -275,62 +275,62 @@ public class SlidingTilesUnitTest {
     public void testUpdateStatesAfterUndoAndUndoingAfterMaxUndo(){
         this.setUpAndResetBoard();
         for (int moves = 0; moves < 3; moves++){
-            Tile emptyTile = findEmptyTile(this.mediumBoardManager.getBoard());
-            int emptyPos = this.getPosition(emptyTile,this.mediumBoardManager.getBoard());
-            HashMap<String, Tile> around = this.mediumBoardManager.getSurroundTiles(emptyPos);
+            SlidingTile emptyTile = findEmptyTile(this.mediumSlidingManager.getBoard());
+            int emptyPos = this.getPosition(emptyTile,this.mediumSlidingManager.getBoard());
+            HashMap<String, SlidingTile> around = this.mediumSlidingManager.getSurroundTiles(emptyPos);
             if (around.get("above") != null) {
-                int abovePos = this.getPosition(around.get("above"), this.mediumBoardManager.getBoard());
-                this.mediumBoardManager.touchMove(abovePos);
+                int abovePos = this.getPosition(around.get("above"), this.mediumSlidingManager.getBoard());
+                this.mediumSlidingManager.touchMove(abovePos);
             } else {
-                int belowPos = this.getPosition(around.get("below"), this.mediumBoardManager.getBoard());
-                this.mediumBoardManager.touchMove(belowPos);
+                int belowPos = this.getPosition(around.get("below"), this.mediumSlidingManager.getBoard());
+                this.mediumSlidingManager.touchMove(belowPos);
             }
         }
-        this.mediumBoardManager.undoToPastState();
-        this.mediumBoardManager.undoToPastState();
-        this.mediumBoardManager.undoToPastState();
-        assertEquals(false,this.mediumBoardManager.ableToUndo());
-        Tile emptyTile = this.findEmptyTile(this.mediumBoardManager.getBoard());
-        int emptyPos = this.getPosition(emptyTile,this.mediumBoardManager.getBoard());
-        HashMap<String,Tile> around = this.mediumBoardManager.getSurroundTiles(emptyPos);
+        this.mediumSlidingManager.undoToPastState();
+        this.mediumSlidingManager.undoToPastState();
+        this.mediumSlidingManager.undoToPastState();
+        assertEquals(false,this.mediumSlidingManager.ableToUndo());
+        SlidingTile emptyTile = this.findEmptyTile(this.mediumSlidingManager.getBoard());
+        int emptyPos = this.getPosition(emptyTile,this.mediumSlidingManager.getBoard());
+        HashMap<String,SlidingTile> around = this.mediumSlidingManager.getSurroundTiles(emptyPos);
         if (around.get("above") != null) {
-            int abovePos = this.getPosition(around.get("above"), this.mediumBoardManager.getBoard());
-            this.mediumBoardManager.touchMove(abovePos);
+            int abovePos = this.getPosition(around.get("above"), this.mediumSlidingManager.getBoard());
+            this.mediumSlidingManager.touchMove(abovePos);
         } else {
-            int belowPos = this.getPosition(around.get("below"), this.mediumBoardManager.getBoard());
-            this.mediumBoardManager.touchMove(belowPos);
+            int belowPos = this.getPosition(around.get("below"), this.mediumSlidingManager.getBoard());
+            this.mediumSlidingManager.touchMove(belowPos);
         }
 
-        assertEquals(2,this.mediumBoardManager.getPastStates().getBoards().size());
+        assertEquals(2,this.mediumSlidingManager.getPastStates().getBoards().size());
 
 
         this.setUpAndResetBoard();
         for (int moves = 0; moves < 3; moves++){
-            emptyTile = findEmptyTile(this.mediumBoardManager.getBoard());
-            emptyPos = this.getPosition(emptyTile,this.mediumBoardManager.getBoard());
-            around = this.mediumBoardManager.getSurroundTiles(emptyPos);
+            emptyTile = findEmptyTile(this.mediumSlidingManager.getBoard());
+            emptyPos = this.getPosition(emptyTile,this.mediumSlidingManager.getBoard());
+            around = this.mediumSlidingManager.getSurroundTiles(emptyPos);
             if (around.get("above") != null) {
-                int abovePos = this.getPosition(around.get("above"), this.mediumBoardManager.getBoard());
-                this.mediumBoardManager.touchMove(abovePos);
+                int abovePos = this.getPosition(around.get("above"), this.mediumSlidingManager.getBoard());
+                this.mediumSlidingManager.touchMove(abovePos);
             } else {
-                int belowPos = this.getPosition(around.get("below"), this.mediumBoardManager.getBoard());
-                this.mediumBoardManager.touchMove(belowPos);
+                int belowPos = this.getPosition(around.get("below"), this.mediumSlidingManager.getBoard());
+                this.mediumSlidingManager.touchMove(belowPos);
             }
         }
 
-        this.mediumBoardManager.undoToPastState();
-        this.mediumBoardManager.undoToPastState();
-        emptyTile = this.findEmptyTile(this.mediumBoardManager.getBoard());
-        emptyPos = this.getPosition(emptyTile,this.mediumBoardManager.getBoard());
-        around = this.mediumBoardManager.getSurroundTiles(emptyPos);
+        this.mediumSlidingManager.undoToPastState();
+        this.mediumSlidingManager.undoToPastState();
+        emptyTile = this.findEmptyTile(this.mediumSlidingManager.getBoard());
+        emptyPos = this.getPosition(emptyTile,this.mediumSlidingManager.getBoard());
+        around = this.mediumSlidingManager.getSurroundTiles(emptyPos);
         if (around.get("above") != null) {
-            int abovePos = this.getPosition(around.get("above"), this.mediumBoardManager.getBoard());
-            this.mediumBoardManager.touchMove(abovePos);
+            int abovePos = this.getPosition(around.get("above"), this.mediumSlidingManager.getBoard());
+            this.mediumSlidingManager.touchMove(abovePos);
         } else {
-            int belowPos = this.getPosition(around.get("below"), this.mediumBoardManager.getBoard());
-            this.mediumBoardManager.touchMove(belowPos);
+            int belowPos = this.getPosition(around.get("below"), this.mediumSlidingManager.getBoard());
+            this.mediumSlidingManager.touchMove(belowPos);
         }
-        assertEquals(3,this.mediumBoardManager.getPastStates().getBoards().size());
+        assertEquals(3,this.mediumSlidingManager.getPastStates().getBoards().size());
     }
 
 }
