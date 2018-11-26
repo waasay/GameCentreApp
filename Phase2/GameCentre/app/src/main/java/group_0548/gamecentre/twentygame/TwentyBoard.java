@@ -127,7 +127,7 @@ public class TwentyBoard extends AbstractBoard implements Iterable<TwentyTile> {
     }
 
     /**
-     * An Iterator for Board tiles.
+     * An Iterator for TwentyTile.
      */
     private class BoardIterator implements Iterator<TwentyTile> {
 
