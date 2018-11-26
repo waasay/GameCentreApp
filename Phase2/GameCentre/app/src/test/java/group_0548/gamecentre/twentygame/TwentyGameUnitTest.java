@@ -30,6 +30,10 @@ public class TwentyGameUnitTest {
      */
     private TwentyManager solved2048Manager;
 
+    /**
+     * A board where no moves are possible and the game is lost.
+     */
+    private TwentyManager lost2048Manager;
 
     /**
      * Setup and reset the boards for testing
