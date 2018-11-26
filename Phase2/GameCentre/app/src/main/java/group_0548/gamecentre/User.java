@@ -11,7 +11,7 @@ import group_0548.gamecentre.slidingtiles.SlidingManager;
 /**
  * A user of the game center
  */
-public class User implements Serializable {
+public class User<T> implements Serializable {
 
     /**
      * The username of the user
@@ -27,7 +27,7 @@ public class User implements Serializable {
      * The hash map that maps a a user's game type (a game type is referring to
      * any arbitrary game's type complexity
      */
-    private HashMap<String, SlidingManager> hashMapOfPastGames = new HashMap<>();
+    private HashMap<String, AbstractManager<T>> hashMapOfPastGames = new HashMap<>();
 
     /**
      * The hash map that maps a a user's game type to its highest score in that
@@ -53,7 +53,7 @@ public class User implements Serializable {
      * @param gameType a game type
      * @param game     the game that will be saved
      */
-    public void saveGame(String gameType, SlidingManager game) {
+    public void saveGame(String gameType, AbstractManager<T> game) {
         this.hashMapOfPastGames.put(gameType, game);
     }
 
@@ -63,7 +63,7 @@ public class User implements Serializable {
      * @param gameType the game type to load
      * @return The game to be loaded
      */
-    public SlidingManager loadGame(String gameType) {
+    public AbstractManager<T> loadGame(String gameType) {
         return this.hashMapOfPastGames.get(gameType);
     }
 
