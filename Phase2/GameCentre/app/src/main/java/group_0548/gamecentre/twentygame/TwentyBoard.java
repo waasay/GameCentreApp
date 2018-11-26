@@ -21,7 +21,7 @@ public class TwentyBoard extends AbstractBoard implements Iterable<TwentyTile> {
 
     private TwentyTile[][] tiles;
 
-    public TwentyBoard(int rowNum, int colNum) {
+    TwentyBoard(int rowNum, int colNum) {
 
         Random randomGen = new Random();
 
@@ -65,7 +65,7 @@ public class TwentyBoard extends AbstractBoard implements Iterable<TwentyTile> {
         Iterator<TwentyTile> iterator = tileSet.iterator();
         this.numRow = numRow;
         this.numCol = numCol;
-        this.score = 0;
+        this.score = score;
         for (int row = 0; row != numRow; row++) {
             for (int col = 0; col != numCol; col++) {
                 this.tiles[row][col] = iterator.next();
