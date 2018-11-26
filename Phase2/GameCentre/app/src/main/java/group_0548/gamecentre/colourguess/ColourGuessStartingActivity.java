@@ -41,7 +41,7 @@ public class ColourGuessStartingActivity extends AppCompatActivity {
     /**
      * The arrange method for current game.
      */
-    public static final String ORDER = "Descending";
+    public static final String ORDER = "Ascending";
 
 
     @Override
