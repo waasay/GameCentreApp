@@ -1,8 +1,11 @@
 package group_0548.gamecentre.twentygame;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public class TwentyStates {
+
+
+public class TwentyStates implements Serializable {
 
     /**
      * An Arraylist of board.
