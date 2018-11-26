@@ -3,6 +3,7 @@ package group_0548.gamecentre.colourguess;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
+
 import group_0548.gamecentre.AbstractManager;
 
 
@@ -59,7 +60,7 @@ public class ColourGuessManager extends AbstractManager {
                 return false;
             }
 
-            i = i +1;
+            i = i + 1;
         }
         this.increaseScore(1);
         return true;
@@ -83,7 +84,7 @@ public class ColourGuessManager extends AbstractManager {
     /**
      * Increase the score by num.
      */
-    public void increaseScore(int num){
+    public void increaseScore(int num) {
         this.score += num;
         super.changeAndNotify();
     }
@@ -92,12 +93,12 @@ public class ColourGuessManager extends AbstractManager {
         return this.score;
     }
 
-    public void setId(int id) {
-        this.id = id;
-    }
-
     public int getId() {
         return this.id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public String getComplexity() {
@@ -113,11 +114,11 @@ public class ColourGuessManager extends AbstractManager {
         return board2;
     }
 
-    public void setTime(int time) {
-        this.time = time;
-    }
-
     public int getTime() {
         return time;
+    }
+
+    public void setTime(int time) {
+        this.time = time;
     }
 }

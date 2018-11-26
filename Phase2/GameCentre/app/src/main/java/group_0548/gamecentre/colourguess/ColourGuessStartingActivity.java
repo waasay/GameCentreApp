@@ -34,15 +34,13 @@ public class ColourGuessStartingActivity extends AppCompatActivity {
      */
     public static final String TEMP_SAVE_FILENAME = "colour_save_file_tmp.ser";
     /**
-     * The scoreboard manager.
-     */
-    public static ScoreBoardManager scoreBoardManager = new ScoreBoardManager();
-
-    /**
      * The arrange method for current game.
      */
     public static final String ORDER = "Descending";
-
+    /**
+     * The scoreboard manager.
+     */
+    public static ScoreBoardManager scoreBoardManager = new ScoreBoardManager();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

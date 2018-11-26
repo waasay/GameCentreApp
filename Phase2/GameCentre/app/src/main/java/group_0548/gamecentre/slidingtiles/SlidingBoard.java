@@ -108,7 +108,7 @@ public class SlidingBoard extends AbstractBoard implements Serializable, Iterabl
      * Setter for tiles
      */
 
-    public void setTiles(SlidingTile[][] newTiles){
+    public void setTiles(SlidingTile[][] newTiles) {
         this.tiles = newTiles;
     }
 

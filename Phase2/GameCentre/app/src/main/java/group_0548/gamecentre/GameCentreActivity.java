@@ -6,8 +6,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 
-import group_0548.gamecentre.slidingtiles.SlidingStartingActivity;
 import group_0548.gamecentre.colourguess.ColourGuessStartingActivity;
+import group_0548.gamecentre.slidingtiles.SlidingStartingActivity;
 
 /**
  * The GameCentreActivity class where all the available games can be viewed and selected

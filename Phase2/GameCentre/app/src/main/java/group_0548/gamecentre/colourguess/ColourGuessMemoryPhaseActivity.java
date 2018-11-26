@@ -23,19 +23,14 @@ import group_0548.gamecentre.R;
 
 public class ColourGuessMemoryPhaseActivity extends AppCompatActivity {
 
+    private static int columnWidth, columnHeight;
+    private static CountDownTimer countDownTimer;
     /**
      * The TextView for the timer.
      */
     private TextView countdownTimerText;
-
     private ColourGuessGestureDetectGridView gridView;
-
-    private static int columnWidth, columnHeight;
-
     private ArrayList<Button> tileButtons;
-
-    private static CountDownTimer countDownTimer;
-
     /**
      * The colour guess manager.
      */
@@ -131,6 +126,7 @@ public class ColourGuessMemoryPhaseActivity extends AppCompatActivity {
                                 TimeUnit.MINUTES.toSeconds(TimeUnit.MILLISECONDS.toMinutes(millis)));
                 countdownTimerText.setText(hms);//set text
             }
+
             public void onFinish() {
                 switchToChoose();
             }

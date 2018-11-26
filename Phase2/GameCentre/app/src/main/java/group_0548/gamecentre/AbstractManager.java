@@ -9,8 +9,7 @@ public abstract class AbstractManager<T> extends Observable implements Serializa
     public abstract boolean puzzleSolved();
 
 
-
-    public void changeAndNotify(){
+    public void changeAndNotify() {
         setChanged();
         notifyObservers();
     }

@@ -18,11 +18,4 @@ public abstract class AbstractTile implements Serializable {
     abstract public int getId();
 
 
-
-
-
-
-
-
-
 }

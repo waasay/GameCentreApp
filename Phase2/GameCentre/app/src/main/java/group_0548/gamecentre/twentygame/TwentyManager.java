@@ -13,6 +13,10 @@ public class TwentyManager extends AbstractManager implements Undoable {
      */
     private final int maxUndo;
     /**
+     * The game type.
+     */
+    private final String gameType = "2048";
+    /**
      * The board being managed.
      */
     private TwentyBoard board;
@@ -25,16 +29,10 @@ public class TwentyManager extends AbstractManager implements Undoable {
      * The current number of undo left, it is define as MAX_UNDO - 1
      */
     private int currUndo;
-
     /**
      * The complexity of the board.
      */
     private String complexity;
-    /**
-     * The game type.
-     */
-    private final String gameType = "2048";
-
     private int rowNum;
     private int colNum;
 
@@ -84,19 +82,19 @@ public class TwentyManager extends AbstractManager implements Undoable {
         // starting from the right of each row if there are two consecutive tiles with the same
         // number change the first tile to background and the second to the next index (as long
         // as the index is in range)
-        for(int r = 0; r < rowNum; r++) {
+        for (int r = 0; r < rowNum; r++) {
 
-            for(int c = colNum - 1; c != 1; c--) {
-                if (tiles[r][c].getId() != 11 && tiles[r][c].getId() == tiles[r][c-1].getId()) {
-                    tiles[r][c] = new TwentyTile(tiles[r][c].getId()+1);
-                    tiles[r][c-1] = new TwentyTile(11);
+            for (int c = colNum - 1; c != 1; c--) {
+                if (tiles[r][c].getId() != 11 && tiles[r][c].getId() == tiles[r][c - 1].getId()) {
+                    tiles[r][c] = new TwentyTile(tiles[r][c].getId() + 1);
+                    tiles[r][c - 1] = new TwentyTile(11);
                 }
             }
             // Then get all the non background tiles in an array (for each row)
             ArrayList<TwentyTile> rowR = new ArrayList<TwentyTile>();
 
             for (TwentyTile t : tiles[r]) {
-                if (t.getId() != 11){
+                if (t.getId() != 11) {
                     rowR.add(t);
                 }
             }
@@ -105,6 +103,7 @@ public class TwentyManager extends AbstractManager implements Undoable {
         }
         return rowsOfNumbers;
     }
+
     // Precondition: tiles has rowNum X colNum dimensions and represents rows post mergeRight
     // Returns an ArrayList of rows of TwentyTiles after a swipe to the
     // right (according to 2048 rules)
@@ -114,13 +113,13 @@ public class TwentyManager extends AbstractManager implements Undoable {
         // and add that many
         // background tiles to begging of each row
         ArrayList<ArrayList<TwentyTile>> newRows = new ArrayList<ArrayList<TwentyTile>>();
-        for(int r = 0; r < rowNum; r++) {
+        for (int r = 0; r < rowNum; r++) {
             int numberOfBackgrounds = colNum - rowsOfNumbers.get(r).size();
 
             // make an ArrayList of the appropriate # of backgrounds
             ArrayList<TwentyTile> backgrounds = new ArrayList<TwentyTile>();
 
-            for (int i=0; i < numberOfBackgrounds; i++) {
+            for (int i = 0; i < numberOfBackgrounds; i++) {
                 backgrounds.add(new TwentyTile(11));
             }
 
@@ -201,7 +200,7 @@ public class TwentyManager extends AbstractManager implements Undoable {
         // flip board along v axis
         // reverse each row
         for (int row = 0; row != rowNum; row++) {
-            for(int col = 0; col < colNum; col++) {
+            for (int col = 0; col < colNum; col++) {
                 newTiles[row][col] = tiles[row][colNum - 1 - col];
             }
         }
@@ -213,7 +212,7 @@ public class TwentyManager extends AbstractManager implements Undoable {
         // flip board
         // reverse each row
         for (int row = 0; row != rowNum; row++) {
-            for(int col = 0; col < colNum; col++) {
+            for (int col = 0; col < colNum; col++) {
                 newTiles[row][col] = newTiles[row][colNum - 1 - col];
             }
         }
@@ -234,7 +233,7 @@ public class TwentyManager extends AbstractManager implements Undoable {
         TwentyTile[][] newTiles = new TwentyTile[rowNum][colNum];
         // rotate board 90 degrees clockwise
         for (int col = 0; col != colNum; col++) {
-            for(int row = 0; row < rowNum; row++) {
+            for (int row = 0; row < rowNum; row++) {
                 newTiles[col][row] = tiles[rowNum - 1 - row][col];
             }
         }
@@ -243,7 +242,7 @@ public class TwentyManager extends AbstractManager implements Undoable {
         // flip board to original position
         // rotate board 90 degrees counterclockwise
         for (int row = 0; row != rowNum; row++) {
-            for(int col = 0; col < colNum; col++) {
+            for (int col = 0; col < colNum; col++) {
                 newTiles[row][col] = newTiles[rowNum - 1 - row][col];
             }
         }
@@ -259,12 +258,13 @@ public class TwentyManager extends AbstractManager implements Undoable {
         this.getBoard().updateScore(1);
         super.changeAndNotify();
     }
+
     public void swipeDown(TwentyTile[][] tiles) {
 
         TwentyTile[][] newTiles = new TwentyTile[rowNum][colNum];
         // rotate board 90 degrees clockwise
         for (int col = 0; col != colNum; col++) {
-            for(int row = 0; row < rowNum; row++) {
+            for (int row = 0; row < rowNum; row++) {
                 newTiles[col][row] = tiles[rowNum - 1 - row][col];
             }
         }
@@ -272,7 +272,7 @@ public class TwentyManager extends AbstractManager implements Undoable {
         // flip board along v axis
         // reverse each row
         for (int row = 0; row != rowNum; row++) {
-            for(int col = 0; col < colNum; col++) {
+            for (int col = 0; col < colNum; col++) {
                 newTiles[row][col] = newTiles[row][colNum - 1 - col];
             }
         }
@@ -285,14 +285,14 @@ public class TwentyManager extends AbstractManager implements Undoable {
         // flip board
         // reverse each row
         for (int row = 0; row != rowNum; row++) {
-            for(int col = 0; col < colNum; col++) {
+            for (int col = 0; col < colNum; col++) {
                 newTiles[row][col] = newTiles[row][colNum - 1 - col];
             }
         }
         // flip board to original position
         // rotate board 90 degrees counterclockwise
         for (int row = 0; row != rowNum; row++) {
-            for(int col = 0; col < colNum; col++) {
+            for (int col = 0; col < colNum; col++) {
                 newTiles[row][col] = newTiles[rowNum - 1 - row][col];
             }
         }
@@ -397,7 +397,7 @@ public class TwentyManager extends AbstractManager implements Undoable {
      *
      * @return the maximum number of undo
      */
-    public int getMaxUndo(){
+    public int getMaxUndo() {
         return this.maxUndo;
     }
 
@@ -410,8 +410,7 @@ public class TwentyManager extends AbstractManager implements Undoable {
     }
 
 
-
-    public String getGameType(){
+    public String getGameType() {
         return this.gameType;
     }
 
