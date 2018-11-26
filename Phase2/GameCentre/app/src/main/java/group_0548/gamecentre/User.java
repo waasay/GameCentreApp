@@ -27,7 +27,7 @@ public class User implements Serializable {
      * The hash map that maps a a user's game type (a game type is referring to
      * any arbitrary game's type complexity
      */
-    private HashMap<String, SlidingManager> hashMapOfPastGames = new HashMap<>();
+    private HashMap<String, AbstractManager> hashMapOfPastGames = new HashMap<>();
 
     /**
      * The hash map that maps a a user's game type to its highest score in that
@@ -63,7 +63,7 @@ public class User implements Serializable {
      * @param gameType the game type to load
      * @return The game to be loaded
      */
-    public SlidingManager loadGame(String gameType) {
+    public AbstractManager loadGame(String gameType) {
         return this.hashMapOfPastGames.get(gameType);
     }
 
@@ -93,16 +93,11 @@ public class User implements Serializable {
      * @param order    the method for ordering the score
      * @param score    the new score
      */
-    public void updateScore(String gameType, String order, int score) {
+    public void updateScore(String gameType, int score, String order) {
         if (this.hashMapOfHighScore.containsKey(gameType)) {
-            if (order.equals("Ascending")) {
-                if (this.hashMapOfHighScore.get(gameType) > score) {
-                    this.hashMapOfHighScore.put(gameType, score);
-                }
-            } else if (order.equals("Descending")) {
-                if (this.hashMapOfHighScore.get(gameType) < score) {
-                    this.hashMapOfHighScore.put(gameType, score);
-                }
+            if ((order.equals("Ascending") && this.hashMapOfHighScore.get(gameType) > score)
+                    || (order.equals("Descending") && this.hashMapOfHighScore.get(gameType) < score)){
+                this.hashMapOfHighScore.put(gameType, score);
             }
         } else {
             this.hashMapOfHighScore.put(gameType, score);

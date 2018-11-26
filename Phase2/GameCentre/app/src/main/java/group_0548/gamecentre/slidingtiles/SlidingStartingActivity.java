@@ -89,7 +89,8 @@ public class SlidingStartingActivity extends AppCompatActivity {
         loadButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                slidingManager = LoginActivity.usersManager.getCurrentUser().loadGame(GAME_TYPE);
+                slidingManager = (SlidingManager) LoginActivity.usersManager.getCurrentUser()
+                        .loadGame(GAME_TYPE);
                 if (slidingManager != null) {
                     saveToFile(TEMP_SAVE_FILENAME, slidingManager);
                     makeToastLoadedText();

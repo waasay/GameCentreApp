@@ -6,7 +6,7 @@ public class ColourGuessMovementController {
     /**
      * The board manager
      */
-    private ColourManager colourManager = null;
+    private ColourGuessManager colourGuessManager = null;
 
     /**
      * The movement controller
@@ -17,10 +17,10 @@ public class ColourGuessMovementController {
     /**
      * Setting the board manager
      *
-     * @param colourManager the board manager
+     * @param colourGuessManager the board manager
      */
-    void setColourManager(ColourManager colourManager) {
-        this.colourManager = colourManager;
+    void setColourGuessManager(ColourGuessManager colourGuessManager) {
+        this.colourGuessManager = colourGuessManager;
     }
 
     /**
@@ -30,7 +30,7 @@ public class ColourGuessMovementController {
      * @param position the position of the tile
      */
     void processTapMovement(Context context, int position, boolean display) {
-        colourManager.select(position);
+        colourGuessManager.select(position);
     }
 }
 

@@ -35,8 +35,8 @@ public class ScoreBoardManager implements Serializable {
      * @param name       the username of the player to be updated to the scoreboard
      * @param score      the score of that player to be updated to the scoreboard
      */
-    public void updateScoreBoard(String complexity, String name, int score) {
-        scoreBoards.get(complexity).addScore(name, score);
+    public void updateScoreBoard(String complexity, String name, int score, String order) {
+        scoreBoards.get(complexity).addScore(name, score, order);
     }
 
     /**
