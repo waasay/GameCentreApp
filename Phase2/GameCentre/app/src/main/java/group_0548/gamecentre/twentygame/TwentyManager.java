@@ -102,23 +102,31 @@ public class TwentyManager extends AbstractManager implements Undoable {
      * @return whether the game is lost
      */
     public boolean puzzleLost(){
-        TwentyTile[][] tiles = this.getBoard().getTiles();
         for (int i = 0; i < this.getBoard().getNumRow(); i++){
             for (int j = 0; j < this.getBoard().getNumCol(); j++){
-                if (tiles[i][j].getId() == 11){
+                if (this.getBoard().getTile(i,j).getId() == 11){
                     return false;
                 }
                 else {
-                    int id = tiles[i][j].getId();
+                    int id = this.getBoard().getTile(i,j).getId();
                     HashMap<String, TwentyTile> around =
                             getSurroundTiles(i*this.getBoard().getNumCol()+j);
-                    if (around.get("above").getId() == id || around.get("below").getId() == id ||
-                            around.get("left").getId() == id || around.get("right").getId() == id){
+                    if (around.get("above") != null && around.get("above").getId() == id){
                         return false;
+                    }
+                    else if (around.get("below") != null && around.get("below").getId() == id){
+                        return false;
+                    }
+                    else if (around.get("left") != null && around.get("left").getId() == id){
+                        return false;
+                    }
+                    else if (around.get("right") != null && around.get("right").getId() == id){
+                        return false;
+                    }
+
                     }
                 }
             }
-        }
         return true;
     }
 
