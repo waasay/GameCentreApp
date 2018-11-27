@@ -21,8 +21,17 @@
         android:layout_height="50dp"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="350dp"
+        android:layout_marginTop="340dp"
         android:text="@string/colourguess_text" />
+
+    <Button
+        android:id="@+id/TwentyGame"
+        android:layout_width="200dp"
+        android:layout_height="50dp"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="400dp"
+        android:text="@string/twenty_text" />
 
     <TextView
         android:id="@+id/GameCentreText"
