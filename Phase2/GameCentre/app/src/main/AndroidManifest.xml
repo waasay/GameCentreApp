@@ -27,7 +27,10 @@
         <activity android:name=".colourguess.ColourGuessChooseComplexityActivity" />
         <activity android:name=".colourguess.ColourGuessMemoryPhaseActivity" />
         <activity android:name=".colourguess.ColourGuessChoosePhaseActivity" />
-        <activity android:name=".UserScoreBoardActivity"></activity>
+        <activity android:name=".UserScoreBoardActivity" />
+        <activity android:name=".twentygame.TwentyStartingActivity" />
+        <activity android:name=".twentygame.TwentyChooseComplexityActivity" />
+        <activity android:name=".twentygame.TwentyGameActivity"></activity>
     </application>
 
 </manifest>
