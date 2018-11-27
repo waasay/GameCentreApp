@@ -8,6 +8,7 @@ import android.widget.Button;
 
 import group_0548.gamecentre.colourguess.ColourGuessStartingActivity;
 import group_0548.gamecentre.slidingtiles.SlidingStartingActivity;
+import group_0548.gamecentre.twentygame.TwentyStartingActivity;
 
 /**
  * The GameCentreActivity class where all the available games can be viewed and selected
@@ -24,6 +25,7 @@ public class GameCentreActivity extends AppCompatActivity {
         setContentView(R.layout.activity_game_centre);
         addStartSlidingTilesListener();
         addStartColourGuessListener();
+        addStartTwentyListener();
     }
 
     /**
@@ -53,6 +55,19 @@ public class GameCentreActivity extends AppCompatActivity {
     }
 
     /**
+     * Initializing the 2048 button to go to the sliding tile game
+     */
+    private void addStartTwentyListener() {
+        Button button = findViewById(R.id.ColourGuessGame);
+        button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                switchToTwenty();
+            }
+        });
+    }
+
+    /**
      * Method to go the sliding tile game activity page
      */
     private void switchToSlidingTiles() {
@@ -65,6 +80,14 @@ public class GameCentreActivity extends AppCompatActivity {
      */
     private void switchToColourGuess() {
         Intent tmp = new Intent(this, ColourGuessStartingActivity.class);
+        startActivity(tmp);
+    }
+
+    /**
+     * Method to go the 2048 game activity page
+     */
+    private void switchToTwenty() {
+        Intent tmp = new Intent(this, TwentyStartingActivity.class);
         startActivity(tmp);
     }
 }
