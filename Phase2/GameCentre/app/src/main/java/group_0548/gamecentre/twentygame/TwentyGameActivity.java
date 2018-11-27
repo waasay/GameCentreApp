@@ -92,7 +92,7 @@ public class TwentyGameActivity extends AppCompatActivity implements Observer {
      */
     private void updateTileButtons() {
         TwentyBoard board = twentyManager.getBoard();
-        currentScore.setText(String.valueOf(board.getScore()));
+        currentScore.setText(String.valueOf(twentyManager.getScore()));
         int nextPos = 0;
         for (Button b : tileButtons) {
             int row = nextPos / twentyManager.getBoard().getNumRow();
@@ -169,12 +169,12 @@ public class TwentyGameActivity extends AppCompatActivity implements Observer {
 
     public void saveToScoreBoard() {
         String gameType = TwentyStartingActivity.GAME_TYPE;
-        if (twentyManager.puzzleSolved() && TwentyManager.getMaxUndo() == 3) {
+        if (twentyManager.puzzleSolved() && twentyManager.getMaxUndo() == 3) {
             TwentyStartingActivity.scoreBoardManager.updateScoreBoard(twentyManager.getComplexity(),
                     LoginActivity.usersManager.getCurrentUser().getUserName(),
-                    twentyManager.getBoard().getScore(), TwentyStartingActivity.ORDER);
+                    twentyManager.getScore(), TwentyStartingActivity.ORDER);
             LoginActivity.usersManager.getCurrentUser().updateScore(gameType,
-                    twentyManager.getBoard().getScore(), TwentyStartingActivity.ORDER);
+                    twentyManager.getScore(), TwentyStartingActivity.ORDER);
             saveToFile(TwentyStartingActivity.SCOREBOARD_SAVE_FILENAME,
                     TwentyStartingActivity.scoreBoardManager);
             saveToFile(LoginActivity.USER_SAVE_FILENAME, LoginActivity.usersManager);

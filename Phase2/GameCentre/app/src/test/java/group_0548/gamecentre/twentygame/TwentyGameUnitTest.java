@@ -55,9 +55,9 @@ public class TwentyGameUnitTest {
             solvedTiles.add(new TwentyTile(solvedIDList.get(j)));
             lostTiles.add(new TwentyTile(lostIDList.get(j)));
         }
-        TwentyBoard hardcodeBoard = new TwentyBoard(hardcodedTiles, 0, 4, 4);
-        TwentyBoard solvedBoard = new TwentyBoard(solvedTiles, 0, 4, 4);
-        TwentyBoard lostBoard = new TwentyBoard(lostTiles, 0, 4, 4);
+        TwentyBoard hardcodeBoard = new TwentyBoard(hardcodedTiles, 4, 4);
+        TwentyBoard solvedBoard = new TwentyBoard(solvedTiles, 4, 4);
+        TwentyBoard lostBoard = new TwentyBoard(lostTiles, 4, 4);
         TwentyTile[][] hardcodedTiles2D = hardcodeBoard.getTiles();
         TwentyTile[][] solvedTiles2D = solvedBoard.getTiles();
         TwentyTile[][] lostTiles2D = lostBoard.getTiles();
