@@ -145,7 +145,7 @@ public class SlidingTilesUnitTest {
      * touch move is called
      */
     @Test
-    public void testScoreIncreaseAndCurrentUndoResetAfterTouchMove() {
+    public void testScoreIncreaseCurrentUndoResetAfterTouchMove() {
         this.setUpAndResetBoard();
         SlidingTile emptyTile = this.findEmptyTile(this.mediumSlidingManager.getBoard());
         int emptyPos = this.getPosition(emptyTile, this.mediumSlidingManager.getBoard());
@@ -165,8 +165,29 @@ public class SlidingTilesUnitTest {
     }
 
     /**
+     * Test whether current undo resets after each touch move
+     */
+    @Test
+    public void testCurrentUndoResetAfterTouchMove(){
+        this.setUpAndResetBoard();
+        SlidingTile emptyTile = this.findEmptyTile(this.mediumSlidingManager.getBoard());
+        int emptyPos = this.getPosition(emptyTile, this.mediumSlidingManager.getBoard());
+        HashMap<String, SlidingTile> around = this.mediumSlidingManager.getSurroundTiles(emptyPos);
+        int valueOfResetUndo = this.mediumSlidingManager.getMaxUndo() - 1;
+        if (around.get("above") != null) {
+            int abovePos = this.getPosition(around.get("above"), this.mediumSlidingManager.getBoard());
+            this.mediumSlidingManager.touchMove(abovePos);
+        } else {
+            int belowPos = this.getPosition(around.get("below"), this.mediumSlidingManager.getBoard());
+            this.mediumSlidingManager.touchMove(belowPos);
+        }
+        assertEquals(valueOfResetUndo, this.mediumSlidingManager.getCurrUndo());
+    }
+
+    /**
      * Test whether ableToUndo and ableToRedo actually works, and whether it actually
-     * prevents the user from undoing when the board is solved
+     * prevents the user from undoing when the board is solved, these are put together
+     * because how similar the two tests are.
      */
     @Test
     public void testAbleToUndoAndAbleToRedo(){
@@ -219,7 +240,7 @@ public class SlidingTilesUnitTest {
     @Test
     /**
      * Test whether undo and redo actually points to the current board
-     * in pastStates
+     * in pastStates (These two are put together because how similar the two test are)
      */
     public void testUpdateToPastStateAndRedoToFutureState(){
         this.setUpAndResetBoard();
@@ -258,7 +279,7 @@ public class SlidingTilesUnitTest {
 
 
     /**
-     * Test getBackground and compareTo in SlidingTile
+     * Test getBackground SlidingTile
      */
     @Test
     public void testGetBackgroundAndCompareTo(){
@@ -266,17 +287,25 @@ public class SlidingTilesUnitTest {
         SlidingTile emptyTile = findEmptyTile(this.solvedSlidingManager.getBoard());
         SlidingTile toCompare = this.solvedSlidingManager.getBoard().getTile(0,0);
         assertEquals(false, emptyTile.getBackground() == toCompare.getBackground());
+    }
+
+    /**
+     * Test CompareTo actually works
+     */
+    @Test
+    public void testCompareTo(){
+        this.setUpAndResetBoard();
+        SlidingTile emptyTile = findEmptyTile(this.solvedSlidingManager.getBoard());
+        SlidingTile toCompare = this.solvedSlidingManager.getBoard().getTile(0,0);
         assertEquals(-15, emptyTile.compareTo(toCompare));
     }
 
-    @Test
     /**
-     * Test whether UpdateStatesAfterUndo works and whether the code actually stops the user from
-     * undoing after undoing MAX_UNDO number of times
-     * (Note this will be a long test method as the code to setup the board to test
-     * for different scenarios to test is long)
+     * Test whether code actually stops the user from undoing after undoing MAX_UNDO number
+     * of times.
      */
-    public void testUpdateStatesAfterUndoAndUndoingAfterMaxUndo(){
+    @Test
+    public void testUndoingAfterMaxUndo(){
         this.setUpAndResetBoard();
         for (int moves = 0; moves < 3; moves++){
             SlidingTile emptyTile = findEmptyTile(this.mediumSlidingManager.getBoard());
@@ -294,6 +323,32 @@ public class SlidingTilesUnitTest {
         this.mediumSlidingManager.undoToPastState();
         this.mediumSlidingManager.undoToPastState();
         assertEquals(false,this.mediumSlidingManager.ableToUndo());
+    }
+
+    /**
+     * Test whether UpdateStatesAfterUndo works (Note this will be a long test method as the code
+     * to setup the board to test for different scenarios to test is long) (Two edge cases were
+     * considered, one when undoing actually undoing MAX_UNDO number of times and twice, since
+     * how similar the circumstances are they were put together.)
+     */
+    @Test
+    public void testUpdateStatesAfterUndo(){
+        this.setUpAndResetBoard();
+        for (int moves = 0; moves < 3; moves++){
+            SlidingTile emptyTile = findEmptyTile(this.mediumSlidingManager.getBoard());
+            int emptyPos = this.getPosition(emptyTile,this.mediumSlidingManager.getBoard());
+            HashMap<String, SlidingTile> around = this.mediumSlidingManager.getSurroundTiles(emptyPos);
+            if (around.get("above") != null) {
+                int abovePos = this.getPosition(around.get("above"), this.mediumSlidingManager.getBoard());
+                this.mediumSlidingManager.touchMove(abovePos);
+            } else {
+                int belowPos = this.getPosition(around.get("below"), this.mediumSlidingManager.getBoard());
+                this.mediumSlidingManager.touchMove(belowPos);
+            }
+        }
+        this.mediumSlidingManager.undoToPastState();
+        this.mediumSlidingManager.undoToPastState();
+        this.mediumSlidingManager.undoToPastState();
         SlidingTile emptyTile = this.findEmptyTile(this.mediumSlidingManager.getBoard());
         int emptyPos = this.getPosition(emptyTile,this.mediumSlidingManager.getBoard());
         HashMap<String,SlidingTile> around = this.mediumSlidingManager.getSurroundTiles(emptyPos);
@@ -306,8 +361,6 @@ public class SlidingTilesUnitTest {
         }
 
         assertEquals(2,this.mediumSlidingManager.getPastStates().getBoards().size());
-
-
         this.setUpAndResetBoard();
         for (int moves = 0; moves < 3; moves++){
             emptyTile = findEmptyTile(this.mediumSlidingManager.getBoard());
@@ -336,5 +389,4 @@ public class SlidingTilesUnitTest {
         }
         assertEquals(3,this.mediumSlidingManager.getPastStates().getBoards().size());
     }
-
 }

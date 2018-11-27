@@ -59,8 +59,12 @@ public class ColourGuessManager extends AbstractManager {
                     board2.getTile(row, col).getId() != 7) {
                 return false;
             }
-
+            if (board1.getTile(row, col).getId() != id &
+                    board2.getTile(row, col).getId() == 7) {
+                return false;
+            }
             i = i + 1;
+
         }
         this.increaseScore(1);
         return true;

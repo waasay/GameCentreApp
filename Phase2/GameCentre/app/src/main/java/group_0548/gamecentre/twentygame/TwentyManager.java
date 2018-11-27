@@ -1,6 +1,7 @@
 package group_0548.gamecentre.twentygame;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Random;
 
 import group_0548.gamecentre.AbstractManager;
@@ -69,6 +70,64 @@ public class TwentyManager extends AbstractManager implements Undoable {
             }
         }
         return false;
+    }
+
+    /**
+     * Return a HashMap of the four surrounding tiles.
+     *
+     * @param position the tile to check
+     * @return return a HashMap of the four surrounding tiles
+     */
+    HashMap<String, TwentyTile> getSurroundTiles(int position) {
+        int row = position / board.getNumRow();
+        int col = position % board.getNumCol();
+        HashMap<String, TwentyTile> tileMap = new HashMap<>();
+
+        TwentyTile above = row == 0 ? null : board.getTile(row - 1, col);
+        TwentyTile below = row == board.getNumRow() - 1 ? null : board.getTile(row + 1, col);
+        TwentyTile left = col == 0 ? null : board.getTile(row, col - 1);
+        TwentyTile right = col == board.getNumCol() - 1 ? null : board.getTile(row, col + 1);
+
+        tileMap.put("above", above);
+        tileMap.put("below", below);
+        tileMap.put("left", left);
+        tileMap.put("right", right);
+
+        return tileMap;
+    }
+
+    /**
+     * Return whether the game is lost (no furthur move is possible and the board is
+     * filled with no empty tiles)
+     * @return whether the game is lost
+     */
+    public boolean puzzleLost(){
+        for (int i = 0; i < this.getBoard().getNumRow(); i++){
+            for (int j = 0; j < this.getBoard().getNumCol(); j++){
+                if (this.getBoard().getTile(i,j).getId() == 11){
+                    return false;
+                }
+                else {
+                    int id = this.getBoard().getTile(i,j).getId();
+                    HashMap<String, TwentyTile> around =
+                            getSurroundTiles(i*this.getBoard().getNumCol()+j);
+                    if (around.get("above") != null && around.get("above").getId() == id){
+                        return false;
+                    }
+                    else if (around.get("below") != null && around.get("below").getId() == id){
+                        return false;
+                    }
+                    else if (around.get("left") != null && around.get("left").getId() == id){
+                        return false;
+                    }
+                    else if (around.get("right") != null && around.get("right").getId() == id){
+                        return false;
+                    }
+
+                    }
+                }
+            }
+        return true;
     }
 
 
