@@ -58,7 +58,6 @@ public class SlidingStartingActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        saveToFile(TEMP_SAVE_FILENAME, slidingManager);
 
         setContentView(R.layout.activity_starting_);
         addStartButtonListener();
