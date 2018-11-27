@@ -1,5 +1,6 @@
 package group_0548.gamecentre.twentygame;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -35,23 +36,32 @@ public class TwentyChooseComplexityActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_twenty_choose_complexity);
         MAX_UNDO = 3;
-
         customUndo();
-        currentUndo = findViewById(R.id.SlidingCurrUndo);
+        currentUndo = findViewById(R.id.TwentyCurrUndo);
+        addStartButtonListener();
     }
 
     /**
      * Initialize the listener for the hard complexity button
      */
     private void addStartButtonListener() {
-        Button fiveButton = findViewById(R.id.SlidingHardButton);
+        Button fiveButton = findViewById(R.id.TwentySetUndoStart);
         fiveButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                twentyManager = new TwentyManager(5, 5, "Hard", MAX_UNDO);
+                twentyManager = new TwentyManager(5, 5, "Easy", MAX_UNDO);
                 switchToGame();
             }
         });
+    }
+
+    /**
+     * Switch to the SlidingGameActivity view to play the game.
+     */
+    private void switchToGame() {
+        Intent tmp = new Intent(this, TwentyGameActivity.class);
+        saveToFile(TwentyStartingActivity.TEMP_SAVE_FILENAME);
+        startActivity(tmp);
     }
 
     /**
@@ -59,11 +69,11 @@ public class TwentyChooseComplexityActivity extends AppCompatActivity {
      * input, and the confirm button that saves it
      */
     private void customUndo() {
-        Button confirmButton = findViewById(R.id.SlidingSetUndo);
+        Button confirmButton = findViewById(R.id.TwentySetUndo);
         confirmButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                EditText maxUndo = findViewById(R.id.SlidingCustomUndo);
+                EditText maxUndo = findViewById(R.id.TwentyCustomUndo);
                 String undo = maxUndo.getText().toString();
                 if (!undo.equals("")) {
                     MAX_UNDO = Integer.parseInt(undo);

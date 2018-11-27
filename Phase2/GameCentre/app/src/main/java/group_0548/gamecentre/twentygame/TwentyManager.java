@@ -12,7 +12,7 @@ public class TwentyManager extends AbstractManager implements Undoable {
     /**
      * Max number of undos
      */
-    private final int maxUndo;
+    private static int maxUndo;
     /**
      * The game type.
      */
@@ -34,6 +34,7 @@ public class TwentyManager extends AbstractManager implements Undoable {
      * The complexity of the board.
      */
     private String complexity;
+
     private int rowNum;
     private int colNum;
 
@@ -368,9 +369,6 @@ public class TwentyManager extends AbstractManager implements Undoable {
         super.changeAndNotify();
     }
 
-    public String getComplexity() {
-        return complexity;
-    }
 
     /**
      * Precondition: when calling this method
@@ -456,8 +454,8 @@ public class TwentyManager extends AbstractManager implements Undoable {
      *
      * @return the maximum number of undo
      */
-    public int getMaxUndo() {
-        return this.maxUndo;
+    public static int getMaxUndo() {
+        return maxUndo;
     }
 
     /**
@@ -468,6 +466,9 @@ public class TwentyManager extends AbstractManager implements Undoable {
         this.currUndo = this.maxUndo - 1;
     }
 
+    public String getComplexity() {
+        return complexity;
+    }
 
     public String getGameType() {
         return this.gameType;
