@@ -32,7 +32,7 @@
 
     <group_0548.gamecentre.slidingtiles.SlidingGestureDetectGridView xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:tools="http://schemas.android.com/tools"
-        android:id="@+id/grid"
+        android:id="@+id/SlidingGrid"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_alignParentStart="true"
