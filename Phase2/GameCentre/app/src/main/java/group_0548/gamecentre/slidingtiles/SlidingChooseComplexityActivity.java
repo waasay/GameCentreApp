@@ -112,7 +112,6 @@ public class SlidingChooseComplexityActivity extends AppCompatActivity {
                 }
             }
         });
-
     }
 
     /**
