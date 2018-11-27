@@ -8,29 +8,54 @@ import java.util.Arrays;
  * Abstract class for other board objects
  */
 
-public abstract class AbstractBoard implements Serializable {
+public abstract class AbstractBoard<T> implements Serializable {
     /**
      * The number of rows.
      */
-    private int numRow;
+    protected int numRow;
 
     /**
      * The number of columns.
      */
-    private int numCol;
+    protected int numCol;
 
     /**
      * The tiles on the board in row-major order.
      */
-    private AbstractTile[][] tiles;
+    protected T[][] tiles;
+
+    /**
+     * Return the number of Tiles in this abstractboard
+     * @return
+     */
+    public int numTiles(){
+        return this.numCol*this.numRow;
+    }
 
 
-    abstract public int numTiles();
+    /**
+     * Return the tile at (row, col)
+     * @param row the tile row
+     * @param col the tile column
+     * @return the tile at (row, col)
+     */
+     public T getTile(int row, int col){
+        return this.tiles[row][col];
+    }
 
+    /**
+     * Getter for tiles
+     */
+    public T[][] getTiles(){
+        return this.tiles;
+    }
 
-    abstract public AbstractTile getTile(int row, int col);
-
-    abstract public AbstractTile[][] getTiles();
+    /**
+     * Setter for tiles
+     */
+    public void setTiles(T[][] newTiles){
+        this.tiles = newTiles;
+    }
 
 
     /**
@@ -38,20 +63,19 @@ public abstract class AbstractBoard implements Serializable {
      *
      * @return the row number.
      */
-    public abstract int getNumRow();
+    public int getNumRow(){
+        return this.numRow;
+    }
 
     /**
      * Get the current column number.
      *
      * @return the current column number.
      */
-    public abstract int getNumCol();
-
-
-    public String toString() {
-        return "SlidingBoard{" +
-                "tiles=" + Arrays.toString(tiles) +
-                '}';
-
+    public int getNumCol(){
+        return this.numCol;
     }
+
+
+
 }

@@ -48,7 +48,7 @@ public class ColourGuessMemoryPhaseActivity extends AppCompatActivity {
         countdownTimerText = findViewById(R.id.MemoryTime);
         startTimer(5000);
         gridView = findViewById(R.id.ColourGrid);
-        gridView.setNumColumns(colourGuessManager.getBoard1().getNumCol());
+        gridView.setNumColumns(colourGuessManager.getBoard().getNumCol());
         gridView.setColourGuessManager(colourGuessManager);
         // Observer sets up desired dimensions as well as calls our display function
         gridView.getViewTreeObserver().addOnGlobalLayoutListener(
@@ -60,8 +60,8 @@ public class ColourGuessMemoryPhaseActivity extends AppCompatActivity {
                         int displayWidth = gridView.getMeasuredWidth();
                         int displayHeight = gridView.getMeasuredHeight();
 
-                        columnWidth = displayWidth / colourGuessManager.getBoard1().getNumCol();
-                        columnHeight = displayHeight / colourGuessManager.getBoard1().getNumRow();
+                        columnWidth = displayWidth / colourGuessManager.getBoard().getNumCol();
+                        columnHeight = displayHeight / colourGuessManager.getBoard().getNumRow();
 
                         display();
                     }
@@ -83,10 +83,10 @@ public class ColourGuessMemoryPhaseActivity extends AppCompatActivity {
      * @param context the context
      */
     private void createTileButtons(Context context) {
-        ColourGuessBoard board = colourGuessManager.getBoard1();
+        ColourGuessBoard board = colourGuessManager.getBoard();
         tileButtons = new ArrayList<>();
-        for (int row = 0; row != colourGuessManager.getBoard1().getNumRow(); row++) {
-            for (int col = 0; col != colourGuessManager.getBoard1().getNumCol(); col++) {
+        for (int row = 0; row != colourGuessManager.getBoard().getNumRow(); row++) {
+            for (int col = 0; col != colourGuessManager.getBoard().getNumCol(); col++) {
                 Button tmp = new Button(context);
                 tmp.setBackgroundResource(board.getTile(row, col).getBackground());
                 this.tileButtons.add(tmp);

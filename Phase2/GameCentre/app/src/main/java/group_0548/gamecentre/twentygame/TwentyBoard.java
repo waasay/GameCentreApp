@@ -10,14 +10,9 @@ import java.util.Random;
 import group_0548.gamecentre.AbstractBoard;
 
 
-public class TwentyBoard extends AbstractBoard implements Iterable<TwentyTile> {
+public class TwentyBoard extends AbstractBoard<TwentyTile> implements Iterable<TwentyTile> {
 
 
-    private int score;
-
-    private int numRow;
-
-    private int numCol;
 
     private TwentyTile[][] tiles;
 
@@ -56,16 +51,14 @@ public class TwentyBoard extends AbstractBoard implements Iterable<TwentyTile> {
 
         tiles[randomRow1][randomCol1] = randomTile1;
         tiles[randomRow2][randomCol2] = randomTile2;
-        this.score = 0;
 
     }
 
-    public TwentyBoard(List<TwentyTile> tileSet, int score, int numRow, int numCol) {
+    public TwentyBoard(List<TwentyTile> tileSet, int numRow, int numCol) {
         tiles = new TwentyTile[numRow][numCol];
         Iterator<TwentyTile> iterator = tileSet.iterator();
         this.numRow = numRow;
         this.numCol = numCol;
-        this.score = score;
         for (int row = 0; row != numRow; row++) {
             for (int col = 0; col != numCol; col++) {
                 this.tiles[row][col] = iterator.next();
@@ -122,21 +115,15 @@ public class TwentyBoard extends AbstractBoard implements Iterable<TwentyTile> {
         return new TwentyBoard.BoardIterator();
     }
 
-    public int getScore() {
-        return this.score;
-    }
 
     TwentyBoard copy() {
         List<TwentyTile> newTiles = new ArrayList<>();
         for (TwentyTile t : this) {
             newTiles.add(t);
         }
-        return new TwentyBoard(newTiles, this.getScore(), numRow, numCol);
+        return new TwentyBoard(newTiles, numRow, numCol);
     }
 
-    void updateScore(int adjustment) {
-        this.score += adjustment;
-    }
 
     void replaceBoard(TwentyBoard newBoard) {
         TwentyTile[][] newTiles = newBoard.getTiles();

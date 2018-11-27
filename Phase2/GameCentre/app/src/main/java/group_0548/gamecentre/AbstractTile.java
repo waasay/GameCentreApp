@@ -10,12 +10,14 @@ public abstract class AbstractTile implements Serializable {
     /**
      * An unique ID for the this abstract tile
      */
-    private int id;
+    protected int id;
 
     /**
-     * Abstract method for get ID.
+     * Getter for id
      */
-    abstract public int getId();
+    public int getId(){
+        return this.id;
+    }
 
 
 }

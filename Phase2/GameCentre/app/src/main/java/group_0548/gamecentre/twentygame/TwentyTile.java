@@ -5,8 +5,6 @@ import group_0548.gamecentre.R;
 
 public class TwentyTile extends AbstractTile {
 
-    private int id;
-
     private int background;
 
     TwentyTile(int id) {
@@ -21,9 +19,6 @@ public class TwentyTile extends AbstractTile {
 
     }
 
-    public int getId() {
-        return this.id;
-    }
 
     public int getBackground() {
         return background;

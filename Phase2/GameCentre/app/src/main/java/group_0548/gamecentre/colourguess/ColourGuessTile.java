@@ -5,14 +5,12 @@ import group_0548.gamecentre.R;
 
 public class ColourGuessTile extends AbstractTile {
 
-    private int id;
-
     private int background;
 
 
     ColourGuessTile(int id) {
 
-        this.id = id;
+        super.id = id;
 
         int[] images = {R.drawable.p, R.drawable.b, R.drawable.g, R.drawable.y,
                 R.drawable.o, R.drawable.r, R.drawable.w, R.drawable.t};
@@ -21,8 +19,8 @@ public class ColourGuessTile extends AbstractTile {
 
     }
 
-    public int getId() {
-        return this.id;
+    public int getId(){
+        return super.getId();
     }
 
     public int getBackground() {

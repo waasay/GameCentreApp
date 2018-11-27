@@ -14,26 +14,13 @@ import group_0548.gamecentre.AbstractBoard;
 /**
  * The sliding tiles board.
  */
-public class SlidingBoard extends AbstractBoard implements Serializable, Iterable<SlidingTile> {
-    /**
-     * The number of rows.
-     */
-    private int numRow;
+public class SlidingBoard extends AbstractBoard<SlidingTile> implements Serializable, Iterable<SlidingTile> {
 
-    /**
-     * The number of columns.
-     */
-    private int numCol;
 
     /**
      * The tiles on the board in row-major order.
      */
     private SlidingTile[][] tiles;
-
-    /**
-     * The score of the board.
-     */
-    private int score;
 
 
     /**
@@ -48,7 +35,6 @@ public class SlidingBoard extends AbstractBoard implements Serializable, Iterabl
         Iterator<SlidingTile> iterator = tilesBoard.iterator();
         this.numRow = rowNum;
         this.numCol = colNum;
-        this.score = 0;
         for (int row = 0; row != rowNum; row++) {
             for (int col = 0; col != colNum; col++) {
                 this.tiles[row][col] = iterator.next();
@@ -58,27 +44,17 @@ public class SlidingBoard extends AbstractBoard implements Serializable, Iterabl
 
     public SlidingBoard(List<SlidingTile> tilesBoard, int score, int rowNum, int colNum) {
         this(tilesBoard, rowNum, colNum);
-        this.score = score;
-    }
 
-    /**
-     * Return the number of tiles on the board.
-     *
-     * @return the number of tiles on the board
-     */
-    public int numTiles() {
-        return numRow * numCol;
     }
 
     /**
      * Return the tile at (row, col)
-     *
      * @param row the tile row
      * @param col the tile column
      * @return the tile at (row, col)
      */
     public SlidingTile getTile(int row, int col) {
-        return tiles[row][col];
+        return super.getTile(row, col);
     }
 
     /**
@@ -109,7 +85,7 @@ public class SlidingBoard extends AbstractBoard implements Serializable, Iterabl
      */
 
     public void setTiles(SlidingTile[][] newTiles) {
-        this.tiles = newTiles;
+        super.setTiles(newTiles);
     }
 
     /**
@@ -135,41 +111,7 @@ public class SlidingBoard extends AbstractBoard implements Serializable, Iterabl
         for (SlidingTile t : this) {
             newTiles.add(t);
         }
-        return new SlidingBoard(newTiles, this.getScore(), numRow, numCol);
-    }
-
-    /**
-     * Return the score for the board.
-     *
-     * @return the score for the board.
-     */
-    public int getScore() {
-        return this.score;
-    }
-
-    /**
-     * Increase the score by num.
-     */
-    public void increaseScore(int num) {
-        this.score += num;
-    }
-
-    /**
-     * Get the current row number.
-     *
-     * @return the row number.
-     */
-    public int getNumRow() {
-        return numRow;
-    }
-
-    /**
-     * Get the current column number.
-     *
-     * @return the current column number.
-     */
-    public int getNumCol() {
-        return numCol;
+        return new SlidingBoard(newTiles, super.getNumRow(), super.getNumCol());
     }
 
     @Override
