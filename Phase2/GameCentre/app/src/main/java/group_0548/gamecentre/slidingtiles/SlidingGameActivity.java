@@ -64,7 +64,7 @@ public class SlidingGameActivity extends AppCompatActivity implements Observer {
 
         // Add View to activity
         currentScore = findViewById(R.id.SlidingScore);
-        gridView = findViewById(R.id.grid);
+        gridView = findViewById(R.id.SlidingGrid);
         gridView.setNumColumns(slidingManager.getBoard().getNumCol());
         gridView.setSlidingManager(slidingManager);
         slidingManager.addObserver(this);
