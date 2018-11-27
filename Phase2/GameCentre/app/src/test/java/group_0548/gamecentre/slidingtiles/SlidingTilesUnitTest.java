@@ -150,16 +150,16 @@ public class SlidingTilesUnitTest {
         SlidingTile emptyTile = this.findEmptyTile(this.mediumSlidingManager.getBoard());
         int emptyPos = this.getPosition(emptyTile, this.mediumSlidingManager.getBoard());
         HashMap<String, SlidingTile> around = this.mediumSlidingManager.getSurroundTiles(emptyPos);
-        int oldScore = this.mediumSlidingManager.getBoard().getScore();
+        int oldScore = this.mediumSlidingManager.getScore();
         int valueOfResetUndo = this.mediumSlidingManager.getMaxUndo() - 1;
         if (around.get("above") != null) {
             int abovePos = this.getPosition(around.get("above"), this.mediumSlidingManager.getBoard());
             this.mediumSlidingManager.touchMove(abovePos);
-            assertEquals(oldScore + 1, this.mediumSlidingManager.getBoard().getScore());
+            assertEquals(oldScore + 1, this.mediumSlidingManager.getScore());
         } else {
             int belowPos = this.getPosition(around.get("below"), this.mediumSlidingManager.getBoard());
             this.mediumSlidingManager.touchMove(belowPos);
-            assertEquals(oldScore + 1, this.mediumSlidingManager.getBoard().getScore());
+            assertEquals(oldScore + 1, this.mediumSlidingManager.getScore());
         }
         assertEquals(valueOfResetUndo, this.mediumSlidingManager.getCurrUndo());
     }

@@ -7,6 +7,7 @@ import java.util.HashMap;
 import java.util.List;
 
 import group_0548.gamecentre.AbstractManager;
+import group_0548.gamecentre.States;
 import group_0548.gamecentre.Undoable;
 
 /**
@@ -26,7 +27,7 @@ public class SlidingManager extends AbstractManager<SlidingBoard> implements Und
      * The state object that represents the past MAX_UNDO number of states
      * and the current states
      */
-    private SlidingStates pastStates = new SlidingStates();
+    private States<SlidingBoard> pastStates = new States();
     /**
      * The current number of undo left, it is define as MAX_UNDO - 1
      */
@@ -310,7 +311,7 @@ public class SlidingManager extends AbstractManager<SlidingBoard> implements Und
         return false;
     }
 
-    SlidingStates getPastStates() {
+    States getPastStates() {
         return pastStates;
     }
 }

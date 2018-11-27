@@ -16,6 +16,7 @@ public class TwentyBoard extends AbstractBoard<TwentyTile> implements Iterable<T
 
     private TwentyTile[][] tiles;
 
+
     TwentyBoard(int rowNum, int colNum) {
 
         Random randomGen = new Random();
@@ -68,11 +69,6 @@ public class TwentyBoard extends AbstractBoard<TwentyTile> implements Iterable<T
 
     }
 
-
-    public int numTiles() {
-        return this.numCol * this.numRow;
-    }
-
     public TwentyTile getTile(int row, int col) {
         return this.tiles[row][col];
     }
@@ -85,24 +81,6 @@ public class TwentyBoard extends AbstractBoard<TwentyTile> implements Iterable<T
         this.tiles = newTiles;
     }
 
-
-    /**
-     * Get the number of rows.
-     *
-     * @return the amount of rows.
-     */
-    public int getNumRow() {
-        return this.numRow;
-    }
-
-    /**
-     * Get the number of column.
-     *
-     * @return the amount of column.
-     */
-    public int getNumCol() {
-        return this.numCol;
-    }
 
     /**
      * Returns an iterator for this board.
