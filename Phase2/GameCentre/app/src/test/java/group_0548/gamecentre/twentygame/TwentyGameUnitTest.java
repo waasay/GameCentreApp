@@ -74,6 +74,16 @@ public class TwentyGameUnitTest {
     public void testPuzzleLost() {
         this.setupAndReset();
         assertEquals(true, this.lost2048Manager.puzzleLost());
-        assertEquals(false, this.solved2048Manager.puzzleLost());
+        assertEquals(false, this.hardCode2048Manager.puzzleLost());
+    }
+
+    /**
+     * Test puzzleSolved actually works
+     */
+    @Test
+    public void testPuzzleSolved(){
+        this.setupAndReset();
+        assertEquals(true,this.solved2048Manager.puzzleSolved());
+        assertEquals(false,this.regular2048Manager.puzzleSolved());
     }
 }

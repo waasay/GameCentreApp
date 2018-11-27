@@ -145,7 +145,7 @@ public class SlidingTilesUnitTest {
      * touch move is called
      */
     @Test
-    public void testScoreIncreaseCurrentUndoResetAfterTouchMove() {
+    public void testScoreIncreaseAfterTouchMove() {
         this.setUpAndResetBoard();
         SlidingTile emptyTile = this.findEmptyTile(this.mediumSlidingManager.getBoard());
         int emptyPos = this.getPosition(emptyTile, this.mediumSlidingManager.getBoard());
