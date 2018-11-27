@@ -53,7 +53,7 @@ public class User implements Serializable {
      * @param gameType a game type
      * @param game     the game that will be saved
      */
-    public void saveGame(String gameType, SlidingManager game) {
+    public void saveGame(String gameType, AbstractManager game) {
         this.hashMapOfPastGames.put(gameType, game);
     }
 
