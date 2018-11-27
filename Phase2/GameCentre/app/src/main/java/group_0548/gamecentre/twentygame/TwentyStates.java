@@ -3,8 +3,10 @@ package group_0548.gamecentre.twentygame;
 import java.io.Serializable;
 import java.util.ArrayList;
 
+import group_0548.gamecentre.AbstractState;
 
-public class TwentyStates implements Serializable {
+
+public class TwentyStates extends AbstractState<TwentyBoard> implements Serializable {
 
     /**
      * An Arraylist of board.

@@ -3,11 +3,13 @@ package group_0548.gamecentre.slidingtiles;
 import java.io.Serializable;
 import java.util.ArrayList;
 
+import group_0548.gamecentre.AbstractState;
+
 
 /**
  * The states of the boards
  */
-public class SlidingStates implements Serializable {
+public class SlidingStates extends AbstractState<SlidingBoard> implements Serializable {
 
 
     /**
