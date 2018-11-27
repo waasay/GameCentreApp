@@ -144,12 +144,12 @@ public class TwentyManager extends AbstractManager implements Undoable {
         // as the index is in range)
         for (int r = 0; r < rowNum; r++) {
 
-            for (int c = colNum - 1; c != 1; c--) {
+            /*for (int c = colNum - 1; c != 0; c--) {
                 if (tiles[r][c].getId() != 11 && tiles[r][c].getId() == tiles[r][c - 1].getId()) {
                     tiles[r][c] = new TwentyTile(tiles[r][c].getId() + 1);
                     tiles[r][c - 1] = new TwentyTile(11);
                 }
-            }
+            }*/
             // Then get all the non background tiles in an array (for each row)
             ArrayList<TwentyTile> rowR = new ArrayList<TwentyTile>();
 
@@ -159,8 +159,19 @@ public class TwentyManager extends AbstractManager implements Undoable {
                 }
             }
             rowsOfNumbers.add(rowR);
-
         }
+        for (int r = 0; r < rowNum; r++) {
+            int c = rowsOfNumbers.get(r).size() - 1;
+            while(c > 0) {
+                if (rowsOfNumbers.get(r).get(c).getId() == rowsOfNumbers.get(r).get(c-1).getId()) {
+                    rowsOfNumbers.get(r).set(c, new TwentyTile(rowsOfNumbers.get(r).get(c).getId() + 1));
+                    rowsOfNumbers.get(r).remove(c-1);
+                    c = c - 1;
+                }
+                c = c - 1;
+            }
+        }
+
         return rowsOfNumbers;
     }
 
@@ -186,7 +197,7 @@ public class TwentyManager extends AbstractManager implements Undoable {
             ArrayList<TwentyTile> newRow = new ArrayList<TwentyTile>();
             newRow.addAll(backgrounds);
             newRow.addAll(rowsOfNumbers.get(r));
-            newRows.set(r, newRow);
+            newRows.add(newRow);
         }
         return newRows;
     }
@@ -256,6 +267,7 @@ public class TwentyManager extends AbstractManager implements Undoable {
     public void swipeLeft(TwentyTile[][] tiles) {
 
         TwentyTile[][] newTiles = new TwentyTile[rowNum][colNum];
+        TwentyTile[][] newTilesCopy = new TwentyTile[rowNum][colNum];
 
         // flip board along v axis
         // reverse each row
@@ -267,21 +279,24 @@ public class TwentyManager extends AbstractManager implements Undoable {
         ArrayList<ArrayList<TwentyTile>> rowsOfNumbers = mergeRight(newTiles);
         ArrayList<ArrayList<TwentyTile>> newRows = fillWithBackground(rowsOfNumbers);
 
+        for (int row = 0; row != rowNum; row++) {
+            for (int col = 0; col != colNum; col++) {
+                newTilesCopy[row][col] = newRows.get(row).get(col);
+            }
+        }
+
+
         // flip board to original position
         // reverse each row
         // flip board
         // reverse each row
         for (int row = 0; row != rowNum; row++) {
             for (int col = 0; col < colNum; col++) {
-                newTiles[row][col] = newTiles[row][colNum - 1 - col];
+                newTiles[row][col] = newTilesCopy[row][colNum - 1 - col];
             }
         }
 
-        for (int row = 0; row != rowNum; row++) {
-            for (int col = 0; col != colNum; col++) {
-                newTiles[row][col] = newRows.get(row).get(col);
-            }
-        }
+
         this.board.setTiles(newTiles);
         autoGen();
         this.getBoard().updateScore(1);
@@ -291,6 +306,8 @@ public class TwentyManager extends AbstractManager implements Undoable {
     public void swipeUp(TwentyTile[][] tiles) {
 
         TwentyTile[][] newTiles = new TwentyTile[rowNum][colNum];
+        TwentyTile[][] newTilesCopy = new TwentyTile[rowNum][colNum];
+
         // rotate board 90 degrees clockwise
         for (int col = 0; col != colNum; col++) {
             for (int row = 0; row < rowNum; row++) {
@@ -299,19 +316,26 @@ public class TwentyManager extends AbstractManager implements Undoable {
         }
         ArrayList<ArrayList<TwentyTile>> rowsOfNumbers = mergeRight(newTiles);
         ArrayList<ArrayList<TwentyTile>> newRows = fillWithBackground(rowsOfNumbers);
-        // flip board to original position
-        // rotate board 90 degrees counterclockwise
-        for (int row = 0; row != rowNum; row++) {
-            for (int col = 0; col < colNum; col++) {
-                newTiles[row][col] = newTiles[rowNum - 1 - row][col];
-            }
-        }
 
         for (int row = 0; row != rowNum; row++) {
             for (int col = 0; col != colNum; col++) {
-                newTiles[row][col] = newRows.get(row).get(col);
+                newTilesCopy[row][col] = newRows.get(row).get(col);
             }
         }
+
+        // flip board to original position
+        // rotate board 90 degrees counterclockwise
+        /*for (int row = 0; row != rowNum; row++) {
+            for (int col = 0; col < colNum; col++) {
+                newTiles[row][col] = newTilesCopy[rowNum - 1 - row][col];
+            }
+        }*/
+        for (int col = 0; col != colNum; col++) {
+            for (int row = 0; row < rowNum; row++) {
+                newTiles[col][row] = newTilesCopy[row][colNum - 1 - col];
+            }
+        }
+
 
         this.board.setTiles(newTiles);
         autoGen();
@@ -322,6 +346,10 @@ public class TwentyManager extends AbstractManager implements Undoable {
     public void swipeDown(TwentyTile[][] tiles) {
 
         TwentyTile[][] newTiles = new TwentyTile[rowNum][colNum];
+        TwentyTile[][] newTilesCopy1 = new TwentyTile[rowNum][colNum];
+        TwentyTile[][] newTilesCopy2 = new TwentyTile[rowNum][colNum];
+        TwentyTile[][] newTilesCopy3 = new TwentyTile[rowNum][colNum];
+
         // rotate board 90 degrees clockwise
         for (int col = 0; col != colNum; col++) {
             for (int row = 0; row < rowNum; row++) {
@@ -329,16 +357,28 @@ public class TwentyManager extends AbstractManager implements Undoable {
             }
         }
 
+        for (int row = 0; row != rowNum; row++) {
+            for (int col = 0; col != colNum; col++) {
+                newTilesCopy1[row][col] = newTiles[col][row];
+            }
+        }
+
         // flip board along v axis
         // reverse each row
         for (int row = 0; row != rowNum; row++) {
             for (int col = 0; col < colNum; col++) {
-                newTiles[row][col] = newTiles[row][colNum - 1 - col];
+                newTiles[row][col] = newTilesCopy1[row][colNum - 1 - col];
             }
         }
 
         ArrayList<ArrayList<TwentyTile>> rowsOfNumbers = mergeRight(newTiles);
         ArrayList<ArrayList<TwentyTile>> newRows = fillWithBackground(rowsOfNumbers);
+
+        for (int row = 0; row != rowNum; row++) {
+            for (int col = 0; col != colNum; col++) {
+                newTilesCopy2[row][col] = newRows.get(row).get(col);
+            }
+        }
 
         // flip board to original position
         // reverse each row
@@ -346,22 +386,31 @@ public class TwentyManager extends AbstractManager implements Undoable {
         // reverse each row
         for (int row = 0; row != rowNum; row++) {
             for (int col = 0; col < colNum; col++) {
-                newTiles[row][col] = newTiles[row][colNum - 1 - col];
-            }
-        }
-        // flip board to original position
-        // rotate board 90 degrees counterclockwise
-        for (int row = 0; row != rowNum; row++) {
-            for (int col = 0; col < colNum; col++) {
-                newTiles[row][col] = newTiles[rowNum - 1 - row][col];
+                newTiles[row][col] = newTilesCopy2[row][colNum - 1 - col];
             }
         }
 
         for (int row = 0; row != rowNum; row++) {
             for (int col = 0; col != colNum; col++) {
-                newTiles[row][col] = newRows.get(row).get(col);
+                newTilesCopy3[row][col] = newTiles[col][row];
             }
         }
+
+        // flip board to original position
+        // rotate board 90 degrees counterclockwise
+        /*for (int row = 0; row != rowNum; row++) {
+            for (int col = 0; col < colNum; col++) {
+                newTiles[row][col] = newTilesCopy3[rowNum - 1 - row][col];
+            }
+        }*/
+
+        for (int col = 0; col != colNum; col++) {
+            for (int row = 0; row < rowNum; row++) {
+                newTiles[col][row] = newTilesCopy3[row][colNum - 1 - col];
+            }
+        }
+
+
 
         this.board.setTiles(newTiles);
         autoGen();
