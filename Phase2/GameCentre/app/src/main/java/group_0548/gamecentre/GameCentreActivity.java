@@ -58,7 +58,7 @@ public class GameCentreActivity extends AppCompatActivity {
      * Initializing the 2048 button to go to the sliding tile game
      */
     private void addStartTwentyListener() {
-        Button button = findViewById(R.id.ColourGuessGame);
+        Button button = findViewById(R.id.TwentyGame);
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
