@@ -378,13 +378,14 @@ public class TwentyManager extends AbstractManager<TwentyBoard> implements Undoa
         // rotate board 90 degrees clockwise
         for (int col = 0; col != this.getBoard().getNumCol(); col++) {
             for (int row = 0; row < this.getBoard().getNumRow(); row++) {
-                newTiles[col][row] = tiles[this.getBoard().getNumRow() - 1 - row][col];
+                //newTiles[col][row] = tiles[this.getBoard().getNumRow() - 1 - row][col];
+                newTiles[row][col] = tiles[this.getBoard().getNumRow() - 1 - col][row];
             }
         }
 
         for (int row = 0; row != this.getBoard().getNumRow(); row++) {
             for (int col = 0; col != this.getBoard().getNumRow(); col++) {
-                newTilesCopy1[row][col] = newTiles[col][row];
+                newTilesCopy1[row][col] = newTiles[row][col];
             }
         }
 
@@ -419,7 +420,8 @@ public class TwentyManager extends AbstractManager<TwentyBoard> implements Undoa
 
         for (int row = 0; row != this.getBoard().getNumRow(); row++) {
             for (int col = 0; col != this.getBoard().getNumCol(); col++) {
-                newTilesCopy3[row][col] = newTiles[col][row];
+                //newTilesCopy3[row][col] = newTiles[col][row];
+                newTilesCopy3[row][col] = newTiles[row][col];
             }
         }
 
