@@ -108,7 +108,7 @@ public class SlidingGameActivity extends AppCompatActivity implements Observer {
      */
     private void updateTileButtons() {
         SlidingBoard board = slidingManager.getBoard();
-        currentScore.setText(String.valueOf(board.getScore()));
+        currentScore.setText(String.valueOf(slidingManager.getScore()));
         int nextPos = 0;
         for (Button b : tileButtons) {
             int row = nextPos / slidingManager.getBoard().getNumRow();
@@ -175,12 +175,12 @@ public class SlidingGameActivity extends AppCompatActivity implements Observer {
 
     public void saveToScoreBoard() {
         String gameType = SlidingStartingActivity.GAME_TYPE + " " + slidingManager.getComplexity();
-        if (slidingManager.puzzleSolved() && SlidingManager.getMaxUndo() == 3) {
+        if (slidingManager.puzzleSolved() && slidingManager.getMaxUndo() == 3) {
             SlidingStartingActivity.scoreBoardManager.updateScoreBoard(slidingManager.getComplexity(),
                     LoginActivity.usersManager.getCurrentUser().getUserName(),
-                    slidingManager.getBoard().getScore(), SlidingStartingActivity.ORDER);
+                    slidingManager.getScore(), SlidingStartingActivity.ORDER);
             LoginActivity.usersManager.getCurrentUser().updateScore(gameType,
-                    slidingManager.getBoard().getScore(), SlidingStartingActivity.ORDER);
+                    slidingManager.getScore(), SlidingStartingActivity.ORDER);
             saveToFile(SlidingStartingActivity.SCOREBOARD_SAVE_FILENAME,
                     SlidingStartingActivity.scoreBoardManager);
             saveToFile(LoginActivity.USER_SAVE_FILENAME, LoginActivity.usersManager);

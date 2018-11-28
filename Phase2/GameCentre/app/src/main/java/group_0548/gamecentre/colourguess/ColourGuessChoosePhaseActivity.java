@@ -223,7 +223,8 @@ public class ColourGuessChoosePhaseActivity extends AppCompatActivity implements
         stopCountdown();
         colourGuessManager.setTime(colourGuessManager.getTime() - endTime + startTime);
         if (colourGuessManager.puzzleSolved()) {
-            colourGuessManager.reset();
+            colourGuessManager.reset(colourGuessManager.getBoard().getNumRow(),
+                    colourGuessManager.getBoard().getNumCol());
             saveToFile(ColourGuessStartingActivity.TEMP_SAVE_FILENAME, colourGuessManager);
             Intent tep = new Intent(this, ColourGuessMemoryPhaseActivity.class);
             startActivity(tep);

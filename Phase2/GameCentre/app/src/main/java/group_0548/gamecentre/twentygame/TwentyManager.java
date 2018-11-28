@@ -5,18 +5,16 @@ import java.util.HashMap;
 import java.util.Random;
 
 import group_0548.gamecentre.AbstractManager;
+import group_0548.gamecentre.States;
 import group_0548.gamecentre.Undoable;
 
 
-public class TwentyManager extends AbstractManager implements Undoable {
+public class TwentyManager extends AbstractManager<TwentyBoard> implements Undoable {
     /**
      * Max number of undos
      */
-    private static int maxUndo;
-    /**
-     * The game type.
-     */
-    private final String gameType = "2048";
+    private int maxUndo;
+
     /**
      * The board being managed.
      */
@@ -25,18 +23,13 @@ public class TwentyManager extends AbstractManager implements Undoable {
      * The state object that represents the past maxUndo number of states
      * and the current states
      */
-    private TwentyStates pastStates = new TwentyStates();
+    private States<TwentyBoard> pastStates;
     /**
      * The current number of undo left, it is define as MAX_UNDO - 1
      */
     private int currUndo;
-    /**
-     * The complexity of the board.
-     */
-    private String complexity;
 
-    private int rowNum;
-    private int colNum;
+
 
     /**
      * Manage a new shuffled board.
@@ -44,20 +37,17 @@ public class TwentyManager extends AbstractManager implements Undoable {
     TwentyManager(int rowNum, int colNum, String complex, int maxUndo) {
         this.complexity = complex;
         this.board = new TwentyBoard(rowNum, colNum);
-        this.rowNum = rowNum;
-        this.colNum = colNum;
 
         this.maxUndo = maxUndo;
         this.currUndo = this.maxUndo - 1;
-        pastStates.updateStates(this.getBoard().copy(), this.maxUndo);
+        this.pastStates = new States<>(this.maxUndo);
+        this.pastStates.updateStates(this.getBoard().copy());
     }
 
-    /**
-     * Return the current board.
-     */
-    TwentyBoard getBoard() {
-        return board;
+    public TwentyBoard getBoard(){
+        return this.board;
     }
+
 
     /**
      * Return whether the TwentyBoard contains a 2048 tile
@@ -142,14 +132,14 @@ public class TwentyManager extends AbstractManager implements Undoable {
         // starting from the right of each row if there are two consecutive tiles with the same
         // number change the first tile to background and the second to the next index (as long
         // as the index is in range)
-        for (int r = 0; r < rowNum; r++) {
+        for (int r = 0; r < this.getBoard().getNumRow(); r++) {
 
-            for (int c = colNum - 1; c != 1; c--) {
+            /*for (int c = colNum - 1; c != 0; c--) {
                 if (tiles[r][c].getId() != 11 && tiles[r][c].getId() == tiles[r][c - 1].getId()) {
                     tiles[r][c] = new TwentyTile(tiles[r][c].getId() + 1);
                     tiles[r][c - 1] = new TwentyTile(11);
                 }
-            }
+            }*/
             // Then get all the non background tiles in an array (for each row)
             ArrayList<TwentyTile> rowR = new ArrayList<TwentyTile>();
 
@@ -159,8 +149,19 @@ public class TwentyManager extends AbstractManager implements Undoable {
                 }
             }
             rowsOfNumbers.add(rowR);
-
         }
+        for (int r = 0; r < this.getBoard().getNumRow(); r++) {
+            int c = rowsOfNumbers.get(r).size() - 1;
+            while(c > 0) {
+                if (rowsOfNumbers.get(r).get(c).getId() == rowsOfNumbers.get(r).get(c-1).getId()) {
+                    rowsOfNumbers.get(r).set(c, new TwentyTile(rowsOfNumbers.get(r).get(c).getId() + 1));
+                    rowsOfNumbers.get(r).remove(c-1);
+                    c = c - 1;
+                }
+                c = c - 1;
+            }
+        }
+
         return rowsOfNumbers;
     }
 
@@ -173,8 +174,8 @@ public class TwentyManager extends AbstractManager implements Undoable {
         // and add that many
         // background tiles to begging of each row
         ArrayList<ArrayList<TwentyTile>> newRows = new ArrayList<ArrayList<TwentyTile>>();
-        for (int r = 0; r < rowNum; r++) {
-            int numberOfBackgrounds = colNum - rowsOfNumbers.get(r).size();
+        for (int r = 0; r < this.getBoard().getNumRow(); r++) {
+            int numberOfBackgrounds = this.getBoard().getNumCol() - rowsOfNumbers.get(r).size();
 
             // make an ArrayList of the appropriate # of backgrounds
             ArrayList<TwentyTile> backgrounds = new ArrayList<TwentyTile>();
@@ -186,7 +187,7 @@ public class TwentyManager extends AbstractManager implements Undoable {
             ArrayList<TwentyTile> newRow = new ArrayList<TwentyTile>();
             newRow.addAll(backgrounds);
             newRow.addAll(rowsOfNumbers.get(r));
-            newRows.set(r, newRow);
+            newRows.add(newRow);
         }
         return newRows;
     }
@@ -226,6 +227,25 @@ public class TwentyManager extends AbstractManager implements Undoable {
 
     }
 
+    /**
+     * Helper method to check after each swipe whether the tiles are identifcal or not
+     * @param oldSet the old collection of tiles
+     * @param newSet the new collection of tiles
+     * @return whether oldSet and newSet are identical
+     */
+
+    private boolean compareTiles(TwentyTile[][] oldSet, TwentyTile[][] newSet){
+
+        for (int i = 0; i < this.getBoard().getNumRow(); i++){
+            for (int j = 0; j < this.getBoard().getNumCol(); j++){
+                if (oldSet[i][j].getBackground() != newSet[i][j].getBackground()){
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
     public void swipeRight(TwentyTile[][] tiles) {
         // Rough outline of algorithm
         // divide board into rows
@@ -237,136 +257,191 @@ public class TwentyManager extends AbstractManager implements Undoable {
         // background tiles to begging of a new array of size of number of columns and then append
         // the non background tiles to the end.
 
+        TwentyTile[][] currTiles = this.getBoard().getTiles();
         ArrayList<ArrayList<TwentyTile>> rowsOfNumbers = mergeRight(tiles);
         ArrayList<ArrayList<TwentyTile>> newRows = fillWithBackground(rowsOfNumbers);
-        TwentyTile[][] newTiles = new TwentyTile[rowNum][colNum];
+        TwentyTile[][] newTiles = new TwentyTile[this.getBoard().getNumRow()][this.getBoard().getNumCol()];
 
-        for (int row = 0; row != rowNum; row++) {
-            for (int col = 0; col != colNum; col++) {
+        for (int row = 0; row != this.getBoard().getNumRow(); row++) {
+            for (int col = 0; col != this.getBoard().getNumCol(); col++) {
                 newTiles[row][col] = newRows.get(row).get(col);
             }
         }
-        this.board.setTiles(newTiles);
-        autoGen();
-        this.getBoard().updateScore(1);
-        super.changeAndNotify();
 
+        if (this.compareTiles(currTiles, newTiles)){
+            this.board.setTiles(newTiles);
+            autoGen();
+            pastStates.updateStates(this.getBoard().copy());
+            this.increaseScore(1);
+            this.resetCurrUndo();
+            super.changeAndNotify();
+        }
     }
 
     public void swipeLeft(TwentyTile[][] tiles) {
 
-        TwentyTile[][] newTiles = new TwentyTile[rowNum][colNum];
+        TwentyTile[][] currTiles = this.getBoard().getTiles();
+        TwentyTile[][] newTiles = new TwentyTile[this.getBoard().getNumRow()][this.getBoard().getNumCol()];
+        TwentyTile[][] newTilesCopy = new TwentyTile[this.getBoard().getNumRow()][this.getBoard().getNumCol()];
 
         // flip board along v axis
         // reverse each row
-        for (int row = 0; row != rowNum; row++) {
-            for (int col = 0; col < colNum; col++) {
-                newTiles[row][col] = tiles[row][colNum - 1 - col];
+        for (int row = 0; row != this.getBoard().getNumRow(); row++) {
+            for (int col = 0; col < this.getBoard().getNumCol(); col++) {
+                newTiles[row][col] = tiles[row][this.getBoard().getNumCol() - 1 - col];
             }
         }
         ArrayList<ArrayList<TwentyTile>> rowsOfNumbers = mergeRight(newTiles);
         ArrayList<ArrayList<TwentyTile>> newRows = fillWithBackground(rowsOfNumbers);
 
+        for (int row = 0; row != this.getBoard().getNumRow(); row++) {
+            for (int col = 0; col != this.getBoard().getNumCol(); col++) {
+                newTilesCopy[row][col] = newRows.get(row).get(col);
+            }
+        }
+
+
         // flip board to original position
         // reverse each row
         // flip board
         // reverse each row
-        for (int row = 0; row != rowNum; row++) {
-            for (int col = 0; col < colNum; col++) {
-                newTiles[row][col] = newTiles[row][colNum - 1 - col];
+        for (int row = 0; row != this.getBoard().getNumRow(); row++) {
+            for (int col = 0; col < this.getBoard().getNumCol(); col++) {
+                newTiles[row][col] = newTilesCopy[row][this.getBoard().getNumCol() - 1 - col];
             }
         }
 
-        for (int row = 0; row != rowNum; row++) {
-            for (int col = 0; col != colNum; col++) {
-                newTiles[row][col] = newRows.get(row).get(col);
-            }
+
+        if (this.compareTiles(currTiles, newTiles)){
+            this.board.setTiles(newTiles);
+            autoGen();
+            pastStates.updateStates(this.getBoard().copy());
+            this.increaseScore(1);
+            this.resetCurrUndo();
+            super.changeAndNotify();
         }
-        this.board.setTiles(newTiles);
-        autoGen();
-        this.getBoard().updateScore(1);
-        super.changeAndNotify();
     }
 
     public void swipeUp(TwentyTile[][] tiles) {
+        TwentyTile[][] currTiles = this.getBoard().getTiles();
+        TwentyTile[][] newTiles = new TwentyTile[this.getBoard().getNumRow()][this.getBoard().getNumCol()];
+        TwentyTile[][] newTilesCopy = new TwentyTile[this.getBoard().getNumRow()][this.getBoard().getNumCol()];
 
-        TwentyTile[][] newTiles = new TwentyTile[rowNum][colNum];
         // rotate board 90 degrees clockwise
-        for (int col = 0; col != colNum; col++) {
-            for (int row = 0; row < rowNum; row++) {
-                newTiles[col][row] = tiles[rowNum - 1 - row][col];
+        for (int col = 0; col != this.getBoard().getNumCol(); col++) {
+            for (int row = 0; row < this.getBoard().getNumRow(); row++) {
+                newTiles[col][row] = tiles[this.getBoard().getNumRow() - 1 - row][col];
             }
         }
         ArrayList<ArrayList<TwentyTile>> rowsOfNumbers = mergeRight(newTiles);
         ArrayList<ArrayList<TwentyTile>> newRows = fillWithBackground(rowsOfNumbers);
+
+        for (int row = 0; row != this.getBoard().getNumRow(); row++) {
+            for (int col = 0; col != this.getBoard().getNumCol(); col++) {
+                newTilesCopy[row][col] = newRows.get(row).get(col);
+            }
+        }
+
         // flip board to original position
         // rotate board 90 degrees counterclockwise
-        for (int row = 0; row != rowNum; row++) {
+        /*for (int row = 0; row != rowNum; row++) {
             for (int col = 0; col < colNum; col++) {
-                newTiles[row][col] = newTiles[rowNum - 1 - row][col];
+                newTiles[row][col] = newTilesCopy[rowNum - 1 - row][col];
+            }
+        }*/
+        for (int col = 0; col != this.getBoard().getNumCol(); col++) {
+            for (int row = 0; row < this.getBoard().getNumRow(); row++) {
+                newTiles[col][row] = newTilesCopy[row][this.getBoard().getNumCol() - 1 - col];
             }
         }
 
-        for (int row = 0; row != rowNum; row++) {
-            for (int col = 0; col != colNum; col++) {
-                newTiles[row][col] = newRows.get(row).get(col);
-            }
-        }
 
-        this.board.setTiles(newTiles);
-        autoGen();
-        this.getBoard().updateScore(1);
-        super.changeAndNotify();
+        if (this.compareTiles(currTiles, newTiles)){
+            this.board.setTiles(newTiles);
+            autoGen();
+            pastStates.updateStates(this.getBoard().copy());
+            this.increaseScore(1);
+            this.resetCurrUndo();
+            super.changeAndNotify();
+        }
     }
 
     public void swipeDown(TwentyTile[][] tiles) {
+        TwentyTile[][] currTiles = this.getBoard().getTiles();
+        TwentyTile[][] newTiles = new TwentyTile[this.getBoard().getNumRow()][this.getBoard().getNumCol()];
+        TwentyTile[][] newTilesCopy1 = new TwentyTile[this.getBoard().getNumRow()][this.getBoard().getNumCol()];
+        TwentyTile[][] newTilesCopy2 = new TwentyTile[this.getBoard().getNumRow()][this.getBoard().getNumCol()];
+        TwentyTile[][] newTilesCopy3 = new TwentyTile[this.getBoard().getNumRow()][this.getBoard().getNumCol()];
 
-        TwentyTile[][] newTiles = new TwentyTile[rowNum][colNum];
         // rotate board 90 degrees clockwise
-        for (int col = 0; col != colNum; col++) {
-            for (int row = 0; row < rowNum; row++) {
-                newTiles[col][row] = tiles[rowNum - 1 - row][col];
+        for (int col = 0; col != this.getBoard().getNumCol(); col++) {
+            for (int row = 0; row < this.getBoard().getNumRow(); row++) {
+                newTiles[col][row] = tiles[this.getBoard().getNumRow() - 1 - row][col];
+            }
+        }
+
+        for (int row = 0; row != this.getBoard().getNumRow(); row++) {
+            for (int col = 0; col != this.getBoard().getNumRow(); col++) {
+                newTilesCopy1[row][col] = newTiles[col][row];
             }
         }
 
         // flip board along v axis
         // reverse each row
-        for (int row = 0; row != rowNum; row++) {
-            for (int col = 0; col < colNum; col++) {
-                newTiles[row][col] = newTiles[row][colNum - 1 - col];
+        for (int row = 0; row != this.getBoard().getNumRow(); row++) {
+            for (int col = 0; col < this.getBoard().getNumCol(); col++) {
+                newTiles[row][col] = newTilesCopy1[row][this.getBoard().getNumCol() - 1 - col];
             }
         }
 
         ArrayList<ArrayList<TwentyTile>> rowsOfNumbers = mergeRight(newTiles);
         ArrayList<ArrayList<TwentyTile>> newRows = fillWithBackground(rowsOfNumbers);
 
+        for (int row = 0; row != this.getBoard().getNumRow(); row++) {
+            for (int col = 0; col != this.getBoard().getNumCol(); col++) {
+                newTilesCopy2[row][col] = newRows.get(row).get(col);
+            }
+        }
+
         // flip board to original position
         // reverse each row
         // flip board
         // reverse each row
-        for (int row = 0; row != rowNum; row++) {
-            for (int col = 0; col < colNum; col++) {
-                newTiles[row][col] = newTiles[row][colNum - 1 - col];
+        for (int row = 0; row != this.getBoard().getNumRow(); row++) {
+            for (int col = 0; col < this.getBoard().getNumRow(); col++) {
+                newTiles[row][col] = newTilesCopy2[row][this.getBoard().getNumCol() - 1 - col];
             }
         }
+
+        for (int row = 0; row != this.getBoard().getNumRow(); row++) {
+            for (int col = 0; col != this.getBoard().getNumCol(); col++) {
+                newTilesCopy3[row][col] = newTiles[col][row];
+            }
+        }
+
         // flip board to original position
         // rotate board 90 degrees counterclockwise
-        for (int row = 0; row != rowNum; row++) {
+        /*for (int row = 0; row != rowNum; row++) {
             for (int col = 0; col < colNum; col++) {
-                newTiles[row][col] = newTiles[rowNum - 1 - row][col];
+                newTiles[row][col] = newTilesCopy3[rowNum - 1 - row][col];
+            }
+        }*/
+
+        for (int col = 0; col != this.getBoard().getNumCol(); col++) {
+            for (int row = 0; row < this.getBoard().getNumRow(); row++) {
+                newTiles[col][row] = newTilesCopy3[row][this.getBoard().getNumCol() - 1 - col];
             }
         }
 
-        for (int row = 0; row != rowNum; row++) {
-            for (int col = 0; col != colNum; col++) {
-                newTiles[row][col] = newRows.get(row).get(col);
-            }
-        }
 
-        this.board.setTiles(newTiles);
-        autoGen();
-        this.getBoard().updateScore(1);
-        super.changeAndNotify();
+        if (this.compareTiles(currTiles, newTiles)){
+            this.board.setTiles(newTiles);
+            autoGen();
+            pastStates.updateStates(this.getBoard().copy());
+            this.increaseScore(1);
+            this.resetCurrUndo();
+            super.changeAndNotify();
+        }
     }
 
 
@@ -388,7 +463,7 @@ public class TwentyManager extends AbstractManager implements Undoable {
             i = this.pastStates.getBoards().indexOf(temp);
             this.pastStates.keepStatesUpTill(i);
         }
-        this.pastStates.updateStates(this.getBoard().copy(), this.maxUndo);
+        this.pastStates.updateStates(this.getBoard().copy());
 
     }
 
@@ -445,7 +520,7 @@ public class TwentyManager extends AbstractManager implements Undoable {
      *
      * @return the current undo
      */
-    public int getCurrUndo() {
+    int getCurrUndo() {
         return this.currUndo;
     }
 
@@ -454,27 +529,23 @@ public class TwentyManager extends AbstractManager implements Undoable {
      *
      * @return the maximum number of undo
      */
-    public static int getMaxUndo() {
-        return maxUndo;
+    int getMaxUndo() {
+        return this.maxUndo;
     }
 
     /**
      * Reset currUndo to maxUndo - 1
      */
 
-    public void resetCurrUndo() {
+    void resetCurrUndo() {
         this.currUndo = this.maxUndo - 1;
     }
 
     public String getComplexity() {
-        return complexity;
+        return super.getComplexity();
     }
 
-    public String getGameType() {
-        return this.gameType;
-    }
-
-    public TwentyStates getPastStates() {
+    public States getPastStates() {
         return pastStates;
     }
 }

@@ -7,21 +7,18 @@ import java.util.HashMap;
 import java.util.List;
 
 import group_0548.gamecentre.AbstractManager;
+import group_0548.gamecentre.States;
 import group_0548.gamecentre.Undoable;
 
 /**
  * Manage a board, including swapping tiles, checking for a win, and managing taps.
  */
-public class SlidingManager extends AbstractManager implements Undoable {
+public class SlidingManager extends AbstractManager<SlidingBoard> implements Undoable {
 
     /**
      * Max number of undos
      */
-    private static int MAX_UNDO;
-    /**
-     * The game type.
-     */
-    private final String gameType = "SlidingTiles";
+    private int maxUndo;
     /**
      * The board being managed.
      */
@@ -30,21 +27,18 @@ public class SlidingManager extends AbstractManager implements Undoable {
      * The state object that represents the past MAX_UNDO number of states
      * and the current states
      */
-    private SlidingStates pastStates = new SlidingStates();
+    private States<SlidingBoard> pastStates;
     /**
      * The current number of undo left, it is define as MAX_UNDO - 1
      */
     private int currUndo;
-    /**
-     * The complexity of the board.
-     */
-    private String complexity;
 
     /**
      * Manage a new shuffled board.
      */
     SlidingManager(int rowNum, int colNum, String complex, int maxUndo) {
         this.complexity = complex;
+        this.score = 0;
         List<SlidingTile> tiles = new ArrayList<>();
         final int numTiles = rowNum * colNum;
         for (int tileNum = 0; tileNum != numTiles; tileNum++) {
@@ -67,18 +61,23 @@ public class SlidingManager extends AbstractManager implements Undoable {
             this.board = new SlidingBoard(tiles, rowNum, colNum);
         }
 
-        MAX_UNDO = maxUndo;
-        this.currUndo = MAX_UNDO - 1;
-        pastStates.updateStates(this.getBoard().copy(), MAX_UNDO);
+        this.maxUndo = maxUndo;
+        this.currUndo = this.maxUndo - 1;
+        this.pastStates = new States<>(this.maxUndo);
+        this.pastStates.updateStates(this.getBoard().copy());
     }
+
+
+
+
 
     /**
      * Getter for getting the MAX_UNDO
      *
      * @return the maximum number of undo
      */
-    public static int getMaxUndo() {
-        return MAX_UNDO;
+    int getMaxUndo() {
+        return this.maxUndo;
     }
 
     /**
@@ -88,8 +87,8 @@ public class SlidingManager extends AbstractManager implements Undoable {
      * <p>
      * Return the current board.
      */
-    SlidingBoard getBoard() {
-        return board;
+    public SlidingBoard getBoard() {
+        return this.board;
     }
 
     /**
@@ -116,7 +115,7 @@ public class SlidingManager extends AbstractManager implements Undoable {
      * @return whether the tile at position is surrounded by a blank tile
      */
     boolean isValidTap(int position) {
-        int blankId = board.numTiles();
+        int blankId = this.board.numTiles();
         HashMap<String, SlidingTile> tiles = getSurroundTiles(position);
 
         return (tiles.get("below") != null && tiles.get("below").getId() == blankId)
@@ -137,9 +136,9 @@ public class SlidingManager extends AbstractManager implements Undoable {
 
         HashMap<String, SlidingTile> tiles = getSurroundTiles(position);
 
-        board.increaseScore(1);
+        super.increaseScore(1);
 
-        if (this.currUndo < MAX_UNDO - 1) {
+        if (this.currUndo < this.maxUndo - 1) {
             this.updateStateAfterUndo();
         }
 
@@ -153,7 +152,7 @@ public class SlidingManager extends AbstractManager implements Undoable {
             board.swapTiles(row, col, row, col + 1);
         }
 
-        pastStates.updateStates(this.getBoard().copy(), MAX_UNDO);
+        pastStates.updateStates(this.getBoard().copy());
         this.resetCurrUndo();
         super.changeAndNotify();
 
@@ -183,9 +182,6 @@ public class SlidingManager extends AbstractManager implements Undoable {
         return tileMap;
     }
 
-    public String getComplexity() {
-        return complexity;
-    }
 
     /**
      * Precondition: when calling this method
@@ -205,7 +201,7 @@ public class SlidingManager extends AbstractManager implements Undoable {
             i = this.pastStates.getBoards().indexOf(temp);
             this.pastStates.keepStatesUpTill(i);
         }
-        this.pastStates.updateStates(this.getBoard().copy(), MAX_UNDO);
+        this.pastStates.updateStates(this.getBoard().copy());
 
     }
 
@@ -213,7 +209,7 @@ public class SlidingManager extends AbstractManager implements Undoable {
      * Checking whether the game can undo to last state
      */
     public boolean ableToUndo() {
-        if (this.pastStates.getBoards().size() < MAX_UNDO + 1) {
+        if (this.pastStates.getBoards().size() < this.getMaxUndo() + 1) {
             this.currUndo = this.pastStates.getBoards().size() - 2;
         }
 
@@ -262,7 +258,7 @@ public class SlidingManager extends AbstractManager implements Undoable {
      *
      * @return the current undo
      */
-    public int getCurrUndo() {
+    int getCurrUndo() {
         return this.currUndo;
     }
 
@@ -270,8 +266,8 @@ public class SlidingManager extends AbstractManager implements Undoable {
      * Reset undo to MAX_UNDO - 1
      */
 
-    public void resetCurrUndo() {
-        this.currUndo = MAX_UNDO - 1;
+    void resetCurrUndo() {
+        this.currUndo = this.getMaxUndo() - 1;
     }
 
 
@@ -320,11 +316,11 @@ public class SlidingManager extends AbstractManager implements Undoable {
         return false;
     }
 
-    public String getGameType() {
-        return this.gameType;
+    States getPastStates() {
+        return pastStates;
     }
 
-    public SlidingStates getPastStates() {
-        return pastStates;
+    public String getComplexity() {
+        return super.getComplexity();
     }
 }

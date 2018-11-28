@@ -29,12 +29,12 @@ public class ColourGuessUnitTest {
         this.hardcodedColourManager = new ColourGuessManager(4, 4, "Medium");
         List<ColourGuessTile> hardcodedTiles = new ArrayList<>();
         List<Integer> idList = Arrays.asList(0, 1, 2, 3, 4, 5, 0, 1, 2, 3, 4, 5, 3, 1, 2, 5);
-        for (int j = 0; j < this.hardcodedColourManager.getBoard1().numTiles(); j++) {
+        for (int j = 0; j < this.hardcodedColourManager.getBoard().numTiles(); j++) {
             hardcodedTiles.add(new ColourGuessTile(idList.get(j)));
         }
         ColourGuessBoard board = new ColourGuessBoard(hardcodedTiles, 4, 4);
         ColourGuessTile[][] newTile = board.getTiles();
-        this.hardcodedColourManager.getBoard1().setTiles(newTile);
+        this.hardcodedColourManager.getBoard().setTiles(newTile);
 
     }
 
@@ -100,8 +100,8 @@ public class ColourGuessUnitTest {
     @Test
     public void testGetBackground() {
         this.setupAndResetBoard();
-        assertEquals(this.hardcodedColourManager.getBoard1().getTile(0, 0).getBackground(),
-                this.hardcodedColourManager.getBoard1().getTile(1, 2).getBackground());
+        assertEquals(this.hardcodedColourManager.getBoard().getTile(0, 0).getBackground(),
+                this.hardcodedColourManager.getBoard().getTile(1, 2).getBackground());
     }
 
     /**
@@ -127,7 +127,7 @@ public class ColourGuessUnitTest {
         int i = 0;
         int row;
         int col;
-        for (ColourGuessTile t : this.regularColourManager.getBoard1()) {
+        for (ColourGuessTile t : this.regularColourManager.getBoard()) {
             if (t.getId() == 2) {
                 this.regularColourManager.select(i);
             }

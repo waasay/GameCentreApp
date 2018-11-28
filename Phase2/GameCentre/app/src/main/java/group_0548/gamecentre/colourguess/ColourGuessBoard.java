@@ -7,11 +7,7 @@ import java.util.List;
 
 import group_0548.gamecentre.AbstractBoard;
 
-public class ColourGuessBoard extends AbstractBoard implements Iterable<ColourGuessTile> {
-
-    private int numRow;
-
-    private int numCol;
+public class ColourGuessBoard extends AbstractBoard<ColourGuessTile> implements Iterable<ColourGuessTile> {
 
     private ColourGuessTile[][] tiles;
 
@@ -28,47 +24,32 @@ public class ColourGuessBoard extends AbstractBoard implements Iterable<ColourGu
         }
     }
 
-
-    public int numTiles() {
-        return this.numCol * this.numRow;
-    }
-
+    /**
+     * Getting for a tile at location (row, col)
+     * @param row the tile row
+     * @param col the tile column
+     * @return the tile at location (row, col)
+     */
     public ColourGuessTile getTile(int row, int col) {
         return this.tiles[row][col];
     }
 
+    /**
+     * Getter for all the tiles
+     * @return all the tiles in a 2D array
+     */
     public ColourGuessTile[][] getTiles() {
         return this.tiles;
     }
 
+    /**
+     * Setter for the tiles
+     * @param newTiles the new Tiles arrange in a 2D array
+     */
     public void setTiles(ColourGuessTile[][] newTiles) {
         this.tiles = newTiles;
     }
 
-
-    /**
-     * Get the number of rows.
-     *
-     * @return the amount of rows.
-     */
-    public int getNumRow() {
-        return this.numRow;
-    }
-
-    /**
-     * Get the number of column.
-     *
-     * @return the amount of column.
-     */
-    public int getNumCol() {
-        return this.numCol;
-    }
-
-    /**
-     * Returns an iterator for this board.
-     *
-     * @return an iterator for this board.
-     */
     @NonNull
     @Override
     public Iterator<ColourGuessTile> iterator() {
