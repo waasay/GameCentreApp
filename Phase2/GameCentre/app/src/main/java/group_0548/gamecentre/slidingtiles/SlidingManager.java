@@ -27,7 +27,7 @@ public class SlidingManager extends AbstractManager<SlidingBoard> implements Und
      * The state object that represents the past MAX_UNDO number of states
      * and the current states
      */
-    private States<SlidingBoard> pastStates = new States();
+    private States<SlidingBoard> pastStates;
     /**
      * The current number of undo left, it is define as MAX_UNDO - 1
      */
@@ -63,7 +63,8 @@ public class SlidingManager extends AbstractManager<SlidingBoard> implements Und
 
         this.maxUndo = maxUndo;
         this.currUndo = this.maxUndo - 1;
-        pastStates.updateStates(this.getBoard().copy(), this.maxUndo);
+        this.pastStates = new States<>(this.maxUndo);
+        this.pastStates.updateStates(this.getBoard().copy());
     }
 
 
@@ -151,7 +152,7 @@ public class SlidingManager extends AbstractManager<SlidingBoard> implements Und
             board.swapTiles(row, col, row, col + 1);
         }
 
-        pastStates.updateStates(this.getBoard().copy(), this.getMaxUndo());
+        pastStates.updateStates(this.getBoard().copy());
         this.resetCurrUndo();
         super.changeAndNotify();
 
@@ -200,7 +201,7 @@ public class SlidingManager extends AbstractManager<SlidingBoard> implements Und
             i = this.pastStates.getBoards().indexOf(temp);
             this.pastStates.keepStatesUpTill(i);
         }
-        this.pastStates.updateStates(this.getBoard().copy(), this.getMaxUndo());
+        this.pastStates.updateStates(this.getBoard().copy());
 
     }
 
