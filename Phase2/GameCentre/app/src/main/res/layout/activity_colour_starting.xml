@@ -12,7 +12,8 @@
         android:layout_height="wrap_content"
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
-        android:layout_marginTop="230dp"
+        android:layout_marginTop="150dp"
+        android:textSize="20dp"
         android:gravity="center"
         android:text="@string/welcome_text_colourguess"
         android:textAppearance="@style/TextAppearance.AppCompat.Body2" />
