@@ -18,7 +18,7 @@ public class GameCentreUnitTest {
     private States<String> stringStates;
 
     /**
-     * State object that cotains ints for testing
+     * State object that contains ints for testing
      */
     private States<Integer> integerStates;
 
@@ -56,11 +56,15 @@ public class GameCentreUnitTest {
      */
     @Test
     public void testKeepStatesUptill(){
+        Throwable e = null;
         this.setupAndResetStates();
-        this.stringStates.keepStatesUpTill(1);
-        assertEquals(2, this.stringStates.getBoards().size());
-        ExpectedException exception = ExpectedException.none();
-        this.integerStates.keepStatesUpTill(1);
-        exception.expect(IndexOutOfBoundsException.class);
+        this.stringStates.keepStatesUpTill(2);
+        assertEquals(3, this.stringStates.getBoards().size());
+        try {
+            this.integerStates.keepStatesUpTill(2);
+        } catch (Throwable ex) {
+            e = ex;
+        }
+        assertTrue(e instanceof IndexOutOfBoundsException);
     }
 }
