@@ -226,6 +226,25 @@ public class TwentyManager extends AbstractManager<TwentyBoard> implements Undoa
 
     }
 
+    /**
+     * Helper method to check after each swipe whether the tiles are identifcal or not
+     * @param oldSet the old collection of tiles
+     * @param newSet the new collection of tiles
+     * @return whether oldSet and newSet are identical
+     */
+
+    private boolean compareTiles(TwentyTile[][] oldSet, TwentyTile[][] newSet){
+
+        for (int i = 0; i < this.getBoard().getNumRow(); i++){
+            for (int j = 0; j < this.getBoard().getNumCol(); j++){
+                if (oldSet[i][j].getBackground() != newSet[i][j].getBackground()){
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
     public void swipeRight(TwentyTile[][] tiles) {
         // Rough outline of algorithm
         // divide board into rows
@@ -237,6 +256,7 @@ public class TwentyManager extends AbstractManager<TwentyBoard> implements Undoa
         // background tiles to begging of a new array of size of number of columns and then append
         // the non background tiles to the end.
 
+        TwentyTile[][] currTiles = this.getBoard().getTiles();
         ArrayList<ArrayList<TwentyTile>> rowsOfNumbers = mergeRight(tiles);
         ArrayList<ArrayList<TwentyTile>> newRows = fillWithBackground(rowsOfNumbers);
         TwentyTile[][] newTiles = new TwentyTile[this.getBoard().getNumRow()][this.getBoard().getNumCol()];
@@ -246,16 +266,20 @@ public class TwentyManager extends AbstractManager<TwentyBoard> implements Undoa
                 newTiles[row][col] = newRows.get(row).get(col);
             }
         }
-        this.board.setTiles(newTiles);
-        autoGen();
-        this.increaseScore(1);
-        this.resetCurrUndo();
-        super.changeAndNotify();
 
+        if (this.compareTiles(currTiles, newTiles)){
+            this.board.setTiles(newTiles);
+            autoGen();
+            pastStates.updateStates(this.getBoard().copy(), this.getMaxUndo());
+            this.increaseScore(1);
+            this.resetCurrUndo();
+            super.changeAndNotify();
+        }
     }
 
     public void swipeLeft(TwentyTile[][] tiles) {
 
+        TwentyTile[][] currTiles = this.getBoard().getTiles();
         TwentyTile[][] newTiles = new TwentyTile[this.getBoard().getNumRow()][this.getBoard().getNumCol()];
         TwentyTile[][] newTilesCopy = new TwentyTile[this.getBoard().getNumRow()][this.getBoard().getNumCol()];
 
@@ -287,15 +311,18 @@ public class TwentyManager extends AbstractManager<TwentyBoard> implements Undoa
         }
 
 
-        this.board.setTiles(newTiles);
-        autoGen();
-        this.increaseScore(1);
-        this.resetCurrUndo();
-        super.changeAndNotify();
+        if (this.compareTiles(currTiles, newTiles)){
+            this.board.setTiles(newTiles);
+            autoGen();
+            pastStates.updateStates(this.getBoard().copy(), this.getMaxUndo());
+            this.increaseScore(1);
+            this.resetCurrUndo();
+            super.changeAndNotify();
+        }
     }
 
     public void swipeUp(TwentyTile[][] tiles) {
-
+        TwentyTile[][] currTiles = this.getBoard().getTiles();
         TwentyTile[][] newTiles = new TwentyTile[this.getBoard().getNumRow()][this.getBoard().getNumCol()];
         TwentyTile[][] newTilesCopy = new TwentyTile[this.getBoard().getNumRow()][this.getBoard().getNumCol()];
 
@@ -328,15 +355,18 @@ public class TwentyManager extends AbstractManager<TwentyBoard> implements Undoa
         }
 
 
-        this.board.setTiles(newTiles);
-        autoGen();
-        this.increaseScore(1);
-        this.resetCurrUndo();
-        super.changeAndNotify();
+        if (this.compareTiles(currTiles, newTiles)){
+            this.board.setTiles(newTiles);
+            autoGen();
+            pastStates.updateStates(this.getBoard().copy(), this.getMaxUndo());
+            this.increaseScore(1);
+            this.resetCurrUndo();
+            super.changeAndNotify();
+        }
     }
 
     public void swipeDown(TwentyTile[][] tiles) {
-
+        TwentyTile[][] currTiles = this.getBoard().getTiles();
         TwentyTile[][] newTiles = new TwentyTile[this.getBoard().getNumRow()][this.getBoard().getNumCol()];
         TwentyTile[][] newTilesCopy1 = new TwentyTile[this.getBoard().getNumRow()][this.getBoard().getNumCol()];
         TwentyTile[][] newTilesCopy2 = new TwentyTile[this.getBoard().getNumRow()][this.getBoard().getNumCol()];
@@ -403,12 +433,14 @@ public class TwentyManager extends AbstractManager<TwentyBoard> implements Undoa
         }
 
 
-
-        this.board.setTiles(newTiles);
-        autoGen();
-        this.increaseScore(1);
-        this.resetCurrUndo();
-        super.changeAndNotify();
+        if (this.compareTiles(currTiles, newTiles)){
+            this.board.setTiles(newTiles);
+            autoGen();
+            pastStates.updateStates(this.getBoard().copy(), this.getMaxUndo());
+            this.increaseScore(1);
+            this.resetCurrUndo();
+            super.changeAndNotify();
+        }
     }
 
 
@@ -487,7 +519,7 @@ public class TwentyManager extends AbstractManager<TwentyBoard> implements Undoa
      *
      * @return the current undo
      */
-    public int getCurrUndo() {
+    int getCurrUndo() {
         return this.currUndo;
     }
 
@@ -496,7 +528,7 @@ public class TwentyManager extends AbstractManager<TwentyBoard> implements Undoa
      *
      * @return the maximum number of undo
      */
-    public int getMaxUndo() {
+    int getMaxUndo() {
         return this.maxUndo;
     }
 
@@ -504,7 +536,7 @@ public class TwentyManager extends AbstractManager<TwentyBoard> implements Undoa
      * Reset currUndo to maxUndo - 1
      */
 
-    public void resetCurrUndo() {
+    void resetCurrUndo() {
         this.currUndo = this.maxUndo - 1;
     }
 
