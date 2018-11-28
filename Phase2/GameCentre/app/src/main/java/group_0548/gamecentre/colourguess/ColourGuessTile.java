@@ -10,7 +10,7 @@ public class ColourGuessTile extends AbstractTile {
 
     ColourGuessTile(int id) {
 
-        super.id = id;
+        this.id = id;
 
         int[] images = {R.drawable.p, R.drawable.b, R.drawable.g, R.drawable.y,
                 R.drawable.o, R.drawable.r, R.drawable.w, R.drawable.t};

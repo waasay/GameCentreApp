@@ -282,7 +282,7 @@ public class SlidingTilesUnitTest {
      * Test getBackground SlidingTile
      */
     @Test
-    public void testGetBackgroundAndCompareTo(){
+    public void testGetBackground(){
         this.setUpAndResetBoard();
         SlidingTile emptyTile = findEmptyTile(this.solvedSlidingManager.getBoard());
         SlidingTile toCompare = this.solvedSlidingManager.getBoard().getTile(0,0);

@@ -38,9 +38,7 @@ public abstract class AbstractManager<T> extends Observable implements Serializa
     }
 
 
-    public T getBoard(){
-        return this.board;
-    }
+    public abstract T getBoard();
 
     /**
      * Return the score for the board.

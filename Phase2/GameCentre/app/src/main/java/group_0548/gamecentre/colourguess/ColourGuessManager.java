@@ -42,6 +42,10 @@ public class ColourGuessManager extends AbstractManager<ColourGuessBoard> {
         this.board2 = new ColourGuessBoard(tiles2, rowNum, colNum);
     }
 
+    public ColourGuessBoard getBoard(){
+        return this.board;
+    }
+
     // id by default is set to 0
     public boolean puzzleSolved() {
 
@@ -106,5 +110,9 @@ public class ColourGuessManager extends AbstractManager<ColourGuessBoard> {
 
     public void setTime(int time) {
         this.time = time;
+    }
+
+    public String getComplexity() {
+        return super.getComplexity();
     }
 }

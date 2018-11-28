@@ -54,7 +54,7 @@ public class SlidingBoard extends AbstractBoard<SlidingTile> implements Serializ
      * @return the tile at (row, col)
      */
     public SlidingTile getTile(int row, int col) {
-        return super.getTile(row, col);
+        return this.tiles[row][col];
     }
 
     /**
@@ -85,7 +85,7 @@ public class SlidingBoard extends AbstractBoard<SlidingTile> implements Serializ
      */
 
     public void setTiles(SlidingTile[][] newTiles) {
-        super.setTiles(newTiles);
+        this.tiles = newTiles;
     }
 
     /**

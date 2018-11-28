@@ -39,23 +39,18 @@ public abstract class AbstractBoard<T> implements Serializable {
      * @param col the tile column
      * @return the tile at (row, col)
      */
-     public T getTile(int row, int col){
-        return this.tiles[row][col];
-    }
+     public abstract T getTile(int row, int col);
+
 
     /**
      * Getter for tiles
      */
-    public T[][] getTiles(){
-        return this.tiles;
-    }
+    public abstract T[][] getTiles();
 
     /**
      * Setter for tiles
      */
-    public void setTiles(T[][] newTiles){
-        this.tiles = newTiles;
-    }
+    public abstract void setTiles(T[][] newTiles);
 
 
     /**

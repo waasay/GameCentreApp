@@ -19,6 +19,9 @@ public class TwentyTile extends AbstractTile {
 
     }
 
+    public int getId(){
+        return super.getId();
+    }
 
     public int getBackground() {
         return background;

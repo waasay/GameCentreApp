@@ -66,6 +66,10 @@ public class SlidingManager extends AbstractManager<SlidingBoard> implements Und
         pastStates.updateStates(this.getBoard().copy(), this.maxUndo);
     }
 
+
+
+
+
     /**
      * Getter for getting the MAX_UNDO
      *
@@ -83,7 +87,7 @@ public class SlidingManager extends AbstractManager<SlidingBoard> implements Und
      * Return the current board.
      */
     public SlidingBoard getBoard() {
-        return super.getBoard();
+        return this.board;
     }
 
     /**
@@ -313,5 +317,9 @@ public class SlidingManager extends AbstractManager<SlidingBoard> implements Und
 
     States getPastStates() {
         return pastStates;
+    }
+
+    public String getComplexity() {
+        return super.getComplexity();
     }
 }

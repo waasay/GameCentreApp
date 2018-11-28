@@ -28,10 +28,7 @@ public class TwentyManager extends AbstractManager<TwentyBoard> implements Undoa
      * The current number of undo left, it is define as MAX_UNDO - 1
      */
     private int currUndo;
-    /**
-     * The complexity of the board.
-     */
-    private String complexity;
+
 
 
     /**
@@ -44,6 +41,10 @@ public class TwentyManager extends AbstractManager<TwentyBoard> implements Undoa
         this.maxUndo = maxUndo;
         this.currUndo = this.maxUndo - 1;
         pastStates.updateStates(this.getBoard().copy(), this.maxUndo);
+    }
+
+    public TwentyBoard getBoard(){
+        return this.board;
     }
 
 
@@ -508,7 +509,7 @@ public class TwentyManager extends AbstractManager<TwentyBoard> implements Undoa
     }
 
     public String getComplexity() {
-        return complexity;
+        return super.getComplexity();
     }
 
     public States getPastStates() {

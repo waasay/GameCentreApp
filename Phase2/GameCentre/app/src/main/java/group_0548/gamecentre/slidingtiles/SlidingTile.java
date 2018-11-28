@@ -55,6 +55,14 @@ public class SlidingTile extends AbstractTile implements Comparable<SlidingTile>
         return background;
     }
 
+    /**
+     * Getter for the ID of this tile
+     * @return the id of the tile
+     */
+    public int getId(){
+        return this.id;
+    }
+
 
     @Override
     public int compareTo(@NonNull SlidingTile o) {
