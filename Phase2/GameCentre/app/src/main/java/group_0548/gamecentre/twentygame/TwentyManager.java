@@ -266,6 +266,7 @@ public class TwentyManager extends AbstractManager<TwentyBoard> implements Undoa
             for (int col = 0; col != this.getBoard().getNumCol(); col++) {
                 newTiles[row][col] = newRows.get(row).get(col);
             }
+
         }
 
         if (this.compareTiles(currTiles, newTiles)){
@@ -351,7 +352,8 @@ public class TwentyManager extends AbstractManager<TwentyBoard> implements Undoa
         }*/
         for (int col = 0; col != this.getBoard().getNumCol(); col++) {
             for (int row = 0; row < this.getBoard().getNumRow(); row++) {
-                newTiles[col][row] = newTilesCopy[row][this.getBoard().getNumCol() - 1 - col];
+                //newTiles[col][row] = newTilesCopy[row][this.getBoard().getNumCol() - 1 - col];
+                newTiles[row][col] = newTilesCopy[col][this.getBoard().getNumRow() - 1 - row];
             }
         }
 
@@ -413,6 +415,8 @@ public class TwentyManager extends AbstractManager<TwentyBoard> implements Undoa
             }
         }
 
+
+
         for (int row = 0; row != this.getBoard().getNumRow(); row++) {
             for (int col = 0; col != this.getBoard().getNumCol(); col++) {
                 newTilesCopy3[row][col] = newTiles[col][row];
@@ -429,7 +433,8 @@ public class TwentyManager extends AbstractManager<TwentyBoard> implements Undoa
 
         for (int col = 0; col != this.getBoard().getNumCol(); col++) {
             for (int row = 0; row < this.getBoard().getNumRow(); row++) {
-                newTiles[col][row] = newTilesCopy3[row][this.getBoard().getNumCol() - 1 - col];
+                //newTiles[col][row] = newTilesCopy3[row][this.getBoard().getNumCol() - 1 - col];
+                newTiles[row][col] = newTilesCopy3[col][this.getBoard().getNumRow() - 1 - row];
             }
         }
 
