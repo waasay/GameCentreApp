@@ -109,25 +109,16 @@ public class TwentyGameUnitTest {
     public void testSwipeRight(){
         this.setupAndReset();
         this.hardCode2048Manager.swipeRight(this.hardCode2048Manager.getBoard().getTiles());
-        ArrayList<Integer> mainList = new ArrayList<>();
-        /*for (int r = 0; r < 4; r++){
-            for (int c = 0; c < 4; c++){
-                int position =
-                if ((r != 2 && c != 0) & (r != 3 && c != 0) & (r != 3 && c != 1)){
-                    mainList.add(this.hardCode2048Manager.getBoard().getTile(r, c).getId());
-                }
-
-            }
-        }*/
+        ArrayList<Integer> idListAfterSwipe = new ArrayList<>();
         for (int pos = 0; pos < 16; pos++){
             int r = pos / 4;
             int c = pos % 4;
             if ((pos != 8) & (pos != 12) & (pos != 13)) {
-                mainList.add(this.hardCode2048Manager.getBoard().getTile(r, c).getId());
+                idListAfterSwipe.add(this.hardCode2048Manager.getBoard().getTile(r, c).getId());
             }
         }
-        List<Integer> otherList = Arrays.asList(0, 1, 2, 3, 4, 5, 6, 0, 8, 9, 6, 0, 1);
-        assertEquals(otherList, mainList);
+        List<Integer> idListToCompare = Arrays.asList(0, 1, 2, 3, 4, 5, 6, 0, 8, 9, 6, 0, 1);
+        assertEquals(idListToCompare, idListAfterSwipe);
     }
 
 }
