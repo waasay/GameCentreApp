@@ -10,7 +10,7 @@ import static org.junit.Assert.*;
  * Unit test for features under the directory of gamecentre, such as states, user, usermanager,
  * scoreboard and scoreboard manager.
  */
-public class GameCenterUnitTest {
+public class GameCentreUnitTest {
 
     /**
      * State object that contains string for testing
