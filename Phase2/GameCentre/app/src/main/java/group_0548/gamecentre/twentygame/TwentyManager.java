@@ -23,7 +23,7 @@ public class TwentyManager extends AbstractManager<TwentyBoard> implements Undoa
      * The state object that represents the past maxUndo number of states
      * and the current states
      */
-    private States<TwentyBoard> pastStates = new States();
+    private States<TwentyBoard> pastStates;
     /**
      * The current number of undo left, it is define as MAX_UNDO - 1
      */
@@ -40,7 +40,8 @@ public class TwentyManager extends AbstractManager<TwentyBoard> implements Undoa
 
         this.maxUndo = maxUndo;
         this.currUndo = this.maxUndo - 1;
-        pastStates.updateStates(this.getBoard().copy(), this.maxUndo);
+        this.pastStates = new States<>(this.maxUndo);
+        this.pastStates.updateStates(this.getBoard().copy());
     }
 
     public TwentyBoard getBoard(){
@@ -265,12 +266,13 @@ public class TwentyManager extends AbstractManager<TwentyBoard> implements Undoa
             for (int col = 0; col != this.getBoard().getNumCol(); col++) {
                 newTiles[row][col] = newRows.get(row).get(col);
             }
+
         }
 
         if (this.compareTiles(currTiles, newTiles)){
             this.board.setTiles(newTiles);
             autoGen();
-            pastStates.updateStates(this.getBoard().copy(), this.getMaxUndo());
+            pastStates.updateStates(this.getBoard().copy());
             this.increaseScore(1);
             this.resetCurrUndo();
             super.changeAndNotify();
@@ -314,7 +316,7 @@ public class TwentyManager extends AbstractManager<TwentyBoard> implements Undoa
         if (this.compareTiles(currTiles, newTiles)){
             this.board.setTiles(newTiles);
             autoGen();
-            pastStates.updateStates(this.getBoard().copy(), this.getMaxUndo());
+            pastStates.updateStates(this.getBoard().copy());
             this.increaseScore(1);
             this.resetCurrUndo();
             super.changeAndNotify();
@@ -350,7 +352,8 @@ public class TwentyManager extends AbstractManager<TwentyBoard> implements Undoa
         }*/
         for (int col = 0; col != this.getBoard().getNumCol(); col++) {
             for (int row = 0; row < this.getBoard().getNumRow(); row++) {
-                newTiles[col][row] = newTilesCopy[row][this.getBoard().getNumCol() - 1 - col];
+                //newTiles[col][row] = newTilesCopy[row][this.getBoard().getNumCol() - 1 - col];
+                newTiles[row][col] = newTilesCopy[col][this.getBoard().getNumRow() - 1 - row];
             }
         }
 
@@ -358,7 +361,7 @@ public class TwentyManager extends AbstractManager<TwentyBoard> implements Undoa
         if (this.compareTiles(currTiles, newTiles)){
             this.board.setTiles(newTiles);
             autoGen();
-            pastStates.updateStates(this.getBoard().copy(), this.getMaxUndo());
+            pastStates.updateStates(this.getBoard().copy());
             this.increaseScore(1);
             this.resetCurrUndo();
             super.changeAndNotify();
@@ -381,7 +384,7 @@ public class TwentyManager extends AbstractManager<TwentyBoard> implements Undoa
 
         for (int row = 0; row != this.getBoard().getNumRow(); row++) {
             for (int col = 0; col != this.getBoard().getNumRow(); col++) {
-                newTilesCopy1[row][col] = newTiles[col][row];
+                newTilesCopy1[row][col] = newTiles[row][col];
             }
         }
 
@@ -412,9 +415,11 @@ public class TwentyManager extends AbstractManager<TwentyBoard> implements Undoa
             }
         }
 
+
+
         for (int row = 0; row != this.getBoard().getNumRow(); row++) {
             for (int col = 0; col != this.getBoard().getNumCol(); col++) {
-                newTilesCopy3[row][col] = newTiles[col][row];
+                newTilesCopy3[row][col] = newTiles[row][col];
             }
         }
 
@@ -436,7 +441,7 @@ public class TwentyManager extends AbstractManager<TwentyBoard> implements Undoa
         if (this.compareTiles(currTiles, newTiles)){
             this.board.setTiles(newTiles);
             autoGen();
-            pastStates.updateStates(this.getBoard().copy(), this.getMaxUndo());
+            pastStates.updateStates(this.getBoard().copy());
             this.increaseScore(1);
             this.resetCurrUndo();
             super.changeAndNotify();
@@ -462,7 +467,7 @@ public class TwentyManager extends AbstractManager<TwentyBoard> implements Undoa
             i = this.pastStates.getBoards().indexOf(temp);
             this.pastStates.keepStatesUpTill(i);
         }
-        this.pastStates.updateStates(this.getBoard().copy(), this.maxUndo);
+        this.pastStates.updateStates(this.getBoard().copy());
 
     }
 

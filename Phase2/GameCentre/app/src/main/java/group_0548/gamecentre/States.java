@@ -17,21 +17,26 @@ public class States<T> implements Serializable {
     private List<T> boards;
 
     /**
+     * The number of undos that game can do.
+     */
+    private int maxUndo;
+
+    /**
      * Initialize the states.
      */
-    public States() {
+    public States(int maxUndo) {
         this.boards = new ArrayList<>();
+        this.maxUndo = maxUndo;
     }
 
     /**
      * updates the states of the boards
      *
      * @param newBoard the new board
-     * @param maxUndo  the maximum number of undo
      */
-    public void updateStates(T newBoard, int maxUndo) {
+    public void updateStates(T newBoard) {
 
-        if (this.boards.size() < maxUndo + 1) {
+        if (this.boards.size() < this.maxUndo + 1) {
             this.boards.add(newBoard);
         } else {
             this.boards.remove(0);
@@ -40,7 +45,8 @@ public class States<T> implements Serializable {
     }
 
     /**
-     * Keeping all the states of the boards until the index upTill
+     * Keeping all the states of the boards until the index upTill, if upTill is larger
+     * or equal to the size of the boards index out of bound exception will be thrown.
      *
      * @param upTill index for the ArrayList that indicates which
      *               boards will be, (boards in the ArrayList that has
@@ -48,10 +54,16 @@ public class States<T> implements Serializable {
      */
     public void keepStatesUpTill(int upTill) {
         List<T> temp = new ArrayList<>();
-        for (int i = 0; i <= upTill; i++) {
-            temp.add(this.getBoards().get(i));
+        if (upTill < this.getBoards().size()) {
+            for (int i = 0; i <= upTill; i++) {
+                temp.add(this.getBoards().get(i));
+            }
+            this.boards = temp;
         }
-        this.boards = temp;
+        else{
+            throw new IndexOutOfBoundsException("Index " + Integer.toString(upTill) + " is out of" +
+                    " bound.");
+        }
 
     }
 

@@ -17,7 +17,6 @@
         android:textSize="30sp"
         android:textStyle="bold" />
 
-
     <TextView
         android:id="@+id/TwentyScore"
         android:layout_width="wrap_content"
