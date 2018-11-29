@@ -46,7 +46,6 @@ public class ChooseScoreBoardActivity extends AppCompatActivity {
         addEasyButtonListener();
         addMediumButtonListener();
         addHardButtonListener();
-        addUserButtonListener();
     }
 
     /**
@@ -86,27 +85,6 @@ public class ChooseScoreBoardActivity extends AppCompatActivity {
                 switchToScore("Hard");
             }
         });
-    }
-
-    /**
-     * Activate the user button.
-     */
-    private void addUserButtonListener() {
-        Button returnButton = findViewById(R.id.ScoreBoardUserButton);
-        returnButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                switchToUser();
-            }
-        });
-    }
-
-    /**
-     * Switch to the scoreboard for current user.
-     */
-    private void switchToUser() {
-        Intent tep = new Intent(this, UserScoreBoardActivity.class);
-        startActivity(tep);
     }
 
     /**

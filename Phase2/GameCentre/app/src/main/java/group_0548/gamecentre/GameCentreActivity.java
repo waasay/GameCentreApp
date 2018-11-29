@@ -26,6 +26,7 @@ public class GameCentreActivity extends AppCompatActivity {
         addStartSlidingTilesListener();
         addStartColourGuessListener();
         addStartTwentyListener();
+        addUserButtonListener();
     }
 
     /**
@@ -65,6 +66,27 @@ public class GameCentreActivity extends AppCompatActivity {
                 switchToTwenty();
             }
         });
+    }
+
+    /**
+     * Activate the user button.
+     */
+    private void addUserButtonListener() {
+        Button returnButton = findViewById(R.id.UserGameScoreButton);
+        returnButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                switchToUser();
+            }
+        });
+    }
+
+    /**
+     * Switch to the scoreboard for current user.
+     */
+    private void switchToUser() {
+        Intent tep = new Intent(this, UserScoreBoardActivity.class);
+        startActivity(tep);
     }
 
     /**
