@@ -118,15 +118,6 @@ public class GameCentreUnitTest {
         this.scoreBoardManager.updateScoreBoard("Easy", "F", 35, "Ascending");
         assertEquals(testHashMap, this.scoreBoardManager.getScoreBoard("Easy").getTopScores());
 
-        this.setupAndReset();
-        testHashMap.put("A", 0);
-        testHashMap.put("B", 5);
-        testHashMap.put("C", 10);
-        this.scoreBoardManager.updateScoreBoard("Easy", "A", 0, "Ascending");
-        this.scoreBoardManager.updateScoreBoard("Easy", "C", 10, "Ascending");
-        this.scoreBoardManager.updateScoreBoard("Easy", "B", 5, "Ascending");
-        this.scoreBoardManager.updateScoreBoard("Easy", "A", 20, "Ascending");
-        assertEquals(testHashMap, this.scoreBoardManager.getScoreBoard("Easy").getTopScores());
     }
 
     @Test
