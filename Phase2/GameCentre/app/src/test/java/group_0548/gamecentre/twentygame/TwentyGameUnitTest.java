@@ -46,7 +46,7 @@ public class TwentyGameUnitTest {
         this.hardCode2048Manager = new TwentyManager(4, 4, "medium", 1);
         this.solved2048Manager = new TwentyManager(4, 4, "medium", 1);
         this.lost2048Manager = new TwentyManager(4, 4, "medium", 1);
-        List<Integer> hardCodeIDList = Arrays.asList(0, 1, 2, 3, 4, 5, 6, 0, 8, 9, 5, 5, 11, 11, 0, 1);
+        List<Integer> hardCodeIDList = Arrays.asList(0, 1, 6, 3, 4, 5, 6, 0, 8, 9, 5, 5, 11, 11, 0, 1);
         List<Integer> solvedIDList = Arrays.asList(11, 11, 11, 11, 6, 7, 8, 9, 9, 8, 7, 10, 9, 8, 7, 6);
         List<Integer> lostIDList = Arrays.asList(0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 8, 0, 1, 2, 3, 4);
         List<TwentyTile> hardcodedTiles = new ArrayList<>();
@@ -110,15 +110,81 @@ public class TwentyGameUnitTest {
         this.setupAndReset();
         this.hardCode2048Manager.swipeRight(this.hardCode2048Manager.getBoard().getTiles());
         ArrayList<Integer> idListAfterSwipe = new ArrayList<>();
+        ArrayList<Integer> autogenList = new ArrayList<>();
         for (int pos = 0; pos < 16; pos++){
             int r = pos / 4;
             int c = pos % 4;
             if ((pos != 8) & (pos != 12) & (pos != 13)) {
                 idListAfterSwipe.add(this.hardCode2048Manager.getBoard().getTile(r, c).getId());
             }
+            else{
+                autogenList.add(this.hardCode2048Manager.getBoard().getTile(r, c).getId());
+            }
         }
         List<Integer> idListToCompare = Arrays.asList(0, 1, 2, 3, 4, 5, 6, 0, 8, 9, 6, 0, 1);
         assertEquals(idListToCompare, idListAfterSwipe);
+        assertEquals(true, (autogenList.contains(0) || autogenList.contains(1)));
     }
+    @Test
+    public void testSwipeLeft(){
+        this.setupAndReset();
+        this.hardCode2048Manager.swipeLeft(this.hardCode2048Manager.getBoard().getTiles());
+        ArrayList<Integer> idListAfterSwipe = new ArrayList<>();
+        ArrayList<Integer> autogenList = new ArrayList<>();
+        for (int pos = 0; pos < 16; pos++){
+            int r = pos / 4;
+            int c = pos % 4;
+            if ((pos != 11) & (pos != 14) & (pos != 15)) {
+                idListAfterSwipe.add(this.hardCode2048Manager.getBoard().getTile(r, c).getId());
+            }
+            else{
+                autogenList.add(this.hardCode2048Manager.getBoard().getTile(r, c).getId());
+            }
+        }
+        List<Integer> idListToCompare = Arrays.asList(0, 1, 2, 3, 4, 5, 6, 0, 8, 9, 6, 0, 1);
+        assertEquals(idListToCompare, idListAfterSwipe);
+        assertEquals(true, (autogenList.contains(0) || autogenList.contains(1)));
+    }
+    @Test
+    public void testSwipeDown(){
+        this.setupAndReset();
+        this.hardCode2048Manager.swipeDown(this.hardCode2048Manager.getBoard().getTiles());
+        ArrayList<Integer> idListAfterSwipe = new ArrayList<>();
+        ArrayList<Integer> autogenList = new ArrayList<>();
+        for (int pos = 0; pos < 16; pos++){
+            int r = pos / 4;
+            int c = pos % 4;
+            if ((pos != 0) & (pos != 1) & (pos != 2)) {
+                idListAfterSwipe.add(this.hardCode2048Manager.getBoard().getTile(r, c).getId());
+            }
+            else{
+                autogenList.add(this.hardCode2048Manager.getBoard().getTile(r, c).getId());
+            }
+        }
+        List<Integer> idListToCompare = Arrays.asList(3, 0, 1, 7, 0, 4, 5, 5, 5, 8, 9,0, 1);
+        assertEquals(idListToCompare, idListAfterSwipe);
+        assertEquals(true, (autogenList.contains(0) || autogenList.contains(1)));
+    }
+    @Test
+    public void testSwipeUp(){
+        this.setupAndReset();
+        this.hardCode2048Manager.swipeUp(this.hardCode2048Manager.getBoard().getTiles());
+        ArrayList<Integer> idListAfterSwipe = new ArrayList<>();
+        ArrayList<Integer> autogenList = new ArrayList<>();
+        for (int pos = 0; pos < 16; pos++){
+            int r = pos / 4;
+            int c = pos % 4;
+            if ((pos != 12) & (pos != 13) & (pos != 14)) {
+                idListAfterSwipe.add(this.hardCode2048Manager.getBoard().getTile(r, c).getId());
+            }
+            else{
+                autogenList.add(this.hardCode2048Manager.getBoard().getTile(r, c).getId());
+            }
+        }
+        List<Integer> idListToCompare = Arrays.asList(0, 1, 7, 3, 4, 5, 5, 0, 8, 9, 0, 5, 1);
+        assertEquals(idListToCompare, idListAfterSwipe);
+        assertEquals(true, (autogenList.contains(0) || autogenList.contains(1)));
+    }
+
 
 }
