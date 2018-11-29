@@ -229,26 +229,30 @@ public class TwentyGameUnitTest {
         this.regular2048Manager.undoToPastState();
         assertEquals(false, this.regular2048Manager.ableToUndo());
     }
-    /*@Test
+    @Test
     public void testUpdateStatesAfterUndo(){
         this.setupAndReset();
-        System.out.println(this.regular2048Manager.getPastStates().getBoards().size());
         this.regular2048Manager.swipeLeft(this.regular2048Manager.getBoard().getTiles());
-        System.out.println(this.regular2048Manager.getPastStates().getBoards().size());
         this.regular2048Manager.swipeUp(this.regular2048Manager.getBoard().getTiles());
-        System.out.println(this.regular2048Manager.getPastStates().getBoards().size());
         this.regular2048Manager.swipeDown(this.regular2048Manager.getBoard().getTiles());
-        System.out.println(this.regular2048Manager.getPastStates().getBoards().size());
-        System.out.println(this.regular2048Manager.ableToUndo());
         this.regular2048Manager.undoToPastState();
-        System.out.println(this.regular2048Manager.ableToUndo());
         this.regular2048Manager.undoToPastState();
-        System.out.println(this.regular2048Manager.getPastStates().getBoards().size());
         this.regular2048Manager.swipeRight(this.regular2048Manager.getBoard().getTiles());
-        System.out.println(this.regular2048Manager.getPastStates().getBoards().size());
         assertEquals(3, this.regular2048Manager.getPastStates().getBoards().size());
 
-    }*/
+        this.setupAndReset();
+        this.regular2048Manager.swipeLeft(this.regular2048Manager.getBoard().getTiles());
+        this.regular2048Manager.swipeUp(this.regular2048Manager.getBoard().getTiles());
+        this.regular2048Manager.swipeDown(this.regular2048Manager.getBoard().getTiles());
+        this.regular2048Manager.undoToPastState();
+        this.regular2048Manager.redoToFutureState();
+        this.regular2048Manager.undoToPastState();
+        this.regular2048Manager.undoToPastState();
+        this.regular2048Manager.undoToPastState();
+        this.regular2048Manager.swipeRight(this.regular2048Manager.getBoard().getTiles());
+        assertEquals(2, this.regular2048Manager.getPastStates().getBoards().size());
+
+    }
 
 
 }
