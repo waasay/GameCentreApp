@@ -50,14 +50,14 @@ public class SlidingChooseComplexityActivity extends AppCompatActivity {
         addMediumButtonListener();
         addHardButtonListener();
         customUndo();
-        currentUndo = findViewById(R.id.SlidingCurrUndo);
+        currentUndo = findViewById(R.id.GameCurrUndo);
     }
 
     /**
      * Initialize the listener for the easy complexity button
      */
     private void addEasyButtonListener() {
-        Button threeButton = findViewById(R.id.SlidingEasyButton);
+        Button threeButton = findViewById(R.id.GameEasyButton);
         threeButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -71,7 +71,7 @@ public class SlidingChooseComplexityActivity extends AppCompatActivity {
      * Initialize the listener for the medium complexity button
      */
     private void addMediumButtonListener() {
-        Button fourButton = findViewById(R.id.SlidingMediumButton);
+        Button fourButton = findViewById(R.id.GameMediumButton);
         fourButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -85,7 +85,7 @@ public class SlidingChooseComplexityActivity extends AppCompatActivity {
      * Initialize the listener for the hard complexity button
      */
     private void addHardButtonListener() {
-        Button fiveButton = findViewById(R.id.SlidingHardButton);
+        Button fiveButton = findViewById(R.id.GameHardButton);
         fiveButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -100,11 +100,11 @@ public class SlidingChooseComplexityActivity extends AppCompatActivity {
      * input, and the confirm button that saves it
      */
     private void customUndo() {
-        Button confirmButton = findViewById(R.id.SlidingSetUndo);
+        Button confirmButton = findViewById(R.id.GameSetUndo);
         confirmButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                EditText maxUndo = findViewById(R.id.SlidingCustomUndo);
+                EditText maxUndo = findViewById(R.id.GameCustomUndo);
                 String undos = maxUndo.getText().toString();
                 if (!undos.equals("")) {
                     MAX_UNDO = Integer.parseInt(undos);
