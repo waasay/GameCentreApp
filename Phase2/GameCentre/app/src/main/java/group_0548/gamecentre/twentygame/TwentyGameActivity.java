@@ -190,15 +190,14 @@ public class TwentyGameActivity extends AppCompatActivity implements Observer {
      * @param view view for the undo button
      */
 
-    public void undo(View view) {
+    /**
+     * Implementing button for undo
+     *
+     * @param view view for the undo button
+     */
 
-        if (this.twentyManager.ableToUndo()) {
-            this.twentyManager.undoToPastState();
-        } else {
-            Toast toast = Toast.makeText(getApplicationContext(), "No more undo", Toast.LENGTH_SHORT);
-            toast.setGravity(Gravity.BOTTOM, 0, 0);
-            toast.show();
-        }
+    public void undo(View view) {
+        this.gridView.undoEvent();
     }
 
     /**
@@ -207,13 +206,6 @@ public class TwentyGameActivity extends AppCompatActivity implements Observer {
      * @param view view for the undo button
      */
     public void redo(View view) {
-
-        if (this.twentyManager.ableToRedo()) {
-            this.twentyManager.redoToFutureState();
-        } else {
-            Toast toast = Toast.makeText(getApplicationContext(), "No more redo", Toast.LENGTH_SHORT);
-            toast.setGravity(Gravity.BOTTOM, 0, 0);
-            toast.show();
-        }
+        this.gridView.redoEvent();
     }
 }
