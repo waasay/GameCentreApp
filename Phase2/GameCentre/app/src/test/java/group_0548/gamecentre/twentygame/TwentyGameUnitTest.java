@@ -9,7 +9,8 @@ import java.util.List;
 
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertSame;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 
 /**
  * Unit test for the 2048 game
@@ -75,8 +76,8 @@ public class TwentyGameUnitTest {
     @Test
     public void testPuzzleLost() {
         this.setupAndReset();
-        assertEquals(true, this.lost2048Manager.puzzleLost());
-        assertEquals(false, this.hardCode2048Manager.puzzleLost());
+        assertTrue(this.lost2048Manager.puzzleLost());
+        assertFalse(this.hardCode2048Manager.puzzleLost());
     }
 
     /**
@@ -85,8 +86,8 @@ public class TwentyGameUnitTest {
     @Test
     public void testPuzzleSolved(){
         this.setupAndReset();
-        assertEquals(true,this.solved2048Manager.puzzleSolved());
-        assertEquals(false,this.regular2048Manager.puzzleSolved());
+        assertTrue(this.solved2048Manager.puzzleSolved());
+        assertFalse(this.regular2048Manager.puzzleSolved());
     }
     @Test
     public void testSurroundTile(){
@@ -94,14 +95,14 @@ public class TwentyGameUnitTest {
         HashMap<String, TwentyTile> map = new HashMap<>();
         // test the surround tiles at position 0
         map.put("above", null);
-        map.put("below", this.hardCode2048Manager.getBoard().getTile(4 / 4, 4 % 4));
+        map.put("below", this.hardCode2048Manager.getBoard().getTile(1, 0));
         map.put("left", null);
         map.put("right", this.hardCode2048Manager.getBoard().getTile(1 / 4, 1 % 4));
         assertEquals(map,this.hardCode2048Manager.getSurroundTiles(0));
         // test the surround tiles at position 5
         map.put("above", this.hardCode2048Manager.getBoard().getTile(1 / 4, 1 % 4));
         map.put("below", this.hardCode2048Manager.getBoard().getTile(9 / 4, 9 % 4));
-        map.put("left", this.hardCode2048Manager.getBoard().getTile(4/ 4, 4 % 4));
+        map.put("left", this.hardCode2048Manager.getBoard().getTile(1, 0));
         map.put("right", this.hardCode2048Manager.getBoard().getTile(6 / 4, 6 % 4));
         assertEquals(map,this.hardCode2048Manager.getSurroundTiles(5));
     }
@@ -110,7 +111,7 @@ public class TwentyGameUnitTest {
         this.setupAndReset();
         this.hardCode2048Manager.swipeRight(this.hardCode2048Manager.getBoard().getTiles());
         ArrayList<Integer> idListAfterSwipe = new ArrayList<>();
-        ArrayList<Integer> autogenList = new ArrayList<>();
+        ArrayList<Integer> autoGenList = new ArrayList<>();
         for (int pos = 0; pos < 16; pos++){
             int r = pos / 4;
             int c = pos % 4;
@@ -118,19 +119,19 @@ public class TwentyGameUnitTest {
                 idListAfterSwipe.add(this.hardCode2048Manager.getBoard().getTile(r, c).getId());
             }
             else{
-                autogenList.add(this.hardCode2048Manager.getBoard().getTile(r, c).getId());
+                autoGenList.add(this.hardCode2048Manager.getBoard().getTile(r, c).getId());
             }
         }
         List<Integer> idListToCompare = Arrays.asList(0, 1, 6, 3, 4, 5, 6, 0, 8, 9, 6, 0, 1);
         assertEquals(idListToCompare, idListAfterSwipe);
-        assertEquals(true, (autogenList.contains(0) || autogenList.contains(1)));
+        assertTrue(autoGenList.contains(0) || autoGenList.contains(1));
     }
     @Test
     public void testSwipeLeft(){
         this.setupAndReset();
         this.hardCode2048Manager.swipeLeft(this.hardCode2048Manager.getBoard().getTiles());
         ArrayList<Integer> idListAfterSwipe = new ArrayList<>();
-        ArrayList<Integer> autogenList = new ArrayList<>();
+        ArrayList<Integer> autoGenList = new ArrayList<>();
         for (int pos = 0; pos < 16; pos++){
             int r = pos / 4;
             int c = pos % 4;
@@ -138,19 +139,19 @@ public class TwentyGameUnitTest {
                 idListAfterSwipe.add(this.hardCode2048Manager.getBoard().getTile(r, c).getId());
             }
             else{
-                autogenList.add(this.hardCode2048Manager.getBoard().getTile(r, c).getId());
+                autoGenList.add(this.hardCode2048Manager.getBoard().getTile(r, c).getId());
             }
         }
         List<Integer> idListToCompare = Arrays.asList(0, 1, 6, 3, 4, 5, 6, 0, 8, 9, 6, 0, 1);
         assertEquals(idListToCompare, idListAfterSwipe);
-        assertEquals(true, (autogenList.contains(0) || autogenList.contains(1)));
+        assertTrue(autoGenList.contains(0) || autoGenList.contains(1));
     }
     @Test
     public void testSwipeDown(){
         this.setupAndReset();
         this.hardCode2048Manager.swipeDown(this.hardCode2048Manager.getBoard().getTiles());
         ArrayList<Integer> idListAfterSwipe = new ArrayList<>();
-        ArrayList<Integer> autogenList = new ArrayList<>();
+        ArrayList<Integer> autoGenList = new ArrayList<>();
         for (int pos = 0; pos < 16; pos++){
             int r = pos / 4;
             int c = pos % 4;
@@ -158,19 +159,19 @@ public class TwentyGameUnitTest {
                 idListAfterSwipe.add(this.hardCode2048Manager.getBoard().getTile(r, c).getId());
             }
             else{
-                autogenList.add(this.hardCode2048Manager.getBoard().getTile(r, c).getId());
+                autoGenList.add(this.hardCode2048Manager.getBoard().getTile(r, c).getId());
             }
         }
         List<Integer> idListToCompare = Arrays.asList(3, 0, 1, 7, 0, 4, 5, 5, 5, 8, 9,0, 1);
         assertEquals(idListToCompare, idListAfterSwipe);
-        assertEquals(true, (autogenList.contains(0) || autogenList.contains(1)));
+        assertTrue(autoGenList.contains(0) || autoGenList.contains(1));
     }
     @Test
     public void testSwipeUp(){
         this.setupAndReset();
         this.hardCode2048Manager.swipeUp(this.hardCode2048Manager.getBoard().getTiles());
         ArrayList<Integer> idListAfterSwipe = new ArrayList<>();
-        ArrayList<Integer> autogenList = new ArrayList<>();
+        ArrayList<Integer> autoGenList = new ArrayList<>();
         for (int pos = 0; pos < 16; pos++){
             int r = pos / 4;
             int c = pos % 4;
@@ -178,29 +179,29 @@ public class TwentyGameUnitTest {
                 idListAfterSwipe.add(this.hardCode2048Manager.getBoard().getTile(r, c).getId());
             }
             else{
-                autogenList.add(this.hardCode2048Manager.getBoard().getTile(r, c).getId());
+                autoGenList.add(this.hardCode2048Manager.getBoard().getTile(r, c).getId());
             }
         }
         List<Integer> idListToCompare = Arrays.asList(0, 1, 7, 3, 4, 5, 5, 0, 8, 9, 0, 5, 1);
         assertEquals(idListToCompare, idListAfterSwipe);
-        assertEquals(true, (autogenList.contains(0) || autogenList.contains(1)));
+        assertTrue(autoGenList.contains(0) || autoGenList.contains(1));
     }
     @Test
     public void testAbleToUndo(){
         this.setupAndReset();
-        assertEquals(false, this.hardCode2048Manager.ableToUndo());
+        assertFalse(this.hardCode2048Manager.ableToUndo());
         this.hardCode2048Manager.swipeLeft(this.hardCode2048Manager.getBoard().getTiles());
-        assertEquals(true, this.hardCode2048Manager.ableToUndo());
+        assertTrue(this.hardCode2048Manager.ableToUndo());
         this.setupAndReset();
-        assertEquals(false, this.solved2048Manager.ableToUndo());
+        assertFalse(this.solved2048Manager.ableToUndo());
     }
     @Test
     public void testAbleToRedo(){
         this.setupAndReset();
-        assertEquals(false, this.hardCode2048Manager.ableToRedo());
+        assertFalse(this.hardCode2048Manager.ableToRedo());
         this.hardCode2048Manager.swipeLeft(this.hardCode2048Manager.getBoard().getTiles());
         this.hardCode2048Manager.undoToPastState();
-        assertEquals(true, this.hardCode2048Manager.ableToRedo());
+        assertTrue(this.hardCode2048Manager.ableToRedo());
     }
     @Test
     public void testUndoToPastState(){
@@ -229,7 +230,7 @@ public class TwentyGameUnitTest {
         this.regular2048Manager.undoToPastState();
         this.regular2048Manager.undoToPastState();
         this.regular2048Manager.undoToPastState();
-        assertEquals(false, this.regular2048Manager.ableToUndo());
+        assertFalse(this.regular2048Manager.ableToUndo());
     }
     @Test
     public void testUpdateStatesAfterUndo(){
