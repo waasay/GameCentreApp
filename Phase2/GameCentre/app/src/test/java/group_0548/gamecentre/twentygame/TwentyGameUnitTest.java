@@ -42,7 +42,7 @@ public class TwentyGameUnitTest {
      */
     public void setupAndReset() {
 
-        this.regular2048Manager = new TwentyManager(4, 4, "medium", 1);
+        this.regular2048Manager = new TwentyManager(4, 4, "medium", 3);
         this.hardCode2048Manager = new TwentyManager(4, 4, "medium", 1);
         this.solved2048Manager = new TwentyManager(4, 4, "medium", 1);
         this.lost2048Manager = new TwentyManager(4, 4, "medium", 1);
@@ -185,6 +185,70 @@ public class TwentyGameUnitTest {
         assertEquals(idListToCompare, idListAfterSwipe);
         assertEquals(true, (autogenList.contains(0) || autogenList.contains(1)));
     }
+    @Test
+    public void testAbleToUndo(){
+        this.setupAndReset();
+        assertEquals(false, this.hardCode2048Manager.ableToUndo());
+        this.hardCode2048Manager.swipeLeft(this.hardCode2048Manager.getBoard().getTiles());
+        assertEquals(true, this.hardCode2048Manager.ableToUndo());
+    }
+    @Test
+    public void testAbleToRedo(){
+        this.setupAndReset();
+        assertEquals(false, this.hardCode2048Manager.ableToRedo());
+        this.hardCode2048Manager.swipeLeft(this.hardCode2048Manager.getBoard().getTiles());
+        this.hardCode2048Manager.undoToPastState();
+        assertEquals(true, this.hardCode2048Manager.ableToRedo());
+    }
+    @Test
+    public void testUndoToPastState(){
+        this.setupAndReset();
+        this.hardCode2048Manager.swipeLeft(this.hardCode2048Manager.getBoard().getTiles());
+        int currUndo = this.hardCode2048Manager.getCurrUndo();
+        this.hardCode2048Manager.undoToPastState();
+        assertEquals(currUndo - 1, this.hardCode2048Manager.getCurrUndo());
+    }
+    @Test
+    public void testRedoToFutureState(){
+        this.setupAndReset();
+        this.hardCode2048Manager.swipeLeft(this.hardCode2048Manager.getBoard().getTiles());
+        this.hardCode2048Manager.undoToPastState();
+        int currUndo = this.hardCode2048Manager.getCurrUndo();
+        this.hardCode2048Manager.redoToFutureState();
+        assertEquals(currUndo + 1, this.hardCode2048Manager.getCurrUndo());
+    }
+    @Test
+    public void testUndoAfterMaxUndo(){
+        this.setupAndReset();
+        this.regular2048Manager.swipeLeft(this.regular2048Manager.getBoard().getTiles());
+        this.regular2048Manager.swipeUp(this.regular2048Manager.getBoard().getTiles());
+        this.regular2048Manager.swipeDown(this.regular2048Manager.getBoard().getTiles());
+        this.regular2048Manager.swipeRight(this.regular2048Manager.getBoard().getTiles());
+        this.regular2048Manager.undoToPastState();
+        this.regular2048Manager.undoToPastState();
+        this.regular2048Manager.undoToPastState();
+        assertEquals(false, this.regular2048Manager.ableToUndo());
+    }
+    /*@Test
+    public void testUpdateStatesAfterUndo(){
+        this.setupAndReset();
+        System.out.println(this.regular2048Manager.getPastStates().getBoards().size());
+        this.regular2048Manager.swipeLeft(this.regular2048Manager.getBoard().getTiles());
+        System.out.println(this.regular2048Manager.getPastStates().getBoards().size());
+        this.regular2048Manager.swipeUp(this.regular2048Manager.getBoard().getTiles());
+        System.out.println(this.regular2048Manager.getPastStates().getBoards().size());
+        this.regular2048Manager.swipeDown(this.regular2048Manager.getBoard().getTiles());
+        System.out.println(this.regular2048Manager.getPastStates().getBoards().size());
+        System.out.println(this.regular2048Manager.ableToUndo());
+        this.regular2048Manager.undoToPastState();
+        System.out.println(this.regular2048Manager.ableToUndo());
+        this.regular2048Manager.undoToPastState();
+        System.out.println(this.regular2048Manager.getPastStates().getBoards().size());
+        this.regular2048Manager.swipeRight(this.regular2048Manager.getBoard().getTiles());
+        System.out.println(this.regular2048Manager.getPastStates().getBoards().size());
+        assertEquals(3, this.regular2048Manager.getPastStates().getBoards().size());
+
+    }*/
 
 
 }
