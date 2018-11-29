@@ -14,6 +14,7 @@ import android.util.AttributeSet;
 import android.view.GestureDetector;
 import android.view.MotionEvent;
 import android.widget.GridView;
+import android.widget.Toast;
 
 public class TwentyGestureDetectGridView extends GridView {
     private GestureDetector gDetector;
@@ -67,19 +68,25 @@ public class TwentyGestureDetectGridView extends GridView {
                             || Math.abs(velocityY) < SWIPE_THRESHOLD_VELOCITY) {
                         return false;
                     }
-                    if (e1.getY() - e2.getY() > SWIPE_MIN_DISTANCE) {
-                        mController.processUpMovement();
-                    } else if (e2.getY() - e1.getY() > SWIPE_MIN_DISTANCE) {
-                        mController.processDownMovement();
+                    if(checkGameSituation(context).equals("Neither")) {
+                        if (e1.getY() - e2.getY() > SWIPE_MIN_DISTANCE) {
+                            mController.processUpMovement(); //up
+                        } else if (e2.getY() - e1.getY() > SWIPE_MIN_DISTANCE) {
+                            mController.processDownMovement(); //down
+                        }
                     }
+
                 } else {
                     if (Math.abs(velocityX) < SWIPE_THRESHOLD_VELOCITY) {
                         return false;
                     }
-                    if (e1.getX() - e2.getX() > SWIPE_MIN_DISTANCE) {
-                        mController.processLeftMovement();
-                    } else if (e2.getX() - e1.getX() > SWIPE_MIN_DISTANCE) {
-                        mController.processRightMovement();
+                    if(checkGameSituation(context).equals("Neither")) {
+                        if (e1.getX() - e2.getX() > SWIPE_MIN_DISTANCE) {
+                            mController.processLeftMovement(); //left
+
+                        } else if (e2.getX() - e1.getX() > SWIPE_MIN_DISTANCE) {
+                            mController.processRightMovement(); //right
+                        }
                     }
                 }
 
@@ -123,5 +130,17 @@ public class TwentyGestureDetectGridView extends GridView {
     public void setTwentyManager(TwentyManager twentyManager) {
         this.twentyManager = twentyManager;
         mController.setTwentyManager(twentyManager);
+    }
+
+    String checkGameSituation(Context context) {
+        if (twentyManager.puzzleSolved()) {
+            Toast.makeText(context, "You Win!", Toast.LENGTH_SHORT).show();
+            return "Win";
+        }
+        else if (twentyManager.puzzleLost()) {
+            Toast.makeText(context, "You Lost!", Toast.LENGTH_SHORT).show();
+            return "Lost";
+        }
+        return "Neither";
     }
 }

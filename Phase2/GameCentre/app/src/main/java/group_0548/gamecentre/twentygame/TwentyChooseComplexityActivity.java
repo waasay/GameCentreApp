@@ -34,22 +34,52 @@ public class TwentyChooseComplexityActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_twenty_choose_complexity);
+        setContentView(R.layout.activity_choose_complexity);
         MAX_UNDO = 3;
         customUndo();
-        currentUndo = findViewById(R.id.TwentyCurrUndo);
-        addStartButtonListener();
+        currentUndo = findViewById(R.id.GameCurrUndo);
+        addEasyButtonListener();
+        addMediumButtonListener();
+        addHardButtonListener();
+    }
+
+    /**
+     * Initialize the listener for the easy complexity button
+     */
+    private void addEasyButtonListener() {
+        Button threeButton = findViewById(R.id.GameEasyButton);
+        threeButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                twentyManager = new TwentyManager(5, 5, "Easy", MAX_UNDO);
+                switchToGame();
+            }
+        });
+    }
+
+    /**
+     * Initialize the listener for the medium complexity button
+     */
+    private void addMediumButtonListener() {
+        Button fourButton = findViewById(R.id.GameMediumButton);
+        fourButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                twentyManager = new TwentyManager(4, 4, "Medium", MAX_UNDO);
+                switchToGame();
+            }
+        });
     }
 
     /**
      * Initialize the listener for the hard complexity button
      */
-    private void addStartButtonListener() {
-        Button fiveButton = findViewById(R.id.TwentySetUndoStart);
+    private void addHardButtonListener() {
+        Button fiveButton = findViewById(R.id.GameHardButton);
         fiveButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                twentyManager = new TwentyManager(5, 5, "Easy", MAX_UNDO);
+                twentyManager = new TwentyManager(3, 3, "Hard", MAX_UNDO);
                 switchToGame();
             }
         });
@@ -69,11 +99,11 @@ public class TwentyChooseComplexityActivity extends AppCompatActivity {
      * input, and the confirm button that saves it
      */
     private void customUndo() {
-        Button confirmButton = findViewById(R.id.TwentySetUndo);
+        Button confirmButton = findViewById(R.id.GameSetUndo);
         confirmButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                EditText maxUndo = findViewById(R.id.TwentyCustomUndo);
+                EditText maxUndo = findViewById(R.id.GameCustomUndo);
                 String undo = maxUndo.getText().toString();
                 if (!undo.equals("")) {
                     MAX_UNDO = Integer.parseInt(undo);

@@ -100,10 +100,13 @@ public class TwentyGameActivity extends AppCompatActivity implements Observer {
             b.setBackgroundResource(board.getTile(row, col).getBackground());
             nextPos++;
         }
-        LoginActivity.usersManager.getCurrentUser().saveGame(TwentyStartingActivity.GAME_TYPE, twentyManager);
+        LoginActivity.usersManager.getCurrentUser().saveGame(TwentyStartingActivity.GAME_TYPE,
+                twentyManager);
         saveToFile(LoginActivity.USER_SAVE_FILENAME, LoginActivity.usersManager);
-        saveToScoreBoard();
         saveToFile(TwentyStartingActivity.TEMP_SAVE_FILENAME, twentyManager);
+        if (!gridView.checkGameSituation(this).equals("Neither")) {
+            saveToScoreBoard();
+        }
     }
 
     public void display() {
@@ -168,8 +171,8 @@ public class TwentyGameActivity extends AppCompatActivity implements Observer {
      */
 
     public void saveToScoreBoard() {
-        String gameType = TwentyStartingActivity.GAME_TYPE;
-        if (twentyManager.puzzleSolved() && twentyManager.getMaxUndo() == 3) {
+        String gameType = TwentyStartingActivity.GAME_TYPE + " " + twentyManager.getComplexity();
+        if (twentyManager.getMaxUndo() == 3) {
             TwentyStartingActivity.scoreBoardManager.updateScoreBoard(twentyManager.getComplexity(),
                     LoginActivity.usersManager.getCurrentUser().getUserName(),
                     twentyManager.getScore(), TwentyStartingActivity.ORDER);
