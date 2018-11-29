@@ -191,6 +191,8 @@ public class TwentyGameUnitTest {
         assertEquals(false, this.hardCode2048Manager.ableToUndo());
         this.hardCode2048Manager.swipeLeft(this.hardCode2048Manager.getBoard().getTiles());
         assertEquals(true, this.hardCode2048Manager.ableToUndo());
+        this.setupAndReset();
+        assertEquals(false, this.solved2048Manager.ableToUndo());
     }
     @Test
     public void testAbleToRedo(){
@@ -234,10 +236,10 @@ public class TwentyGameUnitTest {
         this.setupAndReset();
         this.regular2048Manager.swipeLeft(this.regular2048Manager.getBoard().getTiles());
         this.regular2048Manager.swipeUp(this.regular2048Manager.getBoard().getTiles());
-        this.regular2048Manager.swipeDown(this.regular2048Manager.getBoard().getTiles());
-        this.regular2048Manager.undoToPastState();
-        this.regular2048Manager.undoToPastState();
         this.regular2048Manager.swipeRight(this.regular2048Manager.getBoard().getTiles());
+        this.regular2048Manager.undoToPastState();
+        this.regular2048Manager.undoToPastState();
+        this.regular2048Manager.swipeDown(this.regular2048Manager.getBoard().getTiles());
         assertEquals(3, this.regular2048Manager.getPastStates().getBoards().size());
 
         this.setupAndReset();
