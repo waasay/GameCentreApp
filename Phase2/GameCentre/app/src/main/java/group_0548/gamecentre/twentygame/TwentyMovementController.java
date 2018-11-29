@@ -25,19 +25,19 @@ public class TwentyMovementController {
 
 
     void processUpMovement() {
-        twentyManager.swipeUp(twentyManager.getBoard().getTiles());
+        twentyManager.swipeUp();
     }
 
     void processDownMovement() {
-        twentyManager.swipeDown(twentyManager.getBoard().getTiles());
+        twentyManager.swipeDown();
     }
 
     void processLeftMovement() {
-        twentyManager.swipeLeft(twentyManager.getBoard().getTiles());
+        twentyManager.swipeLeft();
     }
 
     void processRightMovement() {
-        twentyManager.swipeRight(twentyManager.getBoard().getTiles());
+        twentyManager.swipeRight();
     }
 
 }
