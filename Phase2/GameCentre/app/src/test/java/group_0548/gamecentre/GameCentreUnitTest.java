@@ -13,6 +13,16 @@ import static org.junit.Assert.*;
 public class GameCentreUnitTest {
 
     /**
+     * User Manager
+     */
+    private UsersManager usersManager;
+
+    /**
+     * ScoreboardManager for an arbitrary game A;
+     */
+    private ScoreBoardManager scoreBoardManager;
+
+    /**
      * State object that contains string for testing
      */
     private States<String> stringStates;
@@ -22,13 +32,32 @@ public class GameCentreUnitTest {
      */
     private States<Integer> integerStates;
 
+    /**
+     * Setup the scoreboard of an arbitrary game with some arbitrary user.
+     */
+
+    void setupAndReset(){
+
+        User userA = new User("A","123");
+        User userB = new User("B","123");
+        User userC = new User("C","123");
+
+        this.usersManager = new UsersManager();
+        this.usersManager.addUser(userA);
+        this.usersManager.addUser(userB);
+        this.usersManager.addUser(userC);
+
+        this.scoreBoardManager = new ScoreBoardManager();
+
+    }
+
 
     /**
      * Testing State class, since it is only a container class, will test it with strings and ints
      * instead of the various board classes, functionally the state object will treat them
      * the same compare to the board classes.
      */
-    public void setupAndResetStates(){
+    void setupAndResetStates(){
         this.stringStates = new States<>(3);
         this.integerStates = new States<>(3);
         this.stringStates.updateStates("0");
