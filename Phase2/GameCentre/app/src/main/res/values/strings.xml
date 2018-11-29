@@ -10,6 +10,7 @@
     <string name="load_text">Load Saved Game</string>
     <string name="save_text">Save Game</string>
     <string name="user_text">User</string>
+    <string name="my_score_text">My Scoreboard</string>
     <string name="games_text">Games</string>
     <string name="start_game_text">Start Game</string>
     <string name="scoreboard_text">Scoreboard</string>
