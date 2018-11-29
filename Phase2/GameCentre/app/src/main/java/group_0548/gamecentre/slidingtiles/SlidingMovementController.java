@@ -45,4 +45,31 @@ public class SlidingMovementController {
             Toast.makeText(context, "Invalid Tap", Toast.LENGTH_SHORT).show();
         }
     }
+
+    /**
+     * Process a tap for the undo button
+     * @param context the context
+     */
+    void processUndo(Context context){
+        if (this.slidingManager.ableToUndo()){
+            this.slidingManager.undoToPastState();
+        }
+        else{
+            Toast.makeText(context, "No more undo", Toast.LENGTH_SHORT).show();
+        }
+
+    }
+
+    /**
+     * Process a tap for the redo button
+     * @param context the context
+     */
+    void processRedo(Context context){
+        if (this.slidingManager.ableToRedo()){
+            this.slidingManager.redoToFutureState();
+        }
+        else{
+            Toast.makeText(context, "No more redo", Toast.LENGTH_SHORT).show();
+        }
+    }
 }

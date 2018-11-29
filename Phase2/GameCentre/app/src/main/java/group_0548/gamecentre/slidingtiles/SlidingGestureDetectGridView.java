@@ -94,6 +94,20 @@ public class SlidingGestureDetectGridView extends GridView {
         }
 
         return super.onInterceptTouchEvent(ev);
+}
+
+    /**
+     * Initialize the undo event
+     */
+    public void undoEvent(){
+        this.mController.processUndo(this.getContext());
+    }
+
+    /**
+     * Initialize the redo event
+     */
+    public void redoEvent(){
+        this.mController.processRedo(this.getContext());
     }
 
     @Override
