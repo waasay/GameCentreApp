@@ -4,6 +4,9 @@ import org.junit.Test;
 import org.junit.rules.ExpectedException;
 
 
+import java.util.ArrayList;
+import java.util.HashMap;
+
 import static org.junit.Assert.*;
 
 /**
@@ -95,5 +98,76 @@ public class GameCentreUnitTest {
             e = ex;
         }
         assertTrue(e instanceof IndexOutOfBoundsException);
+    }
+    @Test
+    public void testScoreBoardManager(){
+        this.setupAndReset();
+        HashMap<String, Integer> testHashMap = new HashMap<>();
+        testHashMap.put("A", 0);
+        testHashMap.put("B", 5);
+        testHashMap.put("C", 10);
+        this.scoreBoardManager.updateScoreBoard("Easy", "A", 0, "Ascending");
+        this.scoreBoardManager.updateScoreBoard("Easy", "C", 10, "Ascending");
+        this.scoreBoardManager.updateScoreBoard("Easy", "B", 5, "Ascending");
+        assertEquals(testHashMap, this.scoreBoardManager.getScoreBoard("Easy").getTopScores());
+
+        testHashMap.put("E", 15);
+        testHashMap.put("D", 20);
+        this.scoreBoardManager.updateScoreBoard("Easy", "D", 20, "Ascending");
+        this.scoreBoardManager.updateScoreBoard("Easy", "E", 15, "Ascending");
+        this.scoreBoardManager.updateScoreBoard("Easy", "F", 35, "Ascending");
+        assertEquals(testHashMap, this.scoreBoardManager.getScoreBoard("Easy").getTopScores());
+
+        this.setupAndReset();
+        testHashMap.put("A", 0);
+        testHashMap.put("B", 5);
+        testHashMap.put("C", 10);
+        this.scoreBoardManager.updateScoreBoard("Easy", "A", 0, "Ascending");
+        this.scoreBoardManager.updateScoreBoard("Easy", "C", 10, "Ascending");
+        this.scoreBoardManager.updateScoreBoard("Easy", "B", 5, "Ascending");
+        this.scoreBoardManager.updateScoreBoard("Easy", "A", 20, "Ascending");
+        assertEquals(testHashMap, this.scoreBoardManager.getScoreBoard("Easy").getTopScores());
+    }
+
+    @Test
+    public void testScoreBoardManager2(){
+        HashMap<String, Integer> testHashMap = new HashMap<>();
+        this.setupAndReset();
+        testHashMap.put("A", 0);
+        testHashMap.put("B", 5);
+        testHashMap.put("C", 10);
+        this.scoreBoardManager.updateScoreBoard("Easy", "A", 0, "Ascending");
+        this.scoreBoardManager.updateScoreBoard("Easy", "C", 10, "Ascending");
+        this.scoreBoardManager.updateScoreBoard("Easy", "B", 5, "Ascending");
+        this.scoreBoardManager.updateScoreBoard("Easy", "A", 20, "Ascending");
+        assertEquals(testHashMap, this.scoreBoardManager.getScoreBoard("Easy").getTopScores());
+    }
+
+    @Test
+    public void testGetScoreContentAscending(){
+        this.setupAndReset();
+        ArrayList<String> testList = new ArrayList<>();
+        String users =  "A" + "\r\n" + "B" + "\r\n" + "C" + "\r\n";
+        String scores =  "0" + "\r\n" + "5" + "\r\n" + "10" + "\r\n";
+        testList.add(users);
+        testList.add(scores);
+        this.scoreBoardManager.updateScoreBoard("Easy", "A", 0, "Ascending");
+        this.scoreBoardManager.updateScoreBoard("Easy", "B", 5, "Ascending");
+        this.scoreBoardManager.updateScoreBoard("Easy", "C", 10, "Ascending");
+        assertEquals(testList, this.scoreBoardManager.getScoreBoard("Easy").getScoreContent("Ascending"));
+    }
+
+    @Test
+    public void testGetScoreContentDescending(){
+        this.setupAndReset();
+        ArrayList<String> testList = new ArrayList<>();
+        String users = "C" + "\r\n" + "B" + "\r\n" + "A" + "\r\n";
+        String scores = "10" + "\r\n" + "5" + "\r\n" + "0" + "\r\n";
+        testList.add(users);
+        testList.add(scores);
+        this.scoreBoardManager.updateScoreBoard("Easy", "A", 0, "Descending");
+        this.scoreBoardManager.updateScoreBoard("Easy", "B", 5, "Descending");
+        this.scoreBoardManager.updateScoreBoard("Easy", "C", 10, "Descending");
+        assertEquals(testList, this.scoreBoardManager.getScoreBoard("Easy").getScoreContent("Descending"));
     }
 }
