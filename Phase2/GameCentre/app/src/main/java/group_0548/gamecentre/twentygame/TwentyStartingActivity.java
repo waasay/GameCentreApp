@@ -59,7 +59,7 @@ public class TwentyStartingActivity extends AppCompatActivity {
         addLoadButtonListener();
         addStartButtonListener();
         addScoreButtonListener();
-
+        loadFromFile(SCOREBOARD_SAVE_FILENAME);
     }
 
     /**
