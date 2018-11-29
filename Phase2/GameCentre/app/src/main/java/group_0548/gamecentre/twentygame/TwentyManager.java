@@ -272,6 +272,9 @@ public class TwentyManager extends AbstractManager<TwentyBoard> implements Undoa
         if (this.compareTiles(currTiles, newTiles)){
             this.board.setTiles(newTiles);
             autoGen();
+            if (this.currUndo < this.maxUndo - 1) {
+                this.updateStateAfterUndo();
+            }
             pastStates.updateStates(this.getBoard().copy());
             this.increaseScore(1);
             this.resetCurrUndo();
@@ -316,6 +319,9 @@ public class TwentyManager extends AbstractManager<TwentyBoard> implements Undoa
         if (this.compareTiles(currTiles, newTiles)){
             this.board.setTiles(newTiles);
             autoGen();
+            if (this.currUndo < this.maxUndo - 1) {
+                this.updateStateAfterUndo();
+            }
             pastStates.updateStates(this.getBoard().copy());
             this.increaseScore(1);
             this.resetCurrUndo();
@@ -352,8 +358,7 @@ public class TwentyManager extends AbstractManager<TwentyBoard> implements Undoa
         }*/
         for (int col = 0; col != this.getBoard().getNumCol(); col++) {
             for (int row = 0; row < this.getBoard().getNumRow(); row++) {
-                //newTiles[col][row] = newTilesCopy[row][this.getBoard().getNumCol() - 1 - col];
-                newTiles[row][col] = newTilesCopy[col][this.getBoard().getNumRow() - 1 - row];
+                newTiles[col][row] = newTilesCopy[row][this.getBoard().getNumCol() - 1 - col];
             }
         }
 
@@ -361,6 +366,9 @@ public class TwentyManager extends AbstractManager<TwentyBoard> implements Undoa
         if (this.compareTiles(currTiles, newTiles)){
             this.board.setTiles(newTiles);
             autoGen();
+            if (this.currUndo < this.maxUndo - 1) {
+                this.updateStateAfterUndo();
+            }
             pastStates.updateStates(this.getBoard().copy());
             this.increaseScore(1);
             this.resetCurrUndo();
@@ -441,6 +449,9 @@ public class TwentyManager extends AbstractManager<TwentyBoard> implements Undoa
         if (this.compareTiles(currTiles, newTiles)){
             this.board.setTiles(newTiles);
             autoGen();
+            if (this.currUndo < this.maxUndo - 1) {
+                this.updateStateAfterUndo();
+            }
             pastStates.updateStates(this.getBoard().copy());
             this.increaseScore(1);
             this.resetCurrUndo();
