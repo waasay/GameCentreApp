@@ -7,7 +7,7 @@
     tools:context="group_0548.gamecentre.slidingtiles.SlidingChooseComplexityActivity">
 
     <TextView
-        android:id="@+id/SlidingComplexText"
+        android:id="@+id/GameComplexText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
@@ -18,7 +18,7 @@
         android:textSize="18sp" />
 
     <Button
-        android:id="@+id/SlidingEasyButton"
+        android:id="@+id/GameEasyButton"
         android:layout_width="80dp"
         android:layout_height="50dp"
         android:layout_alignParentStart="true"
@@ -28,7 +28,7 @@
         android:text="@string/easy_text" />
 
     <Button
-        android:id="@+id/SlidingMediumButton"
+        android:id="@+id/GameMediumButton"
         android:layout_width="80dp"
         android:layout_height="50dp"
         android:layout_centerHorizontal="true"
@@ -37,7 +37,7 @@
         android:text="@string/medium_text" />
 
     <Button
-        android:id="@+id/SlidingHardButton"
+        android:id="@+id/GameHardButton"
         android:layout_width="80dp"
         android:layout_height="50dp"
         android:layout_alignParentEnd="true"
@@ -47,7 +47,7 @@
         android:text="@string/hard_text" />
 
     <EditText
-        android:id="@+id/SlidingCustomUndo"
+        android:id="@+id/GameCustomUndo"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
@@ -59,7 +59,7 @@
         android:digits="1234567890" />
 
     <Button
-        android:id="@+id/SlidingSetUndo"
+        android:id="@+id/GameSetUndo"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
@@ -68,7 +68,7 @@
         android:text="@string/set_text" />
 
     <TextView
-        android:id="@+id/SlidingDefaultInfo"
+        android:id="@+id/GameDefaultInfo"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
@@ -78,20 +78,20 @@
         android:text="@string/undo_note" />
 
     <TextView
-        android:id="@+id/SlidingScoreInfo"
+        android:id="@+id/GameScoreInfo"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignStart="@id/SlidingDefaultInfo"
+        android:layout_alignStart="@id/GameDefaultInfo"
         android:layout_alignParentTop="true"
         android:layout_marginTop="140dp"
         android:textColor="@android:color/black"
         android:text="@string/undo_score_note" />
 
     <TextView
-        android:id="@+id/SlidingTextUndo"
+        android:id="@+id/GameTextUndo"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignStart="@id/SlidingDefaultInfo"
+        android:layout_alignStart="@id/GameDefaultInfo"
         android:layout_marginTop="60dp"
         android:text="@string/current_undo_text"
         android:textColor="@android:color/black"
@@ -99,13 +99,13 @@
         android:textStyle="bold" />
 
     <TextView
-        android:id="@+id/SlidingCurrUndo"
+        android:id="@+id/GameCurrUndo"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/three_text"
         android:textColor="@android:color/black"
-        android:layout_toEndOf="@id/SlidingTextUndo"
-        android:layout_alignBaseline="@id/SlidingTextUndo"
+        android:layout_toEndOf="@id/GameTextUndo"
+        android:layout_alignBaseline="@id/GameTextUndo"
         android:textSize="20sp"
         android:textStyle="bold" />
 
