@@ -121,7 +121,7 @@ public class TwentyGameUnitTest {
                 autogenList.add(this.hardCode2048Manager.getBoard().getTile(r, c).getId());
             }
         }
-        List<Integer> idListToCompare = Arrays.asList(0, 1, 2, 3, 4, 5, 6, 0, 8, 9, 6, 0, 1);
+        List<Integer> idListToCompare = Arrays.asList(0, 1, 6, 3, 4, 5, 6, 0, 8, 9, 6, 0, 1);
         assertEquals(idListToCompare, idListAfterSwipe);
         assertEquals(true, (autogenList.contains(0) || autogenList.contains(1)));
     }
@@ -141,7 +141,7 @@ public class TwentyGameUnitTest {
                 autogenList.add(this.hardCode2048Manager.getBoard().getTile(r, c).getId());
             }
         }
-        List<Integer> idListToCompare = Arrays.asList(0, 1, 2, 3, 4, 5, 6, 0, 8, 9, 6, 0, 1);
+        List<Integer> idListToCompare = Arrays.asList(0, 1, 6, 3, 4, 5, 6, 0, 8, 9, 6, 0, 1);
         assertEquals(idListToCompare, idListAfterSwipe);
         assertEquals(true, (autogenList.contains(0) || autogenList.contains(1)));
     }
