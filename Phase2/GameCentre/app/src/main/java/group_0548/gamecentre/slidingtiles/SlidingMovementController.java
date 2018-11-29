@@ -13,11 +13,6 @@ public class SlidingMovementController {
     private SlidingManager slidingManager = null;
 
     /**
-     * Toast message to display (it will be declared as string)
-     */
-    String toastMessage;
-
-    /**
      * The movement controller
      */
     SlidingMovementController() {
@@ -42,15 +37,12 @@ public class SlidingMovementController {
         if (slidingManager.isValidTap(position) && !slidingManager.puzzleSolved()) {
             slidingManager.touchMove(position);
             if (slidingManager.puzzleSolved()) {
-                this.toastMessage = "YOU WIN!";
-                Toast.makeText(context, this.toastMessage, Toast.LENGTH_SHORT).show();
+                Toast.makeText(context,"YOU WIN!", Toast.LENGTH_SHORT).show();
             }
         } else if (slidingManager.puzzleSolved()) {
-            this.toastMessage = "YOU WIN!";
-            Toast.makeText(context, this.toastMessage, Toast.LENGTH_SHORT).show();
+            Toast.makeText(context, "YOU WIN!", Toast.LENGTH_SHORT).show();
         } else {
-            this.toastMessage = "Invalid Tap";
-            Toast.makeText(context, this.toastMessage, Toast.LENGTH_SHORT).show();
+            Toast.makeText(context, "Invalid Tap", Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -63,8 +55,7 @@ public class SlidingMovementController {
             this.slidingManager.undoToPastState();
         }
         else{
-            this.toastMessage = "No more undo";
-            Toast.makeText(context, this.toastMessage, Toast.LENGTH_SHORT).show();
+            Toast.makeText(context, "No more undo", Toast.LENGTH_SHORT).show();
         }
 
     }
@@ -78,8 +69,7 @@ public class SlidingMovementController {
             this.slidingManager.redoToFutureState();
         }
         else{
-            this.toastMessage = "No more redo";
-            Toast.makeText(context, this.toastMessage, Toast.LENGTH_SHORT).show();
+            Toast.makeText(context, "No more redo", Toast.LENGTH_SHORT).show();
         }
     }
 
