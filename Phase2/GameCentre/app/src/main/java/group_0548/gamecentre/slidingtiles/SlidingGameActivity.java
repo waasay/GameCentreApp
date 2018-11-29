@@ -194,14 +194,7 @@ public class SlidingGameActivity extends AppCompatActivity implements Observer {
      */
 
     public void undo(View view) {
-
-        if (this.slidingManager.ableToUndo()) {
-            this.slidingManager.undoToPastState();
-        } else {
-            Toast toast = Toast.makeText(getApplicationContext(), "No more undo", Toast.LENGTH_SHORT);
-            toast.setGravity(Gravity.BOTTOM, 0, 0);
-            toast.show();
-        }
+       this.gridView.undoEvent();
     }
 
     /**
@@ -210,14 +203,7 @@ public class SlidingGameActivity extends AppCompatActivity implements Observer {
      * @param view view for the undo button
      */
     public void redo(View view) {
-
-        if (this.slidingManager.ableToRedo()) {
-            this.slidingManager.redoToFutureState();
-        } else {
-            Toast toast = Toast.makeText(getApplicationContext(), "No more redo", Toast.LENGTH_SHORT);
-            toast.setGravity(Gravity.BOTTOM, 0, 0);
-            toast.show();
-        }
+        this.gridView.redoEvent();
     }
 
     @Override

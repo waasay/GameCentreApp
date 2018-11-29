@@ -246,7 +246,7 @@ public class TwentyManager extends AbstractManager<TwentyBoard> implements Undoa
         return false;
     }
 
-    public void swipeRight(TwentyTile[][] tiles) {
+    public void swipeRight() {
         // Rough outline of algorithm
         // divide board into rows
         // starting from the right of each row if there are two consecutive tiles with the same
@@ -258,7 +258,7 @@ public class TwentyManager extends AbstractManager<TwentyBoard> implements Undoa
         // the non background tiles to the end.
 
         TwentyTile[][] currTiles = this.getBoard().getTiles();
-        ArrayList<ArrayList<TwentyTile>> rowsOfNumbers = mergeRight(tiles);
+        ArrayList<ArrayList<TwentyTile>> rowsOfNumbers = mergeRight(currTiles);
         ArrayList<ArrayList<TwentyTile>> newRows = fillWithBackground(rowsOfNumbers);
         TwentyTile[][] newTiles = new TwentyTile[this.getBoard().getNumRow()][this.getBoard().getNumCol()];
 
@@ -282,7 +282,7 @@ public class TwentyManager extends AbstractManager<TwentyBoard> implements Undoa
         }
     }
 
-    public void swipeLeft(TwentyTile[][] tiles) {
+    public void swipeLeft() {
 
         TwentyTile[][] currTiles = this.getBoard().getTiles();
         TwentyTile[][] newTiles = new TwentyTile[this.getBoard().getNumRow()][this.getBoard().getNumCol()];
@@ -292,7 +292,7 @@ public class TwentyManager extends AbstractManager<TwentyBoard> implements Undoa
         // reverse each row
         for (int row = 0; row != this.getBoard().getNumRow(); row++) {
             for (int col = 0; col < this.getBoard().getNumCol(); col++) {
-                newTiles[row][col] = tiles[row][this.getBoard().getNumCol() - 1 - col];
+                newTiles[row][col] = currTiles[row][this.getBoard().getNumCol() - 1 - col];
             }
         }
         ArrayList<ArrayList<TwentyTile>> rowsOfNumbers = mergeRight(newTiles);
@@ -329,7 +329,7 @@ public class TwentyManager extends AbstractManager<TwentyBoard> implements Undoa
         }
     }
 
-    public void swipeUp(TwentyTile[][] tiles) {
+    public void swipeUp() {
         TwentyTile[][] currTiles = this.getBoard().getTiles();
         TwentyTile[][] newTiles = new TwentyTile[this.getBoard().getNumRow()][this.getBoard().getNumCol()];
         TwentyTile[][] newTilesCopy = new TwentyTile[this.getBoard().getNumRow()][this.getBoard().getNumCol()];
@@ -337,7 +337,7 @@ public class TwentyManager extends AbstractManager<TwentyBoard> implements Undoa
         // rotate board 90 degrees clockwise
         for (int col = 0; col != this.getBoard().getNumCol(); col++) {
             for (int row = 0; row < this.getBoard().getNumRow(); row++) {
-                newTiles[col][row] = tiles[this.getBoard().getNumRow() - 1 - row][col];
+                newTiles[col][row] = currTiles[this.getBoard().getNumRow() - 1 - row][col];
             }
         }
         ArrayList<ArrayList<TwentyTile>> rowsOfNumbers = mergeRight(newTiles);
@@ -376,7 +376,7 @@ public class TwentyManager extends AbstractManager<TwentyBoard> implements Undoa
         }
     }
 
-    public void swipeDown(TwentyTile[][] tiles) {
+    public void swipeDown() {
         TwentyTile[][] currTiles = this.getBoard().getTiles();
         TwentyTile[][] newTiles = new TwentyTile[this.getBoard().getNumRow()][this.getBoard().getNumCol()];
         TwentyTile[][] newTilesCopy1 = new TwentyTile[this.getBoard().getNumRow()][this.getBoard().getNumCol()];
@@ -386,7 +386,7 @@ public class TwentyManager extends AbstractManager<TwentyBoard> implements Undoa
         // rotate board 90 degrees clockwise
         for (int col = 0; col != this.getBoard().getNumCol(); col++) {
             for (int row = 0; row < this.getBoard().getNumRow(); row++) {
-                newTiles[col][row] = tiles[this.getBoard().getNumRow() - 1 - row][col];
+                newTiles[col][row] = currTiles[this.getBoard().getNumRow() - 1 - row][col];
             }
         }
 
