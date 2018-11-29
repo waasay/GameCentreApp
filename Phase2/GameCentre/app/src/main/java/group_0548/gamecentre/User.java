@@ -4,6 +4,7 @@ package group_0548.gamecentre;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 
 import group_0548.gamecentre.slidingtiles.SlidingManager;
 
@@ -117,5 +118,8 @@ public class User implements Serializable {
         scoreContent.add(name);
         scoreContent.add(score);
         return scoreContent;
+    }
+    public HashMap<String, Integer> getHashMapOfHighScore(){
+        return this.hashMapOfHighScore;
     }
 }
