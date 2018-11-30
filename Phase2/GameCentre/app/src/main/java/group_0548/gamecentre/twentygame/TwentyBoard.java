@@ -33,7 +33,7 @@ public class TwentyBoard extends AbstractBoard<TwentyTile> implements Iterable<T
         TwentyTile randomTile1 = new TwentyTile(randomGen.nextInt(2));
         TwentyTile randomTile2 = new TwentyTile(randomGen.nextInt(2));
 
-        // find two random rownum and colnum to place the 2/4 tiles, make sure they are not the same.
+        // find two random rowNum and colNum to place the 2/4 tiles, make sure they are not the same.
         int randomRow1 = randomGen.nextInt(rowNum);
         int randomRow2 = randomGen.nextInt(rowNum);
         int randomCol1 = randomGen.nextInt(colNum);
@@ -56,7 +56,7 @@ public class TwentyBoard extends AbstractBoard<TwentyTile> implements Iterable<T
             }
         }
 
-        // Change two the random rownums and colnums with the appropriately chosen random 2/4 tiles.
+        // Change two the random rowNum and colNum with the appropriately chosen random 2/4 tiles.
 
         tiles[randomRow1][randomCol1] = randomTile1;
         tiles[randomRow2][randomCol2] = randomTile2;
