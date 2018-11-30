@@ -1,7 +1,7 @@
 package group_0548.gamecentre;
 
 import org.junit.Test;
-import org.junit.rules.ExpectedException;
+
 
 
 import java.util.ArrayList;
@@ -10,7 +10,7 @@ import java.util.HashMap;
 import static org.junit.Assert.*;
 
 /**
- * Unit test for features under the directory of gamecentre, such as states, user, usermanager,
+ * Unit test for features under the directory of gameCentre, such as states, user, userManager,
  * scoreboard and scoreboard manager.
  */
 public class GameCentreUnitTest {
@@ -39,7 +39,7 @@ public class GameCentreUnitTest {
      * Setup the scoreboard of an arbitrary game with some arbitrary user.
      */
 
-    void setupAndReset(){
+     private void setupAndReset(){
 
         User userA = new User("A","123");
         User userB = new User("B","123");
@@ -60,7 +60,7 @@ public class GameCentreUnitTest {
      * instead of the various board classes, functionally the state object will treat them
      * the same compare to the board classes.
      */
-    void setupAndResetStates(){
+    private void setupAndResetStates(){
         this.stringStates = new States<>(3);
         this.integerStates = new States<>(3);
         this.stringStates.updateStates("0");
@@ -79,15 +79,15 @@ public class GameCentreUnitTest {
         this.setupAndResetStates();
         this.stringStates.updateStates("4");
         this.integerStates.updateStates(2);
-        assertEquals(true,this.integerStates.getBoards().contains(0));
-        assertEquals(false,this.stringStates.getBoards().contains("0"));
+        assertTrue(this.integerStates.getBoards().contains(0));
+        assertFalse(this.stringStates.getBoards().contains("0"));
     }
 
     /**
-     * Test keepStatesUptill actually works
+     * Test keepStatesUpTill actually works
      */
     @Test
-    public void testKeepStatesUptill(){
+    public void testKeepStatesUpTill(){
         Throwable e = null;
         this.setupAndResetStates();
         this.stringStates.keepStatesUpTill(2);
@@ -99,8 +99,12 @@ public class GameCentreUnitTest {
         }
         assertTrue(e instanceof IndexOutOfBoundsException);
     }
+    /**
+     * Test if the score board gets updated with three different users with scores in ascending
+     * order
+     */
     @Test
-    public void testScoreBoardManager(){
+    public void testScoreBoard(){
         this.setupAndReset();
         HashMap<String, Integer> testHashMap = new HashMap<>();
         testHashMap.put("A", 0);
@@ -111,17 +115,33 @@ public class GameCentreUnitTest {
         this.scoreBoardManager.updateScoreBoard("Easy", "B", 5, "Ascending");
         assertEquals(testHashMap, this.scoreBoardManager.getScoreBoard("Easy").getTopScores());
 
+    }
+    /**
+     * Test if the scores of only top 5 users are in ascending order when 6 users have played
+     */
+    @Test
+    public void testScoreBoard1(){
+        this.setupAndReset();
+        HashMap<String, Integer> testHashMap = new HashMap<>();
+        testHashMap.put("A", 0);
+        testHashMap.put("B", 5);
+        testHashMap.put("C", 10);
         testHashMap.put("E", 15);
         testHashMap.put("D", 20);
+        this.scoreBoardManager.updateScoreBoard("Easy", "A", 0, "Ascending");
+        this.scoreBoardManager.updateScoreBoard("Easy", "C", 10, "Ascending");
+        this.scoreBoardManager.updateScoreBoard("Easy", "B", 5, "Ascending");
         this.scoreBoardManager.updateScoreBoard("Easy", "D", 20, "Ascending");
         this.scoreBoardManager.updateScoreBoard("Easy", "E", 15, "Ascending");
         this.scoreBoardManager.updateScoreBoard("Easy", "F", 35, "Ascending");
         assertEquals(testHashMap, this.scoreBoardManager.getScoreBoard("Easy").getTopScores());
 
     }
-
+    /**
+     * Test if the scores are in ascending order adn the users are unique
+     */
     @Test
-    public void testScoreBoardManager2(){
+    public void testScoreBoard2(){
         HashMap<String, Integer> testHashMap = new HashMap<>();
         this.setupAndReset();
         testHashMap.put("A", 0);
@@ -133,7 +153,9 @@ public class GameCentreUnitTest {
         this.scoreBoardManager.updateScoreBoard("Easy", "A", 20, "Ascending");
         assertEquals(testHashMap, this.scoreBoardManager.getScoreBoard("Easy").getTopScores());
     }
-
+    /**
+     * Test the string representation of the score board in ascending order
+     */
     @Test
     public void testGetScoreContentAscending(){
         this.setupAndReset();
@@ -147,7 +169,9 @@ public class GameCentreUnitTest {
         this.scoreBoardManager.updateScoreBoard("Easy", "C", 10, "Ascending");
         assertEquals(testList, this.scoreBoardManager.getScoreBoard("Easy").getScoreContent("Ascending"));
     }
-
+    /**
+     * Test the string representation of the score board in descending order
+     */
     @Test
     public void testGetScoreContentDescending(){
         this.setupAndReset();
@@ -161,7 +185,9 @@ public class GameCentreUnitTest {
         this.scoreBoardManager.updateScoreBoard("Easy", "C", 10, "Descending");
         assertEquals(testList, this.scoreBoardManager.getScoreBoard("Easy").getScoreContent("Descending"));
     }
-
+    /**
+     * Test if a user exists
+     */
     @Test
     public void testCheckUser(){
         this.setupAndReset();
@@ -169,7 +195,9 @@ public class GameCentreUnitTest {
         assertFalse(this.usersManager.checkUser("D", "DDD"));
         assertFalse(this.usersManager.checkUser("A", "DDD"));
     }
-
+    /**
+     * Test if the username is valid
+     */
     @Test
     public void testCheckUsernameValid(){
         this.setupAndReset();
@@ -177,7 +205,9 @@ public class GameCentreUnitTest {
         assertFalse(this.usersManager.checkUsernameValid("A"));
 
     }
-
+    /**
+     * Test if the score of a user gets updated
+     */
     @Test
     public void testUpdateScore(){
         this.setupAndReset();
@@ -189,9 +219,10 @@ public class GameCentreUnitTest {
         this.usersManager.getUser("A", "123").updateScore("Colour Guess Easy", 5, "Ascending");
         this.usersManager.getUser("A", "123").updateScore("2048 Easy", 10, "Ascending");
         assertEquals(testUserNameHashMap,this.usersManager.getUser("A", "123").getHashMapOfHighScore() );
-
-
     }
+    /**
+     * Test the string representation of the users scores
+     */
     @Test
     public void testUserScore(){
         this.setupAndReset();
