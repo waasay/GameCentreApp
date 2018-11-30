@@ -41,7 +41,7 @@ public class TwentyGameUnitTest {
     /**
      * Setup and reset the boards for testing
      */
-    public void setupAndReset() {
+    private void setupAndReset() {
 
         this.regular2048Manager = new TwentyManager(4, 4, "medium", 3);
         this.hardCode2048Manager = new TwentyManager(4, 4, "medium", 1);
@@ -90,6 +90,9 @@ public class TwentyGameUnitTest {
         assertFalse(this.regular2048Manager.puzzleSolved());
     }
     @Test
+    /**
+     * Test surroundTile actually works, so could be use as helper method for other tests
+     */
     public void testSurroundTile(){
         this.setupAndReset();
         HashMap<String, TwentyTile> map = new HashMap<>();
@@ -106,6 +109,10 @@ public class TwentyGameUnitTest {
         map.put("right", this.hardCode2048Manager.getBoard().getTile(6 / 4, 6 % 4));
         assertEquals(map,this.hardCode2048Manager.getSurroundTiles(5));
     }
+
+    /**
+     * Test swipeRight actually works
+     */
     @Test
     public void testSwipeRight(){
         this.setupAndReset();
@@ -126,6 +133,10 @@ public class TwentyGameUnitTest {
         assertEquals(idListToCompare, idListAfterSwipe);
         assertTrue(autoGenList.contains(0) || autoGenList.contains(1));
     }
+
+    /**
+     * Testing swipeLeft actually works
+     */
     @Test
     public void testSwipeLeft(){
         this.setupAndReset();
@@ -146,6 +157,10 @@ public class TwentyGameUnitTest {
         assertEquals(idListToCompare, idListAfterSwipe);
         assertTrue(autoGenList.contains(0) || autoGenList.contains(1));
     }
+
+    /**
+     * Test swipeDown actually works
+     */
     @Test
     public void testSwipeDown(){
         this.setupAndReset();
@@ -166,6 +181,10 @@ public class TwentyGameUnitTest {
         assertEquals(idListToCompare, idListAfterSwipe);
         assertTrue(autoGenList.contains(0) || autoGenList.contains(1));
     }
+
+    /**
+     * Test swipeUp actually works
+     */
     @Test
     public void testSwipeUp(){
         this.setupAndReset();
@@ -186,6 +205,10 @@ public class TwentyGameUnitTest {
         assertEquals(idListToCompare, idListAfterSwipe);
         assertTrue(autoGenList.contains(0) || autoGenList.contains(1));
     }
+
+    /**
+     * Test ableToUndo actually works
+     */
     @Test
     public void testAbleToUndo(){
         this.setupAndReset();
@@ -195,6 +218,10 @@ public class TwentyGameUnitTest {
         this.setupAndReset();
         assertFalse(this.solved2048Manager.ableToUndo());
     }
+
+    /**
+     * Test ableToRedo actually works
+     */
     @Test
     public void testAbleToRedo(){
         this.setupAndReset();
@@ -203,6 +230,10 @@ public class TwentyGameUnitTest {
         this.hardCode2048Manager.undoToPastState();
         assertTrue(this.hardCode2048Manager.ableToRedo());
     }
+
+    /**
+     * Test undoToPastState actually works
+     */
     @Test
     public void testUndoToPastState(){
         this.setupAndReset();
@@ -211,6 +242,10 @@ public class TwentyGameUnitTest {
         this.hardCode2048Manager.undoToPastState();
         assertEquals(currUndo - 1, this.hardCode2048Manager.getCurrUndo());
     }
+
+    /**
+     * Test redoToFutureState actually works
+     */
     @Test
     public void testRedoToFutureState(){
         this.setupAndReset();
@@ -220,6 +255,11 @@ public class TwentyGameUnitTest {
         this.hardCode2048Manager.redoToFutureState();
         assertEquals(currUndo + 1, this.hardCode2048Manager.getCurrUndo());
     }
+
+    /**
+     * Test whether the code actually stops the user from undoing after undoing max undo number
+     * of times
+     */
     @Test
     public void testUndoAfterMaxUndo(){
         this.setupAndReset();
@@ -232,6 +272,10 @@ public class TwentyGameUnitTest {
         this.regular2048Manager.undoToPastState();
         assertFalse(this.regular2048Manager.ableToUndo());
     }
+
+    /**
+     * Test updateStatesAfterUndo actually works
+     */
     @Test
     public void testUpdateStatesAfterUndo(){
         this.setupAndReset();
