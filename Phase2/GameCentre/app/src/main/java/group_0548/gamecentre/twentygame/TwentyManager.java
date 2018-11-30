@@ -8,8 +8,11 @@ import group_0548.gamecentre.AbstractManager;
 import group_0548.gamecentre.States;
 import group_0548.gamecentre.Undoable;
 
-
+/**
+ * A manager to manage the 2048 game.
+ */
 public class TwentyManager extends AbstractManager<TwentyBoard> implements Undoable {
+
     /**
      * Max number of undos
      */
@@ -19,11 +22,13 @@ public class TwentyManager extends AbstractManager<TwentyBoard> implements Undoa
      * The board being managed.
      */
     private TwentyBoard board;
+
     /**
      * The state object that represents the past maxUndo number of states
      * and the current states
      */
     private States<TwentyBoard> pastStates;
+
     /**
      * The current number of undo left, it is define as MAX_UNDO - 1
      */
@@ -31,7 +36,12 @@ public class TwentyManager extends AbstractManager<TwentyBoard> implements Undoa
 
 
     /**
-     * Manage a new shuffled board.
+     * Create a manager for a 2048 game.
+     *
+     * @param rowNum the number of rows for this manager's board to have.
+     * @param colNum the number of columns for this manager's board to have.
+     * @param complex the complexity of this 2048 game.
+     * @param maxUndo the maximum number of undos allowed in this 2048 game.
      */
     TwentyManager(int rowNum, int colNum, String complex, int maxUndo) {
         this.complexity = complex;
@@ -43,15 +53,19 @@ public class TwentyManager extends AbstractManager<TwentyBoard> implements Undoa
         this.pastStates.updateStates(this.getBoard().copy());
     }
 
+    /**
+     * Get the board of this 2048 manager.
+     *
+     * @return the board of this 2048 manager.
+     */
     public TwentyBoard getBoard() {
         return this.board;
     }
 
-
     /**
-     * Return whether the TwentyBoard contains a 2048 tile
+     * Return whether the TwentyBoard is solved according to 2048 rules (contains a 2048 tile)
      *
-     * @return whether the TwentyBoard contains a 2048 tile.
+     * @return whether the TwentyBoard is solved according to 2048 rules (contains a 2048 tile).
      */
     public boolean puzzleSolved() {
         for (TwentyTile t : this.board) {
@@ -118,26 +132,27 @@ public class TwentyManager extends AbstractManager<TwentyBoard> implements Undoa
     }
 
 
-    // Precondition: tiles has rowNum X colNum dimensions and represents rows pre swipe right.
-    // Returns an ArrayList of rows of only numbered TwentyTiles after a swipe to the
-    // right (according to 2048 rules)
+    /**
+     * Precondition: tiles has rowNum X colNum dimensions and represents rows pre swipe right.
+     *
+     * Returns an ArrayList of rows of only numbered TwentyTiles after a merge to the
+     * right (according to 2048 rules)
+     *
+     * @param tiles the tiles to merge
+     * @return an ArrayList of rows of only numbered TwentyTiles after a merge to the
+     * right (according to 2048 rules)
+     */
     private ArrayList<ArrayList<TwentyTile>> mergeRight(TwentyTile[][] tiles) {
 
-        ArrayList<ArrayList<TwentyTile>> rowsOfNumbers = new ArrayList<ArrayList<TwentyTile>>();
+        ArrayList<ArrayList<TwentyTile>> rowsOfNumbers = new ArrayList<>();
 
         // starting from the right of each row if there are two consecutive tiles with the same
         // number change the first tile to background and the second to the next index (as long
         // as the index is in range)
         for (int r = 0; r < this.getBoard().getNumRow(); r++) {
 
-            /*for (int c = colNum - 1; c != 0; c--) {
-                if (tiles[r][c].getId() != 11 && tiles[r][c].getId() == tiles[r][c - 1].getId()) {
-                    tiles[r][c] = new TwentyTile(tiles[r][c].getId() + 1);
-                    tiles[r][c - 1] = new TwentyTile(11);
-                }
-            }*/
             // Then get all the non background tiles in an array (for each row)
-            ArrayList<TwentyTile> rowR = new ArrayList<TwentyTile>();
+            ArrayList<TwentyTile> rowR = new ArrayList<>();
 
             for (TwentyTile t : tiles[r]) {
                 if (t.getId() != 11) {
@@ -146,6 +161,8 @@ public class TwentyManager extends AbstractManager<TwentyBoard> implements Undoa
             }
             rowsOfNumbers.add(rowR);
         }
+
+        // Merge to right
         for (int r = 0; r < this.getBoard().getNumRow(); r++) {
             int c = rowsOfNumbers.get(r).size() - 1;
             while (c > 0) {
@@ -161,9 +178,18 @@ public class TwentyManager extends AbstractManager<TwentyBoard> implements Undoa
         return rowsOfNumbers;
     }
 
-    // Precondition: tiles has rowNum X colNum dimensions and represents rows post mergeRight
-    // Returns an ArrayList of rows of TwentyTiles after a swipe to the
-    // right (according to 2048 rules)
+    /**
+     * Precondition: tiles has rowNum X colNum dimensions and represents rows post mergeRight.
+     *
+     * Returns an ArrayList of rows of TwentyTiles after a merge to the right (according to 2048 rules)
+     * filled with the appropriate number of background tiles so that each row has a size of the board's
+     * number of columns.
+     *
+     * @param rowsOfNumbers the tiles to fill with the appropriate number of background tiles.
+     * @return an ArrayList of rows of TwentyTiles after a merge to the right (according to 2048 rules)
+     *        filled with the appropriate number of background tiles so that each row has a size of the board's
+     *        number of columns.
+     */
     private ArrayList<ArrayList<TwentyTile>> fillWithBackground(ArrayList<ArrayList<TwentyTile>> rowsOfNumbers) {
         // rowsOfNumbers now contains all the numbered tiles in each row.
         // for each row take the difference between the # cols and the # numbered tiles
@@ -188,8 +214,10 @@ public class TwentyManager extends AbstractManager<TwentyBoard> implements Undoa
         return newRows;
     }
 
-    // Randomly changes a background tile of this TwentyBoard to a 2 or 4 tile, if a background tile
-    // exists
+    /**
+     * Randomly changes a background tile of this TwentyBoard to a 2 or 4 tile, if a background tile
+     * exists
+     */
     private void autoGen() {
         // ArrayList of all [row,col] pairs of background tiles.
         ArrayList<int[]> rowColBackgrounds = new ArrayList<>();
@@ -230,7 +258,6 @@ public class TwentyManager extends AbstractManager<TwentyBoard> implements Undoa
      * @param newSet the new collection of tiles
      * @return whether oldSet and newSet are identical
      */
-
     private boolean compareTiles(TwentyTile[][] oldSet, TwentyTile[][] newSet) {
 
         for (int i = 0; i < this.getBoard().getNumRow(); i++) {
@@ -243,6 +270,9 @@ public class TwentyManager extends AbstractManager<TwentyBoard> implements Undoa
         return false;
     }
 
+    /**
+     * Update this board to represent a board after a swipe to the right according to 2048 rules.
+     */
     public void swipeRight() {
         // Rough outline of algorithm
         // divide board into rows
@@ -279,6 +309,9 @@ public class TwentyManager extends AbstractManager<TwentyBoard> implements Undoa
         }
     }
 
+    /**
+     * Update this board to represent a board after a swipe to the left according to 2048 rules.
+     */
     public void swipeLeft() {
 
         TwentyTile[][] currTiles = this.getBoard().getTiles();
@@ -300,7 +333,6 @@ public class TwentyManager extends AbstractManager<TwentyBoard> implements Undoa
                 newTilesCopy[row][col] = newRows.get(row).get(col);
             }
         }
-
 
         // flip board to original position
         // reverse each row
@@ -326,6 +358,9 @@ public class TwentyManager extends AbstractManager<TwentyBoard> implements Undoa
         }
     }
 
+    /**
+     * Update this board to represent a board after a swipe up according to 2048 rules.
+     */
     public void swipeUp() {
         TwentyTile[][] currTiles = this.getBoard().getTiles();
         TwentyTile[][] newTiles = new TwentyTile[this.getBoard().getNumRow()][this.getBoard().getNumCol()];
@@ -348,11 +383,6 @@ public class TwentyManager extends AbstractManager<TwentyBoard> implements Undoa
 
         // flip board to original position
         // rotate board 90 degrees counterclockwise
-        /*for (int row = 0; row != rowNum; row++) {
-            for (int col = 0; col < colNum; col++) {
-                newTiles[row][col] = newTilesCopy[rowNum - 1 - row][col];
-            }
-        }*/
         for (int col = 0; col != this.getBoard().getNumCol(); col++) {
             for (int row = 0; row < this.getBoard().getNumRow(); row++) {
                 newTiles[col][row] = newTilesCopy[row][this.getBoard().getNumCol() - 1 - col];
@@ -373,6 +403,9 @@ public class TwentyManager extends AbstractManager<TwentyBoard> implements Undoa
         }
     }
 
+    /**
+     * Update this board to represent a board after a swipe down according to 2048 rules.
+     */
     public void swipeDown() {
         TwentyTile[][] currTiles = this.getBoard().getTiles();
         TwentyTile[][] newTiles = new TwentyTile[this.getBoard().getNumRow()][this.getBoard().getNumCol()];
@@ -429,18 +462,11 @@ public class TwentyManager extends AbstractManager<TwentyBoard> implements Undoa
 
         // flip board to original position
         // rotate board 90 degrees counterclockwise
-        /*for (int row = 0; row != rowNum; row++) {
-            for (int col = 0; col < colNum; col++) {
-                newTiles[row][col] = newTilesCopy3[rowNum - 1 - row][col];
-            }
-        }*/
-
         for (int col = 0; col != this.getBoard().getNumCol(); col++) {
             for (int row = 0; row < this.getBoard().getNumRow(); row++) {
                 newTiles[col][row] = newTilesCopy3[row][this.getBoard().getNumCol() - 1 - col];
             }
         }
-
 
         if (this.compareTiles(currTiles, newTiles)) {
             this.board.setTiles(newTiles);
@@ -463,7 +489,6 @@ public class TwentyManager extends AbstractManager<TwentyBoard> implements Undoa
      * after undo is done prior to a touchmove, to
      * prevent undo is being abused
      */
-
     public void updateStateAfterUndo() {
         if (this.currUndo < 0) {
             this.pastStates.getBoards().clear();
@@ -480,6 +505,8 @@ public class TwentyManager extends AbstractManager<TwentyBoard> implements Undoa
 
     /**
      * Checking whether the game can undo to last state
+     *
+     * @return  whether the game can undo to last state
      */
     public boolean ableToUndo() {
         if (this.pastStates.getBoards().size() < this.maxUndo + 1) {
@@ -500,7 +527,6 @@ public class TwentyManager extends AbstractManager<TwentyBoard> implements Undoa
     /**
      * Undo to last state
      */
-
     public void undoToPastState() {
         TwentyBoard temp;
         temp = this.pastStates.getBoards().get(this.currUndo);
@@ -512,6 +538,8 @@ public class TwentyManager extends AbstractManager<TwentyBoard> implements Undoa
 
     /**
      * Checking whether the game can redo to the next state
+     *
+     * @return whether the game can redo to the next state
      */
     public boolean ableToRedo() {
         return (this.getCurrUndo() + 1 < this.pastStates.getBoards().size() - 1);
@@ -551,15 +579,24 @@ public class TwentyManager extends AbstractManager<TwentyBoard> implements Undoa
     /**
      * Reset currUndo to maxUndo - 1
      */
-
     void resetCurrUndo() {
         this.currUndo = this.maxUndo - 1;
     }
 
+    /**
+     * Get the complexity of this 2048 game.
+     *
+     * @return the complexity of this 2048 game.
+     */
     public String getComplexity() {
         return super.getComplexity();
     }
 
+    /**
+     * Get the states of this 2048 game.
+     *
+     * @return the states of this 2048 game.
+     */
     public States getPastStates() {
         return pastStates;
     }
