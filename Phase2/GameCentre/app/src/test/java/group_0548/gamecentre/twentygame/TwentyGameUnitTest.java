@@ -218,6 +218,7 @@ public class TwentyGameUnitTest {
         assertTrue(this.hardCode2048Manager.ableToUndo());
         this.setupAndReset();
         assertFalse(this.solved2048Manager.ableToUndo());
+        assertFalse(this.lost2048Manager.ableToUndo());
     }
 
     /**
