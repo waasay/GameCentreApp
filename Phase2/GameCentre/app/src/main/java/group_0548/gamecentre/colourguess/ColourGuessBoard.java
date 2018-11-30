@@ -7,12 +7,23 @@ import java.util.List;
 
 import group_0548.gamecentre.AbstractBoard;
 
+/**
+ * The ColourGuessBoards which contains a 2D array of ColourGuessTiles
+ */
 public class ColourGuessBoard extends AbstractBoard<ColourGuessTile> implements Iterable<ColourGuessTile> {
 
+    /**
+     * A 2D array of ColourGuessTiles
+     */
     private ColourGuessTile[][] tiles;
 
-
-    public ColourGuessBoard(List<ColourGuessTile> tilesList, int rowNum, int colNum) {
+    /**
+     * The constructor of the ColourGuessBoard
+     * @param tilesList the list of ColourGuessTiles
+     * @param rowNum the amount of rows
+     * @param colNum the amount of columns
+     */
+    ColourGuessBoard(List<ColourGuessTile> tilesList, int rowNum, int colNum) {
         tiles = new ColourGuessTile[rowNum][colNum];
         Iterator<ColourGuessTile> iterator = tilesList.iterator();
         this.numRow = rowNum;
@@ -57,24 +68,24 @@ public class ColourGuessBoard extends AbstractBoard<ColourGuessTile> implements 
     }
 
     /**
-     * An Iterator for SlidingBoard tiles.
+     * An Iterator for ColourGuessBoard tiles.
      */
     private class BoardIterator implements Iterator<ColourGuessTile> {
 
         /**
-         * The row number of the next SlidingTile to return.
+         * The row number of the next ColourGuessTile to return.
          */
         int rowIndex = 0;
 
         /**
-         * The column number of the next SlidingTile to return.
+         * The column number of the next ColourGuessTile to return.
          */
         int colIndex = 0;
 
         /**
-         * Returns whether there is another SlidingTile to return.
+         * Returns whether there is another ColourGuessTile to return.
          *
-         * @return whether there is another SlidingTile to return.
+         * @return whether there is another ColourGuessTile to return.
          */
         @Override
         public boolean hasNext() {
@@ -82,9 +93,9 @@ public class ColourGuessBoard extends AbstractBoard<ColourGuessTile> implements 
         }
 
         /**
-         * Returns the next SlidingTile.
+         * Returns the next ColourGuessTile.
          *
-         * @return the next SlidingTile.
+         * @return the next ColourGuessTile.
          */
         @Override
         public ColourGuessTile next() {

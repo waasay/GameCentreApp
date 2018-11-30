@@ -23,13 +23,25 @@ import group_0548.gamecentre.R;
 
 public class ColourGuessMemoryPhaseActivity extends AppCompatActivity {
 
+    /**
+     * The dimensions of the boards
+     */
     private static int columnWidth, columnHeight;
+    /**
+     * The countdown timer
+     */
     private static CountDownTimer countDownTimer;
     /**
      * The TextView for the timer.
      */
     private TextView countdownTimerText;
+    /**
+     * The gridview of the game
+     */
     private ColourGuessGestureDetectGridView gridView;
+    /**
+     * An array of buttons to tap that correspond to the tiles
+     */
     private ArrayList<Button> tileButtons;
     /**
      * The colour guess manager.
@@ -115,6 +127,10 @@ public class ColourGuessMemoryPhaseActivity extends AppCompatActivity {
         }
     }
 
+    /**
+     * Start the count down timer at the given input time
+     * @param milliSecond the starting time of the count down timer in milliseconds
+     */
     private void startTimer(int milliSecond) {
         countDownTimer = new CountDownTimer(milliSecond, 1000) {
             public void onTick(long millisUntilFinished) {
@@ -133,6 +149,9 @@ public class ColourGuessMemoryPhaseActivity extends AppCompatActivity {
         }.start();
     }
 
+    /**
+     * Switch to the ColourGuessChoosePhaseActivity
+     */
     private void switchToChoose() {
         Intent tep = new Intent(this, ColourGuessChoosePhaseActivity.class);
         startActivity(tep);
@@ -146,6 +165,9 @@ public class ColourGuessMemoryPhaseActivity extends AppCompatActivity {
         finish();
     }
 
+    /**
+     * Stopping the countdown
+     */
     private void stopCountdown() {
         countDownTimer.cancel();
     }
