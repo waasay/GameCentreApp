@@ -28,6 +28,9 @@ public class UserScoreBoardActivity extends AppCompatActivity {
         showScore();
     }
 
+    /**
+     * Activity method to show the score
+     */
     private void showScore() {
         ArrayList<String> score = LoginActivity.usersManager.getCurrentUser().getUserScore();
         gameText.setText(score.get(0));

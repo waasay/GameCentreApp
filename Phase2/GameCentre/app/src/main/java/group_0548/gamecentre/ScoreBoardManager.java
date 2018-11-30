@@ -16,6 +16,9 @@ public class ScoreBoardManager implements Serializable {
      */
     private HashMap<String, ScoreBoard> scoreBoards = null;
 
+    /**
+     * Constructor for the ScoreBoardManager class
+     */
     public ScoreBoardManager() {
         if (scoreBoards == null) {
             scoreBoards = new HashMap<>();

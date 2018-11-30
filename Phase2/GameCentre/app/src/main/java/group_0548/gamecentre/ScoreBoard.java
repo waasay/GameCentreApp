@@ -99,6 +99,11 @@ public class ScoreBoard implements Serializable {
         ids.add(score);
         return ids;
     }
+
+    /**
+     * Getters for top scores
+     * @return the top scores
+     */
     public LinkedHashMap<String, Integer> getTopScores(){
         return this.topScores;
     }

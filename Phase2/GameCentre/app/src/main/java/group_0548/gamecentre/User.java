@@ -105,6 +105,7 @@ public class User implements Serializable {
         }
     }
 
+
     public ArrayList<String> getUserScore() {
         ArrayList<String> scoreContent = new ArrayList<>();
         String name = "";
