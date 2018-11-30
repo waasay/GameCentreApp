@@ -112,7 +112,7 @@ public class TwentyGameActivity extends AppCompatActivity implements Observer {
                 twentyManager);
         saveToFile(LoginActivity.USER_SAVE_FILENAME, LoginActivity.usersManager);
         saveToFile(TwentyStartingActivity.TEMP_SAVE_FILENAME, twentyManager);
-        if (!gridView.checkGameSituation(this).equals("Neither")) {
+        if (!gridView.checkGameSituation(this).equals("Win")) {
             saveToScoreBoard();
         }
     }
