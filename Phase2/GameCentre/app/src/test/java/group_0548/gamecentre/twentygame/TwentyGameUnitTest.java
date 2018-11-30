@@ -89,10 +89,11 @@ public class TwentyGameUnitTest {
         assertTrue(this.solved2048Manager.puzzleSolved());
         assertFalse(this.regular2048Manager.puzzleSolved());
     }
-    @Test
+
     /**
      * Test surroundTile actually works, so could be use as helper method for other tests
      */
+    @Test
     public void testSurroundTile(){
         this.setupAndReset();
         HashMap<String, TwentyTile> map = new HashMap<>();
