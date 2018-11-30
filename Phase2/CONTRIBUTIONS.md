@@ -15,7 +15,9 @@
                 AbstractTile, Undoable, generified everything,
                 Unittests for SlidingTiles, ColourGuess, and  half of 2048.
 
-**Waasay Shehzad**: Auto Save, UserManager, States, SignUp, Login
+**Waasay Shehzad**: Auto Save, UserManager, States, SignUp, Login, producing solvable boards in SlidingTilesManager,
+                    ColourGuessManager, ColourGuessTile, ColourGuessBoard, TwentyManager (including writing own algorithm
+                    to update board after swipes) , TwentyBoard, TwentyTile.
 
 **Afzal Patel**: Unit tests for SlidingTiles, ColourGuess, 2048, and GameCentre
 
