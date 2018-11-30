@@ -30,7 +30,6 @@ public class TwentyManager extends AbstractManager<TwentyBoard> implements Undoa
     private int currUndo;
 
 
-
     /**
      * Manage a new shuffled board.
      */
@@ -44,7 +43,7 @@ public class TwentyManager extends AbstractManager<TwentyBoard> implements Undoa
         this.pastStates.updateStates(this.getBoard().copy());
     }
 
-    public TwentyBoard getBoard(){
+    public TwentyBoard getBoard() {
         return this.board;
     }
 
@@ -90,34 +89,31 @@ public class TwentyManager extends AbstractManager<TwentyBoard> implements Undoa
     /**
      * Return whether the game is lost (no furthur move is possible and the board is
      * filled with no empty tiles)
+     *
      * @return whether the game is lost
      */
-    public boolean puzzleLost(){
-        for (int i = 0; i < this.getBoard().getNumRow(); i++){
-            for (int j = 0; j < this.getBoard().getNumCol(); j++){
-                if (this.getBoard().getTile(i,j).getId() == 11){
+    public boolean puzzleLost() {
+        for (int i = 0; i < this.getBoard().getNumRow(); i++) {
+            for (int j = 0; j < this.getBoard().getNumCol(); j++) {
+                if (this.getBoard().getTile(i, j).getId() == 11) {
                     return false;
-                }
-                else {
-                    int id = this.getBoard().getTile(i,j).getId();
+                } else {
+                    int id = this.getBoard().getTile(i, j).getId();
                     HashMap<String, TwentyTile> around =
-                            getSurroundTiles(i*this.getBoard().getNumCol()+j);
-                    if (around.get("above") != null && around.get("above").getId() == id){
+                            getSurroundTiles(i * this.getBoard().getNumCol() + j);
+                    if (around.get("above") != null && around.get("above").getId() == id) {
                         return false;
-                    }
-                    else if (around.get("below") != null && around.get("below").getId() == id){
+                    } else if (around.get("below") != null && around.get("below").getId() == id) {
                         return false;
-                    }
-                    else if (around.get("left") != null && around.get("left").getId() == id){
+                    } else if (around.get("left") != null && around.get("left").getId() == id) {
                         return false;
-                    }
-                    else if (around.get("right") != null && around.get("right").getId() == id){
+                    } else if (around.get("right") != null && around.get("right").getId() == id) {
                         return false;
                     }
 
-                    }
                 }
             }
+        }
         return true;
     }
 
@@ -152,10 +148,10 @@ public class TwentyManager extends AbstractManager<TwentyBoard> implements Undoa
         }
         for (int r = 0; r < this.getBoard().getNumRow(); r++) {
             int c = rowsOfNumbers.get(r).size() - 1;
-            while(c > 0) {
-                if (rowsOfNumbers.get(r).get(c).getId() == rowsOfNumbers.get(r).get(c-1).getId()) {
+            while (c > 0) {
+                if (rowsOfNumbers.get(r).get(c).getId() == rowsOfNumbers.get(r).get(c - 1).getId()) {
                     rowsOfNumbers.get(r).set(c, new TwentyTile(rowsOfNumbers.get(r).get(c).getId() + 1));
-                    rowsOfNumbers.get(r).remove(c-1);
+                    rowsOfNumbers.get(r).remove(c - 1);
                     c = c - 1;
                 }
                 c = c - 1;
@@ -229,16 +225,17 @@ public class TwentyManager extends AbstractManager<TwentyBoard> implements Undoa
 
     /**
      * Helper method to check after each swipe whether the tiles are identifcal or not
+     *
      * @param oldSet the old collection of tiles
      * @param newSet the new collection of tiles
      * @return whether oldSet and newSet are identical
      */
 
-    private boolean compareTiles(TwentyTile[][] oldSet, TwentyTile[][] newSet){
+    private boolean compareTiles(TwentyTile[][] oldSet, TwentyTile[][] newSet) {
 
-        for (int i = 0; i < this.getBoard().getNumRow(); i++){
-            for (int j = 0; j < this.getBoard().getNumCol(); j++){
-                if (oldSet[i][j].getBackground() != newSet[i][j].getBackground()){
+        for (int i = 0; i < this.getBoard().getNumRow(); i++) {
+            for (int j = 0; j < this.getBoard().getNumCol(); j++) {
+                if (oldSet[i][j].getBackground() != newSet[i][j].getBackground()) {
                     return true;
                 }
             }
@@ -269,7 +266,7 @@ public class TwentyManager extends AbstractManager<TwentyBoard> implements Undoa
 
         }
 
-        if (this.compareTiles(currTiles, newTiles)){
+        if (this.compareTiles(currTiles, newTiles)) {
             this.board.setTiles(newTiles);
             autoGen();
             if (this.currUndo < this.maxUndo - 1) {
@@ -316,7 +313,7 @@ public class TwentyManager extends AbstractManager<TwentyBoard> implements Undoa
         }
 
 
-        if (this.compareTiles(currTiles, newTiles)){
+        if (this.compareTiles(currTiles, newTiles)) {
             this.board.setTiles(newTiles);
             autoGen();
             if (this.currUndo < this.maxUndo - 1) {
@@ -363,7 +360,7 @@ public class TwentyManager extends AbstractManager<TwentyBoard> implements Undoa
         }
 
 
-        if (this.compareTiles(currTiles, newTiles)){
+        if (this.compareTiles(currTiles, newTiles)) {
             this.board.setTiles(newTiles);
             autoGen();
             if (this.currUndo < this.maxUndo - 1) {
@@ -424,7 +421,6 @@ public class TwentyManager extends AbstractManager<TwentyBoard> implements Undoa
         }
 
 
-
         for (int row = 0; row != this.getBoard().getNumRow(); row++) {
             for (int col = 0; col != this.getBoard().getNumCol(); col++) {
                 newTilesCopy3[row][col] = newTiles[row][col];
@@ -446,7 +442,7 @@ public class TwentyManager extends AbstractManager<TwentyBoard> implements Undoa
         }
 
 
-        if (this.compareTiles(currTiles, newTiles)){
+        if (this.compareTiles(currTiles, newTiles)) {
             this.board.setTiles(newTiles);
             autoGen();
             if (this.currUndo < this.maxUndo - 1) {

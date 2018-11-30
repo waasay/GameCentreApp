@@ -4,7 +4,6 @@ import android.content.Context;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
-
 import android.view.View;
 import android.view.ViewTreeObserver;
 import android.widget.Button;
@@ -193,7 +192,7 @@ public class SlidingGameActivity extends AppCompatActivity implements Observer {
      */
 
     public void undo(View view) {
-       this.gridView.undoEvent();
+        this.gridView.undoEvent();
     }
 
     /**

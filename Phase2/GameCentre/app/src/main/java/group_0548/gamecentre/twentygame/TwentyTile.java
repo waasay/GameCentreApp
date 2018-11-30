@@ -19,7 +19,7 @@ public class TwentyTile extends AbstractTile {
 
     }
 
-    public int getId(){
+    public int getId() {
         return super.getId();
     }
 

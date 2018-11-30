@@ -44,13 +44,13 @@ public class TwentyMovementController {
 
     /**
      * Process a tap for the undo button
+     *
      * @param context the context
      */
-    void processUndo(Context context){
-        if (this.twentyManager.ableToUndo()){
+    void processUndo(Context context) {
+        if (this.twentyManager.ableToUndo()) {
             this.twentyManager.undoToPastState();
-        }
-        else{
+        } else {
             Toast.makeText(context, "No more undo", Toast.LENGTH_SHORT).show();
         }
 
@@ -58,13 +58,13 @@ public class TwentyMovementController {
 
     /**
      * Process a tap for the redo button
+     *
      * @param context the context
      */
-    void processRedo(Context context){
-        if (this.twentyManager.ableToRedo()){
+    void processRedo(Context context) {
+        if (this.twentyManager.ableToRedo()) {
             this.twentyManager.redoToFutureState();
-        }
-        else{
+        } else {
             Toast.makeText(context, "No more redo", Toast.LENGTH_SHORT).show();
         }
     }

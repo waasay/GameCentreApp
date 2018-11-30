@@ -15,7 +15,7 @@ public abstract class AbstractTile implements Serializable {
     /**
      * Getter for id
      */
-    public int getId(){
+    public int getId() {
         return this.id;
     }
 
@@ -26,7 +26,6 @@ public abstract class AbstractTile implements Serializable {
      * @return the background
      */
     public abstract int getBackground();
-
 
 
 }

@@ -19,9 +19,10 @@ public class ColourGuessBoard extends AbstractBoard<ColourGuessTile> implements 
 
     /**
      * The constructor of the ColourGuessBoard
+     *
      * @param tilesList the list of ColourGuessTiles
-     * @param rowNum the amount of rows
-     * @param colNum the amount of columns
+     * @param rowNum    the amount of rows
+     * @param colNum    the amount of columns
      */
     ColourGuessBoard(List<ColourGuessTile> tilesList, int rowNum, int colNum) {
         tiles = new ColourGuessTile[rowNum][colNum];
@@ -37,6 +38,7 @@ public class ColourGuessBoard extends AbstractBoard<ColourGuessTile> implements 
 
     /**
      * Getting for a tile at location (row, col)
+     *
      * @param row the tile row
      * @param col the tile column
      * @return the tile at location (row, col)
@@ -47,6 +49,7 @@ public class ColourGuessBoard extends AbstractBoard<ColourGuessTile> implements 
 
     /**
      * Getter for all the tiles
+     *
      * @return all the tiles in a 2D array
      */
     public ColourGuessTile[][] getTiles() {
@@ -55,6 +58,7 @@ public class ColourGuessBoard extends AbstractBoard<ColourGuessTile> implements 
 
     /**
      * Setter for the tiles
+     *
      * @param newTiles the new Tiles arrange in a 2D array
      */
     public void setTiles(ColourGuessTile[][] newTiles) {

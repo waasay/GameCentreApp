@@ -59,8 +59,7 @@ public class States<T> implements Serializable {
                 temp.add(this.getBoards().get(i));
             }
             this.boards = temp;
-        }
-        else{
+        } else {
             throw new IndexOutOfBoundsException("Index " + Integer.toString(upTill) + " is out of" +
                     " bound.");
         }

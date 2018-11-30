@@ -36,7 +36,7 @@ public abstract class AbstractManager<T> extends Observable implements Serializa
     /**
      * Getter for complexity
      */
-    public String getComplexity(){
+    public String getComplexity() {
         return this.complexity;
     }
 
@@ -60,7 +60,7 @@ public abstract class AbstractManager<T> extends Observable implements Serializa
     /**
      * Increase the score by adjustment
      */
-    protected void increaseScore(int adjustment){
+    protected void increaseScore(int adjustment) {
         this.score += adjustment;
     }
 

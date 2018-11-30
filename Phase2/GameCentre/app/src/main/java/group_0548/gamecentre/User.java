@@ -117,7 +117,8 @@ public class User implements Serializable {
         scoreContent.add(score);
         return scoreContent;
     }
-    HashMap<String, Integer> getHashMapOfHighScore(){
+
+    HashMap<String, Integer> getHashMapOfHighScore() {
         return this.hashMapOfHighScore;
     }
 }

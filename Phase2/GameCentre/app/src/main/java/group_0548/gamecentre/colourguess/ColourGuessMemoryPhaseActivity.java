@@ -129,6 +129,7 @@ public class ColourGuessMemoryPhaseActivity extends AppCompatActivity {
 
     /**
      * Start the count down timer at the given input time
+     *
      * @param milliSecond the starting time of the count down timer in milliseconds
      */
     private void startTimer(int milliSecond) {

@@ -102,9 +102,10 @@ public class ScoreBoard implements Serializable {
 
     /**
      * Getters for top scores
+     *
      * @return the top scores
      */
-    LinkedHashMap<String, Integer> getTopScores(){
+    LinkedHashMap<String, Integer> getTopScores() {
         return this.topScores;
     }
 }

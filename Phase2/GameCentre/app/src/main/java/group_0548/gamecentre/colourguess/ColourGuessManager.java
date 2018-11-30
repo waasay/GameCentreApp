@@ -31,8 +31,9 @@ public class ColourGuessManager extends AbstractManager<ColourGuessBoard> {
 
     /**
      * The constructor of the ColourGuessManager
-     * @param rowNum the amount of rows for the boards
-     * @param colNum the amount of columns for the boards
+     *
+     * @param rowNum  the amount of rows for the boards
+     * @param colNum  the amount of columns for the boards
      * @param complex the complexity of the boards
      */
     ColourGuessManager(int rowNum, int colNum, String complex) {
@@ -43,12 +44,13 @@ public class ColourGuessManager extends AbstractManager<ColourGuessBoard> {
 
     /**
      * Resetting boards
+     *
      * @param rowNum the amount of rows for the boards
      * @param colNum the amount of columns for the boards
      */
     void reset(int rowNum, int colNum) {
 
-        final int numTiles = rowNum*colNum;
+        final int numTiles = rowNum * colNum;
 
         // creating a random board1
         List<ColourGuessTile> tiles1 = new ArrayList<>();
@@ -69,14 +71,16 @@ public class ColourGuessManager extends AbstractManager<ColourGuessBoard> {
 
     /**
      * Getter for memorization phase board
+     *
      * @return the memorization phase board
      */
-    public ColourGuessBoard getBoard(){
+    public ColourGuessBoard getBoard() {
         return this.board;
     }
 
     /**
      * Method to indicate whether the board is solved or not
+     *
      * @return whether the board is solved or not
      */
     public boolean puzzleSolved() {
@@ -104,6 +108,7 @@ public class ColourGuessManager extends AbstractManager<ColourGuessBoard> {
 
     /**
      * The method to select a ColourGuessTile on the memorization phase board
+     *
      * @param position the position of the tile to selection
      */
     void select(int position) {
@@ -123,6 +128,7 @@ public class ColourGuessManager extends AbstractManager<ColourGuessBoard> {
 
     /**
      * Getter for the ID of the colour to guess
+     *
      * @return the ID of the colour to guess
      */
     public int getId() {
@@ -131,6 +137,7 @@ public class ColourGuessManager extends AbstractManager<ColourGuessBoard> {
 
     /**
      * Setter for the ID of the colour to guess
+     *
      * @param id new ID
      */
     public void setId(int id) {
@@ -139,6 +146,7 @@ public class ColourGuessManager extends AbstractManager<ColourGuessBoard> {
 
     /**
      * The getter for the selection phase board
+     *
      * @return the selection phase board
      */
     ColourGuessBoard getBoard2() {
@@ -147,6 +155,7 @@ public class ColourGuessManager extends AbstractManager<ColourGuessBoard> {
 
     /**
      * The getter for the amount of time left
+     *
      * @return the amount of time left
      */
     public int getTime() {
@@ -155,6 +164,7 @@ public class ColourGuessManager extends AbstractManager<ColourGuessBoard> {
 
     /**
      * The setter for amount of time left
+     *
      * @param time the new time
      */
     public void setTime(int time) {
@@ -163,6 +173,7 @@ public class ColourGuessManager extends AbstractManager<ColourGuessBoard> {
 
     /**
      * Getter of the complexity of the board
+     *
      * @return the complexity of the board
      */
     public String getComplexity() {

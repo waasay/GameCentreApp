@@ -15,16 +15,15 @@ import android.widget.GridView;
 import android.widget.Toast;
 
 public class TwentyGestureDetectGridView extends GridView {
+    private static final int SWIPE_MIN_DISTANCE = 100;
+    private static final int SWIPE_MAX_OFF_PATH = 100;
+    private static final int SWIPE_THRESHOLD_VELOCITY = 100;
     private GestureDetector gDetector;
     private boolean mFlingConfirmed = false;
     private float mTouchX;
     private float mTouchY;
     private TwentyMovementController mController;
     private TwentyManager twentyManager;
-
-    private static final int SWIPE_MIN_DISTANCE = 100;
-    private static final int SWIPE_MAX_OFF_PATH = 100;
-    private static final int SWIPE_THRESHOLD_VELOCITY = 100;
 
     public TwentyGestureDetectGridView(Context context) {
         super(context);
@@ -59,7 +58,7 @@ public class TwentyGestureDetectGridView extends GridView {
                             || Math.abs(velocityY) < SWIPE_THRESHOLD_VELOCITY) {
                         return false;
                     }
-                    if(checkGameSituation(context).equals("Neither")) {
+                    if (checkGameSituation(context).equals("Neither")) {
                         if (e1.getY() - e2.getY() > SWIPE_MIN_DISTANCE) {
                             mController.processUpMovement(); //up
                         } else if (e2.getY() - e1.getY() > SWIPE_MIN_DISTANCE) {
@@ -71,7 +70,7 @@ public class TwentyGestureDetectGridView extends GridView {
                     if (Math.abs(velocityX) < SWIPE_THRESHOLD_VELOCITY) {
                         return false;
                     }
-                    if(checkGameSituation(context).equals("Neither")) {
+                    if (checkGameSituation(context).equals("Neither")) {
                         if (e1.getX() - e2.getX() > SWIPE_MIN_DISTANCE) {
                             mController.processLeftMovement(); //left
 
@@ -117,17 +116,16 @@ public class TwentyGestureDetectGridView extends GridView {
     /**
      * Initialize the undo event
      */
-    public void undoEvent(){
+    public void undoEvent() {
         this.mController.processUndo(this.getContext());
     }
 
     /**
      * Initialize the redo event
      */
-    public void redoEvent(){
+    public void redoEvent() {
         this.mController.processRedo(this.getContext());
     }
-
 
     @Override
     public boolean onTouchEvent(MotionEvent ev) {
@@ -143,8 +141,7 @@ public class TwentyGestureDetectGridView extends GridView {
         if (twentyManager.puzzleSolved()) {
             Toast.makeText(context, "You Win!", Toast.LENGTH_SHORT).show();
             return "Win";
-        }
-        else if (twentyManager.puzzleLost()) {
+        } else if (twentyManager.puzzleLost()) {
             Toast.makeText(context, "You Lost!", Toast.LENGTH_SHORT).show();
             return "Lost";
         }

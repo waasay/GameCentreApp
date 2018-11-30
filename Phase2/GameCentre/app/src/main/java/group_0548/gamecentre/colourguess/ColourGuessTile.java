@@ -16,6 +16,7 @@ public class ColourGuessTile extends AbstractTile {
 
     /**
      * Constructor of the ColourGuessTile
+     *
      * @param id the id of the ColourGuessTile
      */
     ColourGuessTile(int id) {
@@ -31,14 +32,16 @@ public class ColourGuessTile extends AbstractTile {
 
     /**
      * Getter of the id ColourGuessTile
+     *
      * @return the id of the ColourGuessTile
      */
-    public int getId(){
+    public int getId() {
         return super.getId();
     }
 
     /**
      * Getter of the background of the ColourGuessTile
+     *
      * @return the background of the ColourGuessTile
      */
     public int getBackground() {

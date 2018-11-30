@@ -37,7 +37,7 @@ public class SlidingMovementController {
         if (slidingManager.isValidTap(position) && !slidingManager.puzzleSolved()) {
             slidingManager.touchMove(position);
             if (slidingManager.puzzleSolved()) {
-                Toast.makeText(context,"YOU WIN!", Toast.LENGTH_SHORT).show();
+                Toast.makeText(context, "YOU WIN!", Toast.LENGTH_SHORT).show();
             }
         } else if (slidingManager.puzzleSolved()) {
             Toast.makeText(context, "YOU WIN!", Toast.LENGTH_SHORT).show();
@@ -48,13 +48,13 @@ public class SlidingMovementController {
 
     /**
      * Process a tap for the undo button
+     *
      * @param context the context
      */
-    void processUndo(Context context){
-        if (this.slidingManager.ableToUndo()){
+    void processUndo(Context context) {
+        if (this.slidingManager.ableToUndo()) {
             this.slidingManager.undoToPastState();
-        }
-        else{
+        } else {
             Toast.makeText(context, "No more undo", Toast.LENGTH_SHORT).show();
         }
 
@@ -62,13 +62,13 @@ public class SlidingMovementController {
 
     /**
      * Process a tap for the redo button
+     *
      * @param context the context
      */
-    void processRedo(Context context){
-        if (this.slidingManager.ableToRedo()){
+    void processRedo(Context context) {
+        if (this.slidingManager.ableToRedo()) {
             this.slidingManager.redoToFutureState();
-        }
-        else{
+        } else {
             Toast.makeText(context, "No more redo", Toast.LENGTH_SHORT).show();
         }
     }

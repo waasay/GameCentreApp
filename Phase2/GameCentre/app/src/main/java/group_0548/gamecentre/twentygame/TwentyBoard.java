@@ -13,7 +13,6 @@ import group_0548.gamecentre.AbstractBoard;
 public class TwentyBoard extends AbstractBoard<TwentyTile> implements Iterable<TwentyTile> {
 
 
-
     private TwentyTile[][] tiles;
 
 

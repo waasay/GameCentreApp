@@ -193,6 +193,7 @@ public class ColourGuessChoosePhaseActivity extends AppCompatActivity implements
 
     /**
      * Start the count down timer at the given input time
+     *
      * @param milliSecond the time for the timer to start, in milliseconds
      */
     private void startTimer(int milliSecond) {
