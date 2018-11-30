@@ -1,8 +1,8 @@
 package group_0548.gamecentre.twentygame;
 
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -22,7 +22,7 @@ public class TwentyChooseComplexityActivity extends AppCompatActivity {
      */
     private static int MAX_UNDO = 3;
     /**
-     * The board manager.
+     * The board manager for 2048.
      */
     private TwentyManager twentyManager;
 
@@ -31,6 +31,11 @@ public class TwentyChooseComplexityActivity extends AppCompatActivity {
      */
     private TextView currentUndo;
 
+    /**
+     * Initialize the layout activity of Complete
+     *
+     * @param savedInstanceState The instance saved
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -86,7 +91,7 @@ public class TwentyChooseComplexityActivity extends AppCompatActivity {
     }
 
     /**
-     * Switch to the SlidingGameActivity view to play the game.
+     * Switch to the TwentyGameActivity view to play the game.
      */
     private void switchToGame() {
         Intent tmp = new Intent(this, TwentyGameActivity.class);

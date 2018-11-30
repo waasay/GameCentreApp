@@ -1,15 +1,13 @@
 package group_0548.gamecentre.twentygame;
 
 import android.content.Context;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
-import android.view.Gravity;
 import android.view.View;
 import android.view.ViewTreeObserver;
 import android.widget.Button;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -26,17 +24,27 @@ import group_0548.gamecentre.R;
 
 
 public class TwentyGameActivity extends AppCompatActivity implements Observer {
+
+    /**
+     * The column width and the column height.
+     */
     private static int columnWidth, columnHeight;
+
     /**
      * The board manager.
      */
     private TwentyManager twentyManager;
+
     /**
      * The buttons to display.
      */
     private ArrayList<Button> tileButtons;
-    // Grid View and calculated column height and width based on device size
+
+    /**
+     * The GestureDetectGridView for the current game.
+     */
     private TwentyGestureDetectGridView gridView;
+
     /**
      * The TextView for the score.
      */
@@ -109,6 +117,10 @@ public class TwentyGameActivity extends AppCompatActivity implements Observer {
         }
     }
 
+    /**
+     * Set up the background image for each button based on the master list
+     * of positions, and then call the adapter to set the view.
+     */
     public void display() {
         updateTileButtons();
         gridView.setAdapter(new CustomAdapter(tileButtons, columnWidth, columnHeight));
@@ -119,9 +131,6 @@ public class TwentyGameActivity extends AppCompatActivity implements Observer {
         display();
     }
 
-    /**
-     * Dispatch onPause() to fragments.
-     */
     @Override
     protected void onPause() {
         super.onPause();
@@ -166,10 +175,8 @@ public class TwentyGameActivity extends AppCompatActivity implements Observer {
     }
 
     /**
-     * Saving the score when the game is finish and when the maximum undo is default
-     * at 3
+     * Saving the score when the game is finish and when the maximum undo is 3.
      */
-
     public void saveToScoreBoard() {
         String gameType = TwentyStartingActivity.GAME_TYPE + " " + twentyManager.getComplexity();
         if (twentyManager.getMaxUndo() == 3) {
@@ -189,13 +196,6 @@ public class TwentyGameActivity extends AppCompatActivity implements Observer {
      *
      * @param view view for the undo button
      */
-
-    /**
-     * Implementing button for undo
-     *
-     * @param view view for the undo button
-     */
-
     public void undo(View view) {
         this.gridView.undoEvent();
     }
