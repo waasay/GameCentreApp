@@ -1,3 +1,4 @@
+# Phase 1
 ## October 23 Meeting
 Went through each functionality and specified ambiguities in the project handout relating to
 specific functionalities. Decided we will autosave after every move and that we will also implement
@@ -58,6 +59,8 @@ filepath to read and write to for users. Fixed small details overall in app.
 
 ## November 5 Meeting
 Cleaned code, confirmed JavaDocs were specified, fixed warnings.
+
+# Phase 2
 
 ## November 12 Meeting
 Came together to discuss game ideas for Phase 2, went over code from Phase 1 to discuss anything
