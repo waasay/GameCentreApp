@@ -489,6 +489,10 @@ public class TwentyManager extends AbstractManager<TwentyBoard> implements Undoa
         if (this.puzzleSolved()) {
             this.currUndo = -1;
         }
+
+        if (this.puzzleLost()){
+            this.currUndo = -1;
+        }
         return (this.currUndo >= 0);
 
     }
