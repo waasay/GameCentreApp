@@ -14,7 +14,7 @@ import group_0548.gamecentre.Undoable;
 public class TwentyManager extends AbstractManager<TwentyBoard> implements Undoable {
 
     /**
-     * Max number of undos
+     * Max number of undo's
      */
     private int maxUndo;
 
@@ -41,7 +41,7 @@ public class TwentyManager extends AbstractManager<TwentyBoard> implements Undoa
      * @param rowNum the number of rows for this manager's board to have.
      * @param colNum the number of columns for this manager's board to have.
      * @param complex the complexity of this 2048 game.
-     * @param maxUndo the maximum number of undos allowed in this 2048 game.
+     * @param maxUndo the maximum number of undo's allowed in this 2048 game.
      */
     TwentyManager(int rowNum, int colNum, String complex, int maxUndo) {
         this.complexity = complex;
@@ -101,7 +101,7 @@ public class TwentyManager extends AbstractManager<TwentyBoard> implements Undoa
     }
 
     /**
-     * Return whether the game is lost (no furthur move is possible and the board is
+     * Return whether the game is lost (no further move is possible and the board is
      * filled with no empty tiles)
      *
      * @return whether the game is lost
@@ -252,7 +252,7 @@ public class TwentyManager extends AbstractManager<TwentyBoard> implements Undoa
     }
 
     /**
-     * Helper method to check after each swipe whether the tiles are identifcal or not
+     * Helper method to check after each swipe whether the tiles are identical or not
      *
      * @param oldSet the old collection of tiles
      * @param newSet the new collection of tiles
@@ -486,7 +486,7 @@ public class TwentyManager extends AbstractManager<TwentyBoard> implements Undoa
      * Precondition: when calling this method
      * this.currUndo must be < MAX_UNDO - 1
      * This state update this.pastStates accordingly
-     * after undo is done prior to a touchmove, to
+     * after undo is done prior to a touchMove, to
      * prevent undo is being abused
      */
     public void updateStateAfterUndo() {
