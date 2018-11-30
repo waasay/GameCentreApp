@@ -266,7 +266,7 @@ public class SlidingManager extends AbstractManager<SlidingBoard> implements Und
      * Reset undo to MAX_UNDO - 1
      */
 
-    void resetCurrUndo() {
+    private void resetCurrUndo() {
         this.currUndo = this.getMaxUndo() - 1;
     }
 

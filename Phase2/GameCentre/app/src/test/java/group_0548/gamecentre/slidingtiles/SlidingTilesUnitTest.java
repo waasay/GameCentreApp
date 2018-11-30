@@ -42,7 +42,6 @@ public class SlidingTilesUnitTest {
      * @param board the board to look for the empty tile
      * @return the empty tile
      */
-
     private SlidingTile findEmptyTile(SlidingBoard board) {
         int numOfTiles = board.numTiles();
         SlidingTile toReturn = board.getTile(3,3);
@@ -55,6 +54,12 @@ public class SlidingTilesUnitTest {
         return toReturn;
     }
 
+    /**
+     * Get the position of a given tile in the given board
+     * @param tile the tile to look for the position
+     * @param board the board to look for the tile
+     * @return the position
+     */
     private int getPosition(SlidingTile tile, SlidingBoard board) {
         int toReturn = 0;
         for (int n = 0; n < board.numTiles(); n++) {
@@ -70,7 +75,7 @@ public class SlidingTilesUnitTest {
 
     /**
      * Setup the boards for testing, 1 solved board (at medium complexity)
-     * and 3 other boards at different complexity.
+     * and 1 board at medium complexity
      */
     private void setUpAndResetBoard() {
         this.mediumSlidingManager = new SlidingManager(4, 4, "Medium", 3);
@@ -83,14 +88,13 @@ public class SlidingTilesUnitTest {
     }
 
     /**
-     * Test whether swapping two tiles makes a solved board unsolved.
+     * Test whether isSolved works
      */
     @Test
     public void testIsSolved(){
-
         this.setUpAndResetBoard();
-        assertEquals(true, this.solvedSlidingManager.puzzleSolved());
-        assertEquals(false, this.mediumSlidingManager.puzzleSolved());
+        assertTrue(this.solvedSlidingManager.puzzleSolved());
+        assertFalse( this.mediumSlidingManager.puzzleSolved());
     }
 
     /**
@@ -113,15 +117,15 @@ public class SlidingTilesUnitTest {
         SlidingTile emptyTile = this.findEmptyTile(this.solvedSlidingManager.getBoard());
         int emptyPos = this.getPosition(emptyTile,this.solvedSlidingManager.getBoard());
         HashMap<String, SlidingTile> around = this.solvedSlidingManager.getSurroundTiles(emptyPos);
-        assertEquals(null,around.get("below"));
-        assertEquals(null,around.get("right"));
+        assertNull(around.get("below"));
+        assertNull(around.get("right"));
         assertEquals(15,around.get("left").getId());
         assertEquals(12,around.get("above").getId());
 
     }
 
     /**
-     * Test whether isValidHelp works.
+     * Test whether isValidTap works.
      */
     @Test
     public void testIsValidTap() {
@@ -131,18 +135,17 @@ public class SlidingTilesUnitTest {
         HashMap<String, SlidingTile> around = this.mediumSlidingManager.getSurroundTiles(emptyPosition);
         if (around.get("above") != null) {
             int abovePos = this.getPosition(around.get("above"), this.mediumSlidingManager.getBoard());
-            assertEquals(true, this.mediumSlidingManager.isValidTap(abovePos));
+            assertTrue(this.mediumSlidingManager.isValidTap(abovePos));
         }
         else{
             int belowPos = this.getPosition(around.get("below"), this.mediumSlidingManager.getBoard());
-            assertEquals(true, this.mediumSlidingManager.isValidTap(belowPos));
+            assertTrue(this.mediumSlidingManager.isValidTap(belowPos));
         }
-        assertEquals(false, this.mediumSlidingManager.isValidTap(emptyPosition));
+        assertFalse(this.mediumSlidingManager.isValidTap(emptyPosition));
     }
 
     /**
-     * Test score increase after touch move and whether undo resets after a
-     * touch move is called
+     * Test score increase after touch move
      */
     @Test
     public void testScoreIncreaseAfterTouchMove() {
@@ -187,37 +190,35 @@ public class SlidingTilesUnitTest {
     /**
      * Test whether ableToUndo and ableToRedo actually works, and whether it actually
      * prevents the user from undoing when the board is solved, these are put together
-     * because how similar the two tests are.
+     * because how similar the two methods are.
      */
     @Test
     public void testAbleToUndoAndAbleToRedo(){
         this.setUpAndResetBoard();
-        assertEquals(false,this.solvedSlidingManager.ableToUndo());
+        assertFalse(this.solvedSlidingManager.ableToUndo());
         SlidingTile emptyTile = this.findEmptyTile(this.mediumSlidingManager.getBoard());
         int emptyPos = this.getPosition(emptyTile,this.mediumSlidingManager.getBoard());
         HashMap<String, SlidingTile> around = this.mediumSlidingManager.getSurroundTiles(emptyPos);
         if (around.get("above") != null) {
             int abovePos = this.getPosition(around.get("above"), this.mediumSlidingManager.getBoard());
             this.mediumSlidingManager.touchMove(abovePos);
-            assertEquals(true, this.mediumSlidingManager.ableToUndo());
+            assertTrue(this.mediumSlidingManager.ableToUndo());
         } else {
             int belowPos = this.getPosition(around.get("below"), this.mediumSlidingManager.getBoard());
             this.mediumSlidingManager.touchMove(belowPos);
-            assertEquals(true, this.mediumSlidingManager.ableToUndo());
+            assertTrue(this.mediumSlidingManager.ableToUndo());
         }
         this.mediumSlidingManager.undoToPastState();
-        assertEquals(true, this.mediumSlidingManager.ableToRedo());
-        assertEquals(false,this.solvedSlidingManager.ableToRedo());
-        assertEquals(false, this.solvedSlidingManager.ableToUndo());
+        assertTrue(this.mediumSlidingManager.ableToRedo());
+        assertFalse(this.solvedSlidingManager.ableToRedo());
+        assertFalse(this.solvedSlidingManager.ableToUndo());
 
 
     }
-
-    @Test
     /**
      * Test whether updates states work when performing a series of moves
      */
-
+    @Test
     public void testUpdateStatesWith10Moves(){
         this.setUpAndResetBoard();
         for (int moves = 0; moves < 10; moves++){
@@ -237,11 +238,12 @@ public class SlidingTilesUnitTest {
 
     }
 
-    @Test
     /**
      * Test whether undo and redo actually points to the current board
-     * in pastStates (These two are put together because how similar the two test are)
+     * in pastStates (These two are put together because how similar the two methods are
+     *
      */
+    @Test
     public void testUpdateToPastStateAndRedoToFutureState(){
         this.setUpAndResetBoard();
         SlidingTile emptyTile = findEmptyTile(this.mediumSlidingManager.getBoard());
@@ -286,7 +288,7 @@ public class SlidingTilesUnitTest {
         this.setUpAndResetBoard();
         SlidingTile emptyTile = findEmptyTile(this.solvedSlidingManager.getBoard());
         SlidingTile toCompare = this.solvedSlidingManager.getBoard().getTile(0,0);
-        assertEquals(false, emptyTile.getBackground() == toCompare.getBackground());
+        assertNotEquals(emptyTile.getBackground(),toCompare.getBackground());
     }
 
     /**
@@ -322,7 +324,7 @@ public class SlidingTilesUnitTest {
         this.mediumSlidingManager.undoToPastState();
         this.mediumSlidingManager.undoToPastState();
         this.mediumSlidingManager.undoToPastState();
-        assertEquals(false,this.mediumSlidingManager.ableToUndo());
+        assertFalse(this.mediumSlidingManager.ableToUndo());
     }
 
     /**

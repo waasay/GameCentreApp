@@ -42,11 +42,6 @@ public class SlidingBoard extends AbstractBoard<SlidingTile> implements Serializ
         }
     }
 
-    public SlidingBoard(List<SlidingTile> tilesBoard, int score, int rowNum, int colNum) {
-        this(tilesBoard, rowNum, colNum);
-
-    }
-
     /**
      * Return the tile at (row, col)
      * @param row the tile row
@@ -106,7 +101,7 @@ public class SlidingBoard extends AbstractBoard<SlidingTile> implements Serializ
      * @return copy of this
      */
 
-    public SlidingBoard copy() {
+    SlidingBoard copy() {
         List<SlidingTile> newTiles = new ArrayList<>();
         for (SlidingTile t : this) {
             newTiles.add(t);
