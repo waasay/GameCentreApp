@@ -24,8 +24,6 @@ public class SlidingTile extends AbstractTile implements Comparable<SlidingTile>
      * @param backgroundId the id of the tile background
      */
     SlidingTile(int backgroundId, int rowNum, int colNum) {
-        this.id = backgroundId + 1;
-
         int[] images = {R.drawable.tile_1, R.drawable.tile_2, R.drawable.tile_3, R.drawable.tile_4,
                 R.drawable.tile_5, R.drawable.tile_6, R.drawable.tile_7, R.drawable.tile_8,
                 R.drawable.tile_9, R.drawable.tile_10, R.drawable.tile_11, R.drawable.tile_12,
@@ -34,12 +32,14 @@ public class SlidingTile extends AbstractTile implements Comparable<SlidingTile>
                 R.drawable.tile_20, R.drawable.tile_21, R.drawable.tile_22,
                 R.drawable.tile_23, R.drawable.tile_24, R.drawable.tile_25};
 
-        if (id == rowNum * colNum) {
+        if (backgroundId == rowNum * colNum - 1) {
             background = images[images.length - 1];
+            this.id = 24;
         } else {
-            for (int i = 1; i < rowNum * colNum; i++) {
-                if (i == id) {
-                    background = images[i - 1];
+            for (int i = 0; i < rowNum * colNum - 1; i++) {
+                if (i == backgroundId) {
+                    background = images[i];
+                    this.id = backgroundId;
                     break;
                 }
             }
@@ -57,9 +57,10 @@ public class SlidingTile extends AbstractTile implements Comparable<SlidingTile>
 
     /**
      * Getter for the ID of this tile
+     *
      * @return the id of the tile
      */
-    public int getId(){
+    public int getId() {
         return this.id;
     }
 
