@@ -6,6 +6,8 @@ import java.util.Arrays;
 import java.util.List;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 
 /**
  * Unit test for the colour guess game
@@ -39,22 +41,22 @@ public class ColourGuessUnitTest {
     }
 
     /**
-     * Test whether Board2 check marks correspond to the given color in Board1.
+     * Test whether the game has been solved.
      */
     @Test
     public void testIsSolved() {
 
         this.setupAndResetBoard();
-        assertEquals(false, this.hardcodedColourManager.puzzleSolved());
+        assertFalse(this.hardcodedColourManager.puzzleSolved());
         this.hardcodedColourManager.select(0);
         this.hardcodedColourManager.select(6);
-        assertEquals(true, this.hardcodedColourManager.puzzleSolved());
+        assertTrue(this.hardcodedColourManager.puzzleSolved());
 
     }
 
     /**
-     * Test whether after a tile is tap, the id of that tile changed into a corresponding id
-     * that represents a tile with a checkmark
+     * Test whether after a tile is tapped, the id of that tile changed into a corresponding id
+     * that represents a tile with a checkMark
      */
     @Test
     public void testIfTileHasCheckAfterTap() {
@@ -66,7 +68,7 @@ public class ColourGuessUnitTest {
     }
 
     /**
-     * Test whether the after a tile with a checkmark is tap, the id of that tile changed back into
+     * Test whether the after a tile with a checkMark is tapped, the id of that tile changed back into
      * the id that correspond a blank tile
      */
     @Test
@@ -81,7 +83,7 @@ public class ColourGuessUnitTest {
     }
 
     /**
-     * Test whether Board2 check marks correspond to the given color in Board1.
+     * Test whether the score increased after successfully solving a board.
      */
     @Test
     public void testScoreIncreased() {
@@ -114,7 +116,7 @@ public class ColourGuessUnitTest {
         this.hardcodedColourManager.select(1);
         this.hardcodedColourManager.select(7);
         this.hardcodedColourManager.select(13);
-        assertEquals(true, this.hardcodedColourManager.puzzleSolved());
+        assertTrue(this.hardcodedColourManager.puzzleSolved());
     }
 
     /**
@@ -125,8 +127,6 @@ public class ColourGuessUnitTest {
         this.setupAndResetBoard();
         this.regularColourManager.setId(2);
         int i = 0;
-        int row;
-        int col;
         for (ColourGuessTile t : this.regularColourManager.getBoard()) {
             if (t.getId() == 2) {
                 this.regularColourManager.select(i);
@@ -134,7 +134,7 @@ public class ColourGuessUnitTest {
             i++;
         }
 
-        assertEquals(true,this.regularColourManager.puzzleSolved());
+        assertTrue(this.regularColourManager.puzzleSolved());
     }
 }
 

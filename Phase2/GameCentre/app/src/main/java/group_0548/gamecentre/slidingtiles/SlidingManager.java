@@ -15,6 +15,7 @@ import group_0548.gamecentre.Undoable;
  */
 public class SlidingManager extends AbstractManager<SlidingBoard> implements Undoable {
 
+    private final int BLANK_ID = 24;
     /**
      * Max number of undos
      */
@@ -41,8 +42,8 @@ public class SlidingManager extends AbstractManager<SlidingBoard> implements Und
         this.score = 0;
         List<SlidingTile> tiles = new ArrayList<>();
         final int numTiles = rowNum * colNum;
-        for (int tileNum = 0; tileNum != numTiles; tileNum++) {
-            tiles.add(new SlidingTile(tileNum, rowNum, colNum));
+        for (int id = 0; id != numTiles; id++) {
+            tiles.add(new SlidingTile(id, rowNum, colNum));
         }
 
         Collections.shuffle(tiles);
@@ -66,9 +67,6 @@ public class SlidingManager extends AbstractManager<SlidingBoard> implements Und
         this.pastStates = new States<>(this.maxUndo);
         this.pastStates.updateStates(this.getBoard().copy());
     }
-
-
-
 
 
     /**
@@ -98,10 +96,16 @@ public class SlidingManager extends AbstractManager<SlidingBoard> implements Und
      */
     public boolean puzzleSolved() {
         boolean solved = true;
-        int id = 1;
+        int id = 0;
         for (SlidingTile tile : this.getBoard()) {
-            if (tile.getId() != id) {
-                solved = false;
+            if (id != board.getNumCol() * board.getNumRow() - 1) {
+                if (tile.getId() != id) {
+                    solved = false;
+                }
+            } else {
+                if (tile.getId() != 24) {
+                    solved = false;
+                }
             }
             id++;
         }
@@ -115,13 +119,12 @@ public class SlidingManager extends AbstractManager<SlidingBoard> implements Und
      * @return whether the tile at position is surrounded by a blank tile
      */
     boolean isValidTap(int position) {
-        int blankId = this.board.numTiles();
         HashMap<String, SlidingTile> tiles = getSurroundTiles(position);
 
-        return (tiles.get("below") != null && tiles.get("below").getId() == blankId)
-                || (tiles.get("above") != null && tiles.get("above").getId() == blankId)
-                || (tiles.get("left") != null && tiles.get("left").getId() == blankId)
-                || (tiles.get("right") != null && tiles.get("right").getId() == blankId);
+        return (tiles.get("below") != null && tiles.get("below").getId() == BLANK_ID)
+                || (tiles.get("above") != null && tiles.get("above").getId() == BLANK_ID)
+                || (tiles.get("left") != null && tiles.get("left").getId() == BLANK_ID)
+                || (tiles.get("right") != null && tiles.get("right").getId() == BLANK_ID);
     }
 
     /**
@@ -132,7 +135,6 @@ public class SlidingManager extends AbstractManager<SlidingBoard> implements Und
     void touchMove(int position) {
         int row = position / board.getNumRow();
         int col = position % board.getNumCol();
-        int blankId = board.numTiles();
 
         HashMap<String, SlidingTile> tiles = getSurroundTiles(position);
 
@@ -142,13 +144,13 @@ public class SlidingManager extends AbstractManager<SlidingBoard> implements Und
             this.updateStateAfterUndo();
         }
 
-        if (tiles.get("below") != null && tiles.get("below").getId() == blankId) {
+        if (tiles.get("below") != null && tiles.get("below").getId() == BLANK_ID) {
             board.swapTiles(row, col, row + 1, col);
-        } else if (tiles.get("above") != null && tiles.get("above").getId() == blankId) {
+        } else if (tiles.get("above") != null && tiles.get("above").getId() == BLANK_ID) {
             board.swapTiles(row, col, row - 1, col);
-        } else if (tiles.get("left") != null && tiles.get("left").getId() == blankId) {
+        } else if (tiles.get("left") != null && tiles.get("left").getId() == BLANK_ID) {
             board.swapTiles(row, col, row, col - 1);
-        } else if (tiles.get("right") != null && tiles.get("right").getId() == blankId) {
+        } else if (tiles.get("right") != null && tiles.get("right").getId() == BLANK_ID) {
             board.swapTiles(row, col, row, col + 1);
         }
 
@@ -281,9 +283,12 @@ public class SlidingManager extends AbstractManager<SlidingBoard> implements Und
             while (n < this.getBoard().numTiles()) {
                 int nextRow = n / this.getBoard().getNumCol();
                 int nextCol = n % this.getBoard().getNumCol();
-                if (this.getBoard().getTiles()[row][col].getBackground() >
-                        this.getBoard().getTiles()[nextRow][nextCol].getBackground()) {
-                    inversions = inversions + 1;
+                if (this.getBoard().getTiles()[row][col].getId() != 24 && this.getBoard()
+                        .getTiles()[nextRow][nextCol].getId() != 24) {
+                    if (this.getBoard().getTiles()[row][col].getId() >
+                            this.getBoard().getTiles()[nextRow][nextCol].getId()) {
+                        inversions = inversions + 1;
+                    }
                 }
                 n = n + 1;
             }
@@ -301,11 +306,11 @@ public class SlidingManager extends AbstractManager<SlidingBoard> implements Und
             int col = i % cols;
 
             // if this is the blank tile
-            if (this.getBoard().getTile(row, col).getBackground() == 24) {
+            if (this.getBoard().getTile(row, col).getId() == 24) {
 
                 // odd row from bottom when difference between row containing blank and last
                 // row is even
-                if ((rows - row) % 2 == 0) {
+                if ((rows - row - 1) % 2 == 0) {
                     return true;
                 }
 
