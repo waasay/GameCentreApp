@@ -25,7 +25,7 @@ public class ScoreBoard implements Serializable {
      *
      * @param num maximum number of users to store in the scoreboard.
      */
-    public ScoreBoard(int num) {
+    ScoreBoard(int num) {
         this.numScore = num;
         this.topScores = new LinkedHashMap<>();
     }
@@ -36,7 +36,7 @@ public class ScoreBoard implements Serializable {
      * @param name  the name of the user.
      * @param score the score for the current finished game.
      */
-    public void addScore(String name, int score, String order) {
+    void addScore(String name, int score, String order) {
         if (this.topScores.size() < this.numScore) {
             if (this.topScores.containsKey(name)) {
                 if ((order.equals("Ascending") && this.topScores.get(name) > score)
@@ -76,7 +76,7 @@ public class ScoreBoard implements Serializable {
      * @return an array list of the best players with their user names
      * and their corresponding score.
      */
-    public ArrayList<String> getScoreContent(String order) {
+    ArrayList<String> getScoreContent(String order) {
         ArrayList<String> ids = new ArrayList<>();
         String name = "";
         String score = "";
@@ -104,7 +104,7 @@ public class ScoreBoard implements Serializable {
      * Getters for top scores
      * @return the top scores
      */
-    public LinkedHashMap<String, Integer> getTopScores(){
+    LinkedHashMap<String, Integer> getTopScores(){
         return this.topScores;
     }
 }

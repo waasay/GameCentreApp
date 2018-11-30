@@ -48,7 +48,7 @@ public class ScoreBoardManager implements Serializable {
      * @param complexity the difficulty of the game
      * @return the scoreboard of the given difficulty
      */
-    public ScoreBoard getScoreBoard(String complexity) {
+    ScoreBoard getScoreBoard(String complexity) {
         return scoreBoards.get(complexity);
     }
 }

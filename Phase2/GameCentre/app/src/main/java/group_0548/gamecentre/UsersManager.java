@@ -36,7 +36,7 @@ public class UsersManager implements Serializable {
      *
      * @param newUser user to set currentUser to.
      */
-    public void setCurrentUser(User newUser) {
+    void setCurrentUser(User newUser) {
         currentUser = newUser;
     }
 
@@ -45,7 +45,7 @@ public class UsersManager implements Serializable {
      *
      * @param newUser the user to add to users
      */
-    public void addUser(User newUser) {
+    void addUser(User newUser) {
         this.users.add(newUser);
     }
 
@@ -56,7 +56,7 @@ public class UsersManager implements Serializable {
      * @param password password to check
      * @return true iff user with username and password exists.
      */
-    public boolean checkUser(String username, String password) {
+    boolean checkUser(String username, String password) {
         if (this.users != null) {
             for (User curr : this.users) {
                 if (curr.getUserName().equals(username) && curr.getPassword().equals(password)) {
@@ -73,7 +73,7 @@ public class UsersManager implements Serializable {
      * @param username username to check
      * @return true iff no user exists with username
      */
-    public boolean checkUsernameValid(String username) {
+    boolean checkUsernameValid(String username) {
         if (this.users != null) {
             for (User curr : this.users) {
                 if (curr.getUserName().equals(username)) {
@@ -93,7 +93,7 @@ public class UsersManager implements Serializable {
      * @param password password to check
      * @return User with username and password from users asd
      */
-    public User getUser(String username, String password) {
+    User getUser(String username, String password) {
         for (User user : this.users) {
             if (user.getUserName().equals(username) && user.getPassword().equals(password)) {
                 return user;

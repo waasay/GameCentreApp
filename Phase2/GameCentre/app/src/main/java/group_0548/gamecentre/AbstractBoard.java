@@ -1,7 +1,7 @@
 package group_0548.gamecentre;
 
 import java.io.Serializable;
-import java.util.Arrays;
+
 
 
 /**
@@ -26,7 +26,7 @@ public abstract class AbstractBoard<T> implements Serializable {
 
     /**
      * Return the number of Tiles in this abstractboard
-     * @return
+     * @return the number of tiles
      */
     public int numTiles(){
         return this.numCol*this.numRow;
