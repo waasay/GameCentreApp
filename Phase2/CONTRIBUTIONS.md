@@ -8,7 +8,9 @@ Alexander Shum: Undo in (2048 and SlidingTiles), Redo (2048 and SlidingTiles), C
                 AbstractTile, Undoable, generified everything,
                 Unittests for SlidingTiles, ColourGuess, and  half of 2048.
 
-Waasay Shehzad: Auto Save, UserManager, States, SignUp, Login
+Waasay Shehzad: Auto Save, UserManager, States, SignUp, Login, producing solvable boards in SlidingTilesManager,
+                ColourGuessManager, ColourGuessTile, ColourGuessBoard, TwentyManager (including writing own algorithm
+                to update board after swipes) , TwentyBoard, TwentyTile.
 
 Afzal Patel: Game Complexity, Login, SignUp, GameCenterActivity
 
