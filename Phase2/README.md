@@ -64,7 +64,7 @@ ColourGuess:
 - There is also the redo button that allow the user to undo the undo.
 
 
-#Description and walk through of the Functionalities of the GameCenter App
+#Description and walk through of the Functionality of the GameCenter App
 When launch the app will bring the user to the login page, and ask the user for inputs
 for username and password
 
