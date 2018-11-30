@@ -110,10 +110,14 @@ public class GameCentreUnitTest {
         testHashMap.put("A", 0);
         testHashMap.put("B", 5);
         testHashMap.put("C", 10);
-        this.scoreBoardManager.updateScoreBoard("Easy", "A", 0, "Ascending");
-        this.scoreBoardManager.updateScoreBoard("Easy", "C", 10, "Ascending");
-        this.scoreBoardManager.updateScoreBoard("Easy", "B", 5, "Ascending");
-        assertEquals(testHashMap, this.scoreBoardManager.getScoreBoard("Easy").getTopScores());
+        this.scoreBoardManager.updateScoreBoard("Easy", "A", 0,
+                "Ascending");
+        this.scoreBoardManager.updateScoreBoard("Easy", "C", 10,
+                "Ascending");
+        this.scoreBoardManager.updateScoreBoard("Easy", "B", 5,
+                "Ascending");
+        assertEquals(testHashMap, this.scoreBoardManager.getScoreBoard(
+                "Easy").getTopScores());
 
     }
     /**
@@ -128,13 +132,20 @@ public class GameCentreUnitTest {
         testHashMap.put("C", 10);
         testHashMap.put("E", 15);
         testHashMap.put("D", 20);
-        this.scoreBoardManager.updateScoreBoard("Easy", "A", 0, "Ascending");
-        this.scoreBoardManager.updateScoreBoard("Easy", "C", 10, "Ascending");
-        this.scoreBoardManager.updateScoreBoard("Easy", "B", 5, "Ascending");
-        this.scoreBoardManager.updateScoreBoard("Easy", "D", 20, "Ascending");
-        this.scoreBoardManager.updateScoreBoard("Easy", "E", 15, "Ascending");
-        this.scoreBoardManager.updateScoreBoard("Easy", "F", 35, "Ascending");
-        assertEquals(testHashMap, this.scoreBoardManager.getScoreBoard("Easy").getTopScores());
+        this.scoreBoardManager.updateScoreBoard("Easy", "A", 0,
+                "Ascending");
+        this.scoreBoardManager.updateScoreBoard("Easy", "C", 10,
+                "Ascending");
+        this.scoreBoardManager.updateScoreBoard("Easy", "B", 5,
+                "Ascending");
+        this.scoreBoardManager.updateScoreBoard("Easy", "D", 20,
+                "Ascending");
+        this.scoreBoardManager.updateScoreBoard("Easy", "E", 15,
+                "Ascending");
+        this.scoreBoardManager.updateScoreBoard("Easy", "F", 35,
+                "Ascending");
+        assertEquals(testHashMap, this.scoreBoardManager.getScoreBoard(
+                "Easy").getTopScores());
 
     }
     /**
@@ -147,11 +158,16 @@ public class GameCentreUnitTest {
         testHashMap.put("A", 0);
         testHashMap.put("B", 5);
         testHashMap.put("C", 10);
-        this.scoreBoardManager.updateScoreBoard("Easy", "A", 0, "Ascending");
-        this.scoreBoardManager.updateScoreBoard("Easy", "C", 10, "Ascending");
-        this.scoreBoardManager.updateScoreBoard("Easy", "B", 5, "Ascending");
-        this.scoreBoardManager.updateScoreBoard("Easy", "A", 20, "Ascending");
-        assertEquals(testHashMap, this.scoreBoardManager.getScoreBoard("Easy").getTopScores());
+        this.scoreBoardManager.updateScoreBoard("Easy", "A", 0,
+                "Ascending");
+        this.scoreBoardManager.updateScoreBoard("Easy", "C", 10,
+                "Ascending");
+        this.scoreBoardManager.updateScoreBoard("Easy", "B", 5,
+                "Ascending");
+        this.scoreBoardManager.updateScoreBoard("Easy", "A", 20,
+                "Ascending");
+        assertEquals(testHashMap, this.scoreBoardManager.getScoreBoard(
+                "Easy").getTopScores());
     }
     /**
      * Test the string representation of the score board in ascending order
@@ -164,10 +180,14 @@ public class GameCentreUnitTest {
         String scores =  "0" + "\r\n" + "5" + "\r\n" + "10" + "\r\n";
         testList.add(users);
         testList.add(scores);
-        this.scoreBoardManager.updateScoreBoard("Easy", "A", 0, "Ascending");
-        this.scoreBoardManager.updateScoreBoard("Easy", "B", 5, "Ascending");
-        this.scoreBoardManager.updateScoreBoard("Easy", "C", 10, "Ascending");
-        assertEquals(testList, this.scoreBoardManager.getScoreBoard("Easy").getScoreContent("Ascending"));
+        this.scoreBoardManager.updateScoreBoard("Easy", "A", 0,
+                "Ascending");
+        this.scoreBoardManager.updateScoreBoard("Easy", "B", 5,
+                "Ascending");
+        this.scoreBoardManager.updateScoreBoard("Easy", "C", 10,
+                "Ascending");
+        assertEquals(testList, this.scoreBoardManager.getScoreBoard(
+                "Easy").getScoreContent("Ascending"));
     }
     /**
      * Test the string representation of the score board in descending order
@@ -180,10 +200,14 @@ public class GameCentreUnitTest {
         String scores = "10" + "\r\n" + "5" + "\r\n" + "0" + "\r\n";
         testList.add(users);
         testList.add(scores);
-        this.scoreBoardManager.updateScoreBoard("Easy", "A", 0, "Descending");
-        this.scoreBoardManager.updateScoreBoard("Easy", "B", 5, "Descending");
-        this.scoreBoardManager.updateScoreBoard("Easy", "C", 10, "Descending");
-        assertEquals(testList, this.scoreBoardManager.getScoreBoard("Easy").getScoreContent("Descending"));
+        this.scoreBoardManager.updateScoreBoard("Easy", "A", 0,
+                "Descending");
+        this.scoreBoardManager.updateScoreBoard("Easy", "B", 5,
+                "Descending");
+        this.scoreBoardManager.updateScoreBoard("Easy", "C", 10,
+                "Descending");
+        assertEquals(testList, this.scoreBoardManager.getScoreBoard(
+                "Easy").getScoreContent("Descending"));
     }
     /**
      * Test if a user exists
@@ -215,10 +239,14 @@ public class GameCentreUnitTest {
         testUserNameHashMap.put("Sliding Tile Easy", 0);
         testUserNameHashMap.put("Colour Guess Easy", 5);
         testUserNameHashMap.put("2048 Easy", 10);
-        this.usersManager.getUser("A", "123").updateScore("Sliding Tile Easy", 0, "Ascending");
-        this.usersManager.getUser("A", "123").updateScore("Colour Guess Easy", 5, "Ascending");
-        this.usersManager.getUser("A", "123").updateScore("2048 Easy", 10, "Ascending");
-        assertEquals(testUserNameHashMap,this.usersManager.getUser("A", "123").getHashMapOfHighScore() );
+        this.usersManager.getUser("A", "123").updateScore(
+                "Sliding Tile Easy", 0, "Ascending");
+        this.usersManager.getUser("A", "123").updateScore(
+                "Colour Guess Easy", 5, "Ascending");
+        this.usersManager.getUser("A", "123").updateScore(
+                "2048 Easy", 10, "Ascending");
+        assertEquals(testUserNameHashMap,this.usersManager.getUser(
+                "A", "123").getHashMapOfHighScore() );
     }
     /**
      * Test the string representation of the users scores
@@ -231,10 +259,14 @@ public class GameCentreUnitTest {
         String scores = "0" + "\r\n" + "5" + "\r\n" + "10" + "\r\n";
         ScoreList.add(GameType);
         ScoreList.add(scores);
-        this.usersManager.getUser("A", "123").updateScore("Sliding Tile Easy", 0, "Ascending");
-        this.usersManager.getUser("A", "123").updateScore("Colour Guess Easy", 5, "Ascending");
-        this.usersManager.getUser("A", "123").updateScore("2048 Easy", 10, "Ascending");
-        assertEquals(ScoreList,this.usersManager.getUser("A", "123").getUserScore() );
+        this.usersManager.getUser("A", "123").updateScore(
+                "Sliding Tile Easy", 0, "Ascending");
+        this.usersManager.getUser("A", "123").updateScore(
+                "Colour Guess Easy", 5, "Ascending");
+        this.usersManager.getUser("A", "123").updateScore(
+                "2048 Easy", 10, "Ascending");
+        assertEquals(ScoreList,this.usersManager.getUser(
+                "A", "123").getUserScore() );
     }
 
 }
