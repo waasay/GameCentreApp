@@ -30,8 +30,17 @@ import group_0548.gamecentre.R;
 
 public class ColourGuessChoosePhaseActivity extends AppCompatActivity implements Observer {
 
+    /**
+     * The CountDownTimer
+     */
     private static CountDownTimer countDownTimer;
+    /**
+     * The dimensions of the boards
+     */
     private static int columnWidth, columnHeight;
+    /**
+     * The grid view of the game
+     */
     private ColourGuessGestureDetectGridView gridView;
     /**
      * The TextView for the score.
@@ -41,16 +50,30 @@ public class ColourGuessChoosePhaseActivity extends AppCompatActivity implements
      * The TextView for the timer.
      */
     private TextView countdownTimerText;
+    /**
+     * The TextView for the colour to pick
+     */
     private TextView chooseColour;
+    /**
+     * The context of the game
+     */
     private Context myContext = this;
+    /**
+     * An arraylist of all the buttons to tap that correspond to the tiles
+     */
     private ArrayList<Button> tileButtons;
-
+    /**
+     * An array of the colours to random pick
+     */
     private String[] colours = {"Purple", "Blue", "Green", "Yellow", "Orange", "Red"};
-
+    /**
+     * Starting time
+     */
     private int startTime;
-
+    /**
+     * The ending time
+     */
     private int endTime;
-
     /**
      * The colour guess manager.
      */
@@ -154,6 +177,10 @@ public class ColourGuessChoosePhaseActivity extends AppCompatActivity implements
         }
     }
 
+    /**
+     * Add the confirm button listener for the user click once the user finished required
+     * tiles
+     */
     public void addConfirmButtonListener() {
         Button threeButton = findViewById(R.id.ChooseConfirmButton);
         threeButton.setOnClickListener(new View.OnClickListener() {
@@ -164,6 +191,10 @@ public class ColourGuessChoosePhaseActivity extends AppCompatActivity implements
         });
     }
 
+    /**
+     * Start the count down timer at the given input time
+     * @param milliSecond the time for the timer to start, in milliseconds
+     */
     private void startTimer(int milliSecond) {
         countDownTimer = new CountDownTimer(milliSecond, 1000) {
             public void onTick(long millisUntilFinished) {
@@ -188,7 +219,6 @@ public class ColourGuessChoosePhaseActivity extends AppCompatActivity implements
      * Set up the background image for each button based on the master list
      * of positions, and then call the adapter to set the view.
      */
-    // Display
     public void display() {
         updateTileButtons();
         gridView.setAdapter(new CustomAdapter(tileButtons, columnWidth, columnHeight));
@@ -199,6 +229,9 @@ public class ColourGuessChoosePhaseActivity extends AppCompatActivity implements
         display();
     }
 
+    /**
+     * Save the score to the scoreboard
+     */
     public void saveToScoreBoard() {
         String gameType = ColourGuessStartingActivity.GAME_TYPE + " " +
                 colourGuessManager.getComplexity();
@@ -212,12 +245,18 @@ public class ColourGuessChoosePhaseActivity extends AppCompatActivity implements
         saveToFile(LoginActivity.USER_SAVE_FILENAME, LoginActivity.usersManager);
     }
 
+    /**
+     * Lead the user to the starting activity, if the user couldn't solve the boards
+     */
     public void switchToStart() {
         saveToScoreBoard();
         Intent tep = new Intent(this, ColourGuessStartingActivity.class);
         startActivity(tep);
     }
 
+    /**
+     * Lead the user to the MemoryPhaseActivity, if the user solve the boards
+     */
     public void switchToMemory() {
         endTime = (int) System.currentTimeMillis();
         stopCountdown();
@@ -260,6 +299,9 @@ public class ColourGuessChoosePhaseActivity extends AppCompatActivity implements
         finish();
     }
 
+    /**
+     * Stop the timer
+     */
     private void stopCountdown() {
         countDownTimer.cancel();
     }

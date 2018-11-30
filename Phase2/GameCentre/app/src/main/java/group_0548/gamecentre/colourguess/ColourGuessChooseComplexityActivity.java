@@ -76,7 +76,7 @@ public class ColourGuessChooseComplexityActivity extends AppCompatActivity {
     }
 
     /**
-     * Switch to the SlidingGameActivity view to play the game.
+     * Switch to the ColourGuessMemoryPhaseActivity view to play the game.
      */
     private void switchToGame() {
         Intent tmp = new Intent(this, ColourGuessMemoryPhaseActivity.class);
