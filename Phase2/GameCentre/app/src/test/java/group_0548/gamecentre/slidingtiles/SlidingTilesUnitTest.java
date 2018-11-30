@@ -3,6 +3,7 @@ package group_0548.gamecentre.slidingtiles;
 import org.junit.Test;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 
@@ -23,6 +24,10 @@ public class SlidingTilesUnitTest {
      * one however is solved
      */
     private SlidingManager solvedSlidingManager;
+    /**
+     *  Medium complexity SlidingManager with the hardcoded board
+     */
+    private SlidingManager hardcodedSlidingManager;
 
     /**
      * Make a set of tiles that are in order.
@@ -43,16 +48,16 @@ public class SlidingTilesUnitTest {
      * @return the empty tile
      */
     private SlidingTile findEmptyTile(SlidingBoard board) {
-        int numOfTiles = board.numTiles();
-        SlidingTile toReturn = board.getTile(3,3);
-        for (SlidingTile t : board) {
-            if (t.getId() == numOfTiles) {
-                toReturn = t;
-                break;
+        for (int i = 0; i < board.getNumRow(); i++){
+            for (int j = 0; j < board.getNumCol(); j++){
+                if (board.getTile(i,j).getId() == 24) {
+                    return board.getTile(i, j);
+                }
             }
         }
-        return toReturn;
+        return null;
     }
+
 
     /**
      * Get the position of a given tile in the given board
@@ -80,10 +85,21 @@ public class SlidingTilesUnitTest {
     private void setUpAndResetBoard() {
         this.mediumSlidingManager = new SlidingManager(4, 4, "Medium", 3);
         this.solvedSlidingManager = new SlidingManager(4, 4, "Medium", 3);
+        this.hardcodedSlidingManager = new SlidingManager(4,4,"Medium",3);
         List<SlidingTile> tiles = makeTiles(4,4);
         SlidingBoard board = new SlidingBoard(tiles, 4,4);
         SlidingTile[][] newTiles = board.getTiles();
         this.solvedSlidingManager.getBoard().setTiles(newTiles);
+        List<SlidingTile> hardcodedTiles = new ArrayList<>();
+        List<Integer> idList = Arrays.asList(0,1,2,3,4,5,6,7,8,9,10,11,15,12,13,14);
+        for (int j = 0; j < this.hardcodedSlidingManager.getBoard().numTiles(); j++) {
+            hardcodedTiles.add(new SlidingTile(idList.get(j),
+                    this.hardcodedSlidingManager.getBoard().getNumRow(),
+                    this.hardcodedSlidingManager.getBoard().getNumRow()));
+        }
+        SlidingBoard board2= new SlidingBoard(hardcodedTiles, 4, 4);
+        SlidingTile[][] newTiles2 = board2.getTiles();
+        this.hardcodedSlidingManager.getBoard().setTiles(newTiles2);
 
     }
 
@@ -104,8 +120,8 @@ public class SlidingTilesUnitTest {
     public void testSwapFirstTwo() {
         this.setUpAndResetBoard();
         this.solvedSlidingManager.getBoard().swapTiles(0, 0, 0, 1);
-        assertEquals(2, this.solvedSlidingManager.getBoard().getTile(0, 0).getId());
-        assertEquals(1, this.solvedSlidingManager.getBoard().getTile(0, 1).getId());
+        assertEquals(1, this.solvedSlidingManager.getBoard().getTile(0, 0).getId());
+        assertEquals(0, this.solvedSlidingManager.getBoard().getTile(0, 1).getId());
     }
 
     /**
@@ -119,8 +135,8 @@ public class SlidingTilesUnitTest {
         HashMap<String, SlidingTile> around = this.solvedSlidingManager.getSurroundTiles(emptyPos);
         assertNull(around.get("below"));
         assertNull(around.get("right"));
-        assertEquals(15,around.get("left").getId());
-        assertEquals(12,around.get("above").getId());
+        assertEquals(14,around.get("left").getId());
+        assertEquals(11,around.get("above").getId());
 
     }
 
@@ -130,18 +146,12 @@ public class SlidingTilesUnitTest {
     @Test
     public void testIsValidTap() {
         setUpAndResetBoard();
-        SlidingTile emptyTile = this.findEmptyTile(this.mediumSlidingManager.getBoard());
-        int emptyPosition = this.getPosition(emptyTile,this.mediumSlidingManager.getBoard());
-        HashMap<String, SlidingTile> around = this.mediumSlidingManager.getSurroundTiles(emptyPosition);
-        if (around.get("above") != null) {
-            int abovePos = this.getPosition(around.get("above"), this.mediumSlidingManager.getBoard());
-            assertTrue(this.mediumSlidingManager.isValidTap(abovePos));
-        }
-        else{
-            int belowPos = this.getPosition(around.get("below"), this.mediumSlidingManager.getBoard());
-            assertTrue(this.mediumSlidingManager.isValidTap(belowPos));
-        }
-        assertFalse(this.mediumSlidingManager.isValidTap(emptyPosition));
+        SlidingTile emptyTile = this.findEmptyTile(this.hardcodedSlidingManager.getBoard());
+        int emptyPosition = this.getPosition(emptyTile,this.hardcodedSlidingManager.getBoard());
+        HashMap<String, SlidingTile> around = this.hardcodedSlidingManager.getSurroundTiles(emptyPosition);
+        int abovePos = this.getPosition(around.get("above"), this.hardcodedSlidingManager.getBoard());
+        assertTrue(this.hardcodedSlidingManager.isValidTap(abovePos));
+        assertFalse(this.hardcodedSlidingManager.isValidTap(emptyPosition));
     }
 
     /**
@@ -299,7 +309,7 @@ public class SlidingTilesUnitTest {
         this.setUpAndResetBoard();
         SlidingTile emptyTile = findEmptyTile(this.solvedSlidingManager.getBoard());
         SlidingTile toCompare = this.solvedSlidingManager.getBoard().getTile(0,0);
-        assertEquals(-15, emptyTile.compareTo(toCompare));
+        assertEquals(-24, emptyTile.compareTo(toCompare));
     }
 
     /**
