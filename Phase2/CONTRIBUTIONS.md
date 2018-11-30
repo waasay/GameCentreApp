@@ -19,9 +19,10 @@
                     ColourGuessManager, ColourGuessTile, ColourGuessBoard, TwentyManager (including writing own algorithm
                     to update board after swipes) , TwentyBoard, TwentyTile.
 
-**Afzal Patel**: Unit tests for SlidingTiles, ColourGuess, 2048, and GameCentre
+**Afzal Patel**: SignUp, Login, GameCentreActivity, Unit tests for SlidingTiles, ColourGuess, 2048, and GameCentre
 
-**Didar Ibrahim**: Unit tests for SlidingTiles, ColourGuess, 2048, and GameCentre
+**Didar Ibrahim**: SignUp, Login, GameCentreActivity, Unit tests for SlidingTiles, ColourGuess, 2048, and GameCentre, created
+                   tile images for SlidingTiles, ColourGuess and 2048
 
 
 For a more detailed breakdown of contributions from meeting to meeting please refer to Notes.md
