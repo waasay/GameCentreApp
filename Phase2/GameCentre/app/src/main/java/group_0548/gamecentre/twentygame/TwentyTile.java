@@ -3,10 +3,22 @@ package group_0548.gamecentre.twentygame;
 import group_0548.gamecentre.AbstractTile;
 import group_0548.gamecentre.R;
 
+/**
+ * A tile representing a tile in the 2048 board
+ */
 public class TwentyTile extends AbstractTile {
 
+    /**
+     * The integer representing the background image of this tile.
+     */
     private int background;
 
+    /**
+     * Create a new TwentyTile with id which corresponds to the number to be displayed according
+     * to the relationship 2^(id+1) up to where 0 <= id <= 10 for numbered tiles and id = 11 for
+     * background tile.
+     * @param id the id to determine which tile to create.
+     */
     TwentyTile(int id) {
 
         this.id = id;
@@ -19,10 +31,19 @@ public class TwentyTile extends AbstractTile {
 
     }
 
+    /**
+     * Get the id of this tile.
+     *
+     * @return the id of this tile.
+     */
     public int getId() {
         return super.getId();
     }
 
+    /**
+     * Get the background representing the background image of this tile.
+     * @return the background representing the background image of this tile.
+     */
     public int getBackground() {
         return background;
     }
