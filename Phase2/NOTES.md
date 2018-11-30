@@ -81,7 +81,7 @@ related to each other(such as classes corresponding to the same functionality) w
 to each member. Also discussed ways to make Sliding Tiles solvable and tasks were given out to a
 few members to work on making it solvable.
 
-Wassay Shehzad - Colour Guess Manager, Colour Guess Board, Colour Guess Tile, SlidingTiles Manager
+Waasay Shehzad - Colour Guess Manager, Colour Guess Board, Colour Guess Tile, SlidingTiles Manager
 
 Afzal Patel - SignUp, Login, Colour Guess Unittests
 
@@ -109,7 +109,7 @@ CRC cards were made and given to each member corresponding to the functionality 
 the previous meeting. Classes closely related to each other(such as classes corresponding to the
 same functionality) were were assigned to each member.
 
-Wassay Shehzad - TwentyBoard, TwentyManager, TwentyTile,
+Waasay Shehzad - TwentyBoard, TwentyManager, TwentyTile,
 
 Afzal Patel - SignUp, Login, TwentyGame Unittests, GameCentreActivity
 
